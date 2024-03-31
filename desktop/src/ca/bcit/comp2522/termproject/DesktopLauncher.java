@@ -9,7 +9,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setTitle("COMP-2522-202410-Term-Project-MUHGAME");
+		config.setTitle("Crowd Survivor");
 		new Lwjgl3Application(new CrowdSurvivor(), config);
 	}
 }
