@@ -9,3 +9,4 @@ Draw art assets
 Make background fit with screen size
 Create buttons that navigate to new pages
 Create game loop
+Create player loadout page
