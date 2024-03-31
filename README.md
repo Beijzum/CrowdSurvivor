@@ -6,3 +6,6 @@ Inspired by the game "Vampire Survivors".
 
 ## TODO
 Draw art assets
+Make background fit with screen size
+Create buttons that navigate to new pages
+Create game loop
