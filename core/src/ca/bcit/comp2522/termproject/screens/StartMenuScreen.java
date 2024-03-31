@@ -1,19 +1,22 @@
 package ca.bcit.comp2522.termproject.screens;
 
+import ca.bcit.comp2522.termproject.Background;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class StartMenuScreen implements Screen {
+public class StartMenuScreen implements Screen, Background {
 
     final private OrthographicCamera camera;
     final private CrowdSurvivor game;
     final private Music music;
     final private Texture logo = new Texture("logo.jpg");
+    final private Sprite background = new Sprite(new Texture("backgrounds/startMenuBackground.jpg"));
 
     public StartMenuScreen(final CrowdSurvivor game) {
         this.camera = new OrthographicCamera();
@@ -36,6 +39,7 @@ public class StartMenuScreen implements Screen {
 
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
+        renderBackground(game, background);
 
         game.batch.begin();
         game.font.draw(game.batch, "Click Anywhere To Start", game.viewportX / 2, game.viewportY * 7 / 8);
