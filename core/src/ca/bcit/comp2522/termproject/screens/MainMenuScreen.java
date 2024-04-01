@@ -4,6 +4,7 @@ import ca.bcit.comp2522.termproject.ActorManager;
 import ca.bcit.comp2522.termproject.Background;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -35,6 +36,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(game.stage);
         music.setLooping(true);
         music.play();
         addActors(game.stage, menuItems);
@@ -66,9 +68,12 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
 
     }
 
+    // runs when screen is left
     @Override
     public void hide() {
-
+        Gdx.input.setInputProcessor(null);
+        clearStage(game.stage);
+        dispose();
     }
 
     @Override
@@ -86,9 +91,11 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
         startGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (button != Input.Buttons.LEFT) {
+                    return false;
+                }
 //                game.setScreen(game.loadoutMenuScreen); TO IMPLEMENT LATER, GET THE GAME DONE FIRST
                 game.setScreen(game.inGameScreen);
-                clearStage(game.stage);
                 return true;
             }
         });
@@ -99,10 +106,14 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
         shopButton.setSize(game.viewportX / 3, game.viewportY / 10);
         shopButton.setPosition(game.viewportX / 5, game.viewportY / 10);
         shopButton.addListener(new InputListener() {
+
+
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (button != Input.Buttons.LEFT) {
+                    return false;
+                }
                 game.setScreen(game.shopScreen);
-                clearStage(game.stage);
                 return true;
             }
         });
@@ -115,20 +126,14 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
         quitButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (button != Input.Buttons.LEFT) {
+                    return false;
+                }
                 clearStage(game.stage);
                 Gdx.app.exit();
                 return true;
             }
         });
         this.menuItems[2] = quitButton;
-    }
-
-    private void removeActors(Stage stage) {
-
-    }
-
-    @Override
-    public void addActor(Actor actor) {
-        game.stage.addActor(actor);
     }
 }
