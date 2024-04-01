@@ -37,7 +37,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
     public void show() {
         music.setLooping(true);
         music.play();
-        createButtons();
+        addActors(game.stage, menuItems);
     }
 
     @Override
@@ -86,9 +86,9 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
         startGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(game.loadoutMenuScreen);
+//                game.setScreen(game.loadoutMenuScreen); TO IMPLEMENT LATER, GET THE GAME DONE FIRST
+                game.setScreen(game.inGameScreen);
                 clearStage(game.stage);
-                System.out.println("Clicked");
                 return true;
             }
         });
@@ -116,17 +116,11 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 clearStage(game.stage);
-                dispose();
-                game.dispose();
                 Gdx.app.exit();
                 return true;
             }
         });
         this.menuItems[2] = quitButton;
-
-        for (TextButton menuItem : this.menuItems) {
-            game.stage.addActor(menuItem);
-        }
     }
 
     private void removeActors(Stage stage) {
