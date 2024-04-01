@@ -1,24 +1,25 @@
 package ca.bcit.comp2522.termproject;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.awt.*;
 
-abstract public class Entity {
-    private int health;
-    private int maxHealth;
-    private int speed;
-    private int attack;
-    private int defense;
+abstract public class Entity extends Actor {
+    protected int health;
+    protected int maxHealth;
+    protected int speed;
+    protected int attack;
+    protected double defense;
     protected Sprite sprite;
-    protected Rectangle hitbox;
 
 
     public int getAttack() {
         return attack;
     }
 
-    public int getDefense() {
+    public double getDefense() {
         return defense;
     }
 
@@ -53,6 +54,15 @@ abstract public class Entity {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+    public boolean isDead() {
+        if (this.health == 0) {
+            return true;
+        }
+        return false;
+    }
 
-    abstract public void move(int x, int y);
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        batch.draw(this.sprite, this.getX(), this.getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+    }
 }
