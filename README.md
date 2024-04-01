@@ -7,6 +7,11 @@ Inspired by the game "Vampire Survivors".
 ## TODO
 Draw art assets
 Make background fit with screen size
-Create buttons that navigate to new pages
 Create game loop
+Create firing projectiles
+Create spawning enemies
+Create killing enemies
+Create enemy pathing to player
+Create ultimate effect
+Create working pause menu
 Create player loadout page
