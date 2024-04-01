@@ -30,7 +30,6 @@ public class CrowdSurvivor extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		stage = new Stage(new ScreenViewport());
-		Gdx.input.setInputProcessor(stage);
 
 		viewportX = Gdx.graphics.getWidth();
 		viewportY = Gdx.graphics.getHeight();
