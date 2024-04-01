@@ -2,6 +2,7 @@ package ca.bcit.comp2522.termproject.screens;
 
 import ca.bcit.comp2522.termproject.*;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,7 +20,7 @@ public class InGameScreen implements Screen, Background, ActorManager {
     final private Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
     private ArrayList<Enemy> onFieldEnemies;
     private ArrayList<Projectile> projectilesOnScreen;
-    private Player player;
+    final private Player player;
 
     public InGameScreen(CrowdSurvivor crowdSurvivor) {
         this.camera = new OrthographicCamera();
@@ -31,17 +32,24 @@ public class InGameScreen implements Screen, Background, ActorManager {
 
     @Override
     public void show() {
+        music.setLooping(true);
+        music.play();
 
+        game.stage.addActor(player);
     }
 
     @Override
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
-
         camera.update();
+        game.stage.act();
+
         game.batch.setProjectionMatrix(camera.combined);
         renderBackground(game, background);
 
+        player.handleMovement();
+
+        game.stage.draw();
     }
 
     @Override
@@ -66,11 +74,6 @@ public class InGameScreen implements Screen, Background, ActorManager {
 
     @Override
     public void dispose() {
-
-    }
-
-    @Override
-    public void addActor(Actor actor) {
 
     }
 }
