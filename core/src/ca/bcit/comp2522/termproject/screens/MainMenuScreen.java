@@ -10,10 +10,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -36,10 +34,10 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(game.stage);
+        Gdx.input.setInputProcessor(game.stageUI);
         music.setLooping(true);
         music.play();
-        addActors(game.stage, menuItems);
+        addActors(game.stageUI, menuItems);
     }
 
     @Override
@@ -49,8 +47,8 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         renderBackground(game, background);
-        game.stage.act();
-        game.stage.draw();
+        game.stageUI.act();
+        game.stageUI.draw();
     }
 
     @Override
@@ -72,7 +70,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-        clearStage(game.stage);
+        clearStage(game.stageUI);
         dispose();
     }
 
@@ -129,7 +127,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stage);
+                clearStage(game.stageUI);
                 Gdx.app.exit();
                 return true;
             }
