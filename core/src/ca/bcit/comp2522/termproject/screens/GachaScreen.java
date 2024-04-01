@@ -1,10 +1,15 @@
 package ca.bcit.comp2522.termproject.screens;
 
+import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.Screen;
 
 public class GachaScreen implements Screen {
 
     private static boolean onGachaScreen;
+
+    public GachaScreen(CrowdSurvivor crowdSurvivor) {
+    }
+
     public static void runGacha() {
 
     }

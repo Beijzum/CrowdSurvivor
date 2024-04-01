@@ -1,15 +1,14 @@
 package ca.bcit.comp2522.termproject.screens;
 
+import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.Screen;
 
 public class ShopScreen implements Screen {
     private static boolean onShopScreen;
-    public static void runShop() {
-        while (onShopScreen) {
 
-        }
+    public ShopScreen(CrowdSurvivor crowdSurvivor) {
+
     }
-
 
     @Override
     public void show() {
