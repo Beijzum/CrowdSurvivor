@@ -12,20 +12,21 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
-public class Player extends Entity {
+public class Player extends Entity implements InputProcessor {
     final private static double DEFAULT_DEFENSE = 0.0;
     final private static int DEFAULT_MAX_HEALTH = 100;
     final private static int DEFAULT_SPEED = 200;
     final private static double DEFAULT_ATTACK_SPEED = 1;
     final private static double DEFAULT_CRIT_RATE = 0.1;
     final private static double DEFAULT_CRIT_MULTIPLIER = 1.5;
-    final private static int DEFAULT_ULTIMATE_CD = 45;
+    final private static int DEFAULT_ULTIMATE_CD = 5;
     final private static double DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01;
     final private static int DEFAULT_ATTACK = 20;
     private static Player instance = null;
     private double attackSpeed;
     private double critRate;
     private double critMultiplier;
+    private float ultimateCDTimer;
     private int ultimateCD;
     private double healthRegenMultiplier;
     private Projectile projectile;
@@ -146,6 +147,25 @@ public class Player extends Entity {
         this.setY(getY() + deltaY);
     }
 
+    public void handleUltimateTimer() {
+        if (this.ultimateIsReady()) {
+            return;
+        }
+        waitForCD();
+    }
+
+    private void waitForCD() {
+        ultimateCDTimer += Gdx.graphics.getDeltaTime();
+    }
+
+    private boolean ultimateIsReady() {
+        return ultimateCDTimer >= ultimateCD;
+    }
+
+    private void resetUltimateTimer() {
+        this.ultimateCDTimer = 0;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -156,5 +176,58 @@ public class Player extends Entity {
                 ", healthRegenMultiplier=" + healthRegenMultiplier +
                 ", projectile=" + projectile +
                 '}';
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        if (keyCode == Input.Keys.F) {
+            if (ultimateCDTimer > ultimateCD) {
+                // some ultimate effect here
+                System.out.println("Ultimate Used!!!!");
+                resetUltimateTimer();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int i) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char c) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int i, int i1, int i2, int i3) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int i, int i1, int i2, int i3) {
+        return false;
+    }
+
+    @Override
+    public boolean touchCancelled(int i, int i1, int i2, int i3) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int i, int i1, int i2) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int i, int i1) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float v, float v1) {
+        return false;
     }
 }
