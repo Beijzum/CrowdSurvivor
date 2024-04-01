@@ -34,7 +34,7 @@ public class InGameScreen implements Screen, Background, ActorManager {
     public void show() {
         music.setLooping(true);
         music.play();
-
+        Gdx.input.setInputProcessor(player);
         game.stage.addActor(player);
     }
 
@@ -48,6 +48,7 @@ public class InGameScreen implements Screen, Background, ActorManager {
         renderBackground(game, background);
 
         player.handleMovement();
+        player.handleUltimateTimer();
 
         game.stage.draw();
     }
