@@ -2,11 +2,12 @@ package ca.bcit.comp2522.termproject;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.awt.*;
 
-abstract public class Entity extends Actor {
+abstract public class Entity {
     protected int health;
     protected int maxHealth;
     protected int speed;
@@ -54,6 +55,9 @@ abstract public class Entity extends Actor {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+    public Rectangle getHitbox() {
+        return this.sprite.getBoundingRectangle();
+    }
     public boolean isDead() {
         if (this.health == 0) {
             return true;
@@ -61,8 +65,11 @@ abstract public class Entity extends Actor {
         return false;
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        batch.draw(this.sprite, this.getX(), this.getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+    public void draw(Batch batch) {
+        batch.begin();
+        batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
+                this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
+                this.sprite.getScaleY(), this.sprite.getRotation());
+        batch.end();
     }
 }
