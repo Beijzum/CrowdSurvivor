@@ -7,7 +7,9 @@ public interface Background {
         background.setSize(game.viewportX, game.viewportY);
 
         game.batch.begin();
-        game.batch.draw(background, 0, 0);
+        game.batch.draw(background, background.getX(), background.getY(), background.getOriginX(),
+                background.getOriginY(), background.getWidth(), background.getHeight(), background.getScaleX(),
+                background.getScaleY(), background.getRotation());
         game.batch.end();
     }
 }
