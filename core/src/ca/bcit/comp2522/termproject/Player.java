@@ -174,7 +174,7 @@ public class Player extends Entity implements InputProcessor {
         // move not expired projectiles
         for (Projectile projectile : playerProjectiles) {
             projectile.incrementLifetimeTimer();
-//            projectile.moveProjectile();
+            projectile.moveProjectile();
         }
 
         // runs every attackSpeed seconds
