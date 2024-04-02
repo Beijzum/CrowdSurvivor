@@ -10,15 +10,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class InGameScreen implements Screen, Background, ActorManager {
     OrthographicCamera camera;
     final private CrowdSurvivor game;
     final private Music music;
     final private Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
-    private ArrayList<Enemy> onFieldEnemies;
-    private ArrayList<Projectile> playerProjectilesOnScreen = new ArrayList<>();
-    private ArrayList<Projectile> enemyProjectilesOnScreen = new ArrayList<>();
+    private ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
+    final private LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
+    final private LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
     final private Player player;
 
     public InGameScreen(CrowdSurvivor crowdSurvivor) {
@@ -44,16 +45,15 @@ public class InGameScreen implements Screen, Background, ActorManager {
 
         game.batch.setProjectionMatrix(camera.combined);
         renderBackground(game, background);
-        player.draw(game.batch);
 
+        // handle logic firs
         player.handleMovement();
         player.handleUltimateCD();
         player.handleAttack(this.playerProjectilesOnScreen);
 
-        for (Projectile playerProjectile : playerProjectilesOnScreen) {
-            playerProjectile.draw(game.batch);
-        }
-
+        // draw assets
+        player.draw(game.batch);
+        this.drawAllPlayerProjectiles();
         game.stageUI.draw();
     }
 
@@ -80,5 +80,27 @@ public class InGameScreen implements Screen, Background, ActorManager {
     @Override
     public void dispose() {
 
+    }
+
+    private void drawAllPlayerProjectiles() {
+        if (this.playerProjectilesOnScreen.isEmpty()) {
+            return;
+        }
+        game.batch.begin();
+        for (Projectile playerProjectile : playerProjectilesOnScreen) {
+            playerProjectile.draw(game.batch);
+        }
+        game.batch.end();
+    }
+
+    private void drawAllEnemyProjectiles() {
+        if (this.enemyProjectilesOnScreen.isEmpty()) {
+            return;
+        }
+        game.batch.begin();
+        for (Projectile enemyProjectile : enemyProjectilesOnScreen) {
+            enemyProjectile.draw(game.batch);
+        }
+        game.batch.end();
     }
 }
