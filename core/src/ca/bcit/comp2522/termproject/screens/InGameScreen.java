@@ -7,6 +7,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -42,15 +44,21 @@ public class InGameScreen implements Screen, Background, ActorManager {
     @Override
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        camera.update();
+        player.handleMovement();
         game.stageUI.act();
 
         game.batch.setProjectionMatrix(camera.combined);
         renderBackground(game, background);
 
         // handle logic first
+        Vector3 cameraPosition = camera.position;
+        Vector2 playerPosition = player.getPosition();
+        float lerp = 8.5f;
+        cameraPosition.x += (playerPosition.x - cameraPosition.x) * lerp * v;
+        cameraPosition.y += (playerPosition.y - cameraPosition.y) * lerp * v;
+        camera.update();
+
         enemyManager.incrementTimers();
-        player.handleMovement();
         player.handleUltimateCD();
         player.handleAttack(this.playerProjectilesOnScreen);
         enemyManager.handleEnemies();
