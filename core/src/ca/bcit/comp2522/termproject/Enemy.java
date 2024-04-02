@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.LinkedList;
+
 public class Enemy extends Entity {
     final private static double DEFAULT_DEFENSE = 0.0;
     private float acceleration;
+    private LinkedList<Projectile> hitByProjectileList = new LinkedList<>();
 
     public Enemy() {
         // do later
@@ -47,11 +50,23 @@ public class Enemy extends Entity {
                 this.sprite.getScaleY(), this.sprite.getRotation());
     }
 
-    public void takeDamage(Rectangle projectileHitbox, int damage) {
-        if (this.sprite.getBoundingRectangle().overlaps(projectileHitbox)) {
+    public void takeDamage(Projectile projectile, int damage) {
+        if (this.sprite.getBoundingRectangle().overlaps(projectile.getHitbox())
+                && !this.hitByProjectileList.contains(projectile)) {
+            this.hitByProjectileList.add(projectile);
             this.health -= damage;
             System.out.println(this.health);
         }
+        removeFromHitByProjectileList();
     }
 
+    public void clearHitByProjectileList() {
+        this.hitByProjectileList.clear();
+    }
+
+    public void removeFromHitByProjectileList() {
+        if (this.hitByProjectileList.peek() != null && this.hitByProjectileList.peek().isOverLifeTime()) {
+            this.hitByProjectileList.removeFirst();
+        }
+    }
 }
