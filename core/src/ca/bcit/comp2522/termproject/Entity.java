@@ -59,7 +59,7 @@ abstract public class Entity {
         return this.sprite.getBoundingRectangle();
     }
     public boolean isDead() {
-        if (this.health == 0) {
+        if (this.health <= 0) {
             return true;
         }
         return false;
