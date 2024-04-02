@@ -18,7 +18,7 @@ public class Enemy extends Entity {
     private float tintTimer = 0;
     private float acceleration;
     private boolean isTakingDamage;
-    final private Vector2 movementDirecion = new Vector2();
+    final private Vector2 directionVector = new Vector2();
     final private LinkedList<Projectile> hitByProjectileList = new LinkedList<>();
 
     public Enemy() {
@@ -42,12 +42,30 @@ public class Enemy extends Entity {
         return this.acceleration;
     }
 
+    public float getCenterX() {
+        return this.sprite.getX() + this.sprite.getWidth() / 2;
+    }
+
+    public float getCenterY() {
+        return this.sprite.getY() + this.sprite.getHeight() / 2;
+    }
+
     public void setAcceleration(float acceleration) {
         this.acceleration = acceleration;
     }
 
-    public void move(float x, float y) {
+    public Vector2 getDirectionVector() {
+        return this.directionVector;
+    }
 
+    public void move() {
+        float angle = this.directionVector.angleRad();
+
+        // vector already normalized
+        float deltaX = this.speed * Gdx.graphics.getDeltaTime() * (float) Math.cos(angle);
+        float deltaY = this.speed * Gdx.graphics.getDeltaTime() * (float) Math.sin(angle);
+        this.sprite.setX(this.sprite.getX() + deltaX);
+        this.sprite.setY(this.sprite.getY() + deltaY);
     }
 
     public void setCenterPosition(float x, float y) {
