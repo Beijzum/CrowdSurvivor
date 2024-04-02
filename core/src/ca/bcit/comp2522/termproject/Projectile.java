@@ -79,7 +79,6 @@ public class Projectile {
     }
 
     public void draw(Batch batch) {
-        moveProjectile();
         batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
                 this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                 this.sprite.getScaleY(), this.sprite.getRotation());
