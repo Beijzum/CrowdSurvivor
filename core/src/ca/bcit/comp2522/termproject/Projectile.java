@@ -13,11 +13,13 @@ public class Projectile {
     private float lifetimeTimer = 0;
     final private Vector2 directionVector;
 
-    public Projectile(Sprite sprite, int speed, int lifetime) {
+    public Projectile(Sprite sprite, int speed, int lifetime, int size) {
         this.sprite = sprite;
         this.speed = speed;
         this.lifetime = lifetime;
         this.directionVector = new Vector2();
+        this.sprite.setSize(size, size);
+        this.sprite.setOriginCenter();
     }
 
     public Projectile(Projectile projectileTemplate) {
@@ -25,6 +27,7 @@ public class Projectile {
         this.lifetime = projectileTemplate.getLifetime();
         this.directionVector = new Vector2(projectileTemplate.getDirectionVector());
         this.sprite = new Sprite(projectileTemplate.getSprite());
+        this.sprite.setSize(projectileTemplate.getSprite().getWidth(), projectileTemplate.getSprite().getHeight());
     }
 
     public int getSpeed() {
