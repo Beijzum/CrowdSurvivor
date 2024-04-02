@@ -27,7 +27,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
     public MainMenuScreen(final CrowdSurvivor game) {
         this.camera = new OrthographicCamera();
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/mainMenuMusic.mp3"));
-        camera.setToOrtho(false, 800, 400);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.game = game;
         createButtons();
     }
@@ -82,10 +82,16 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
     private void createButtons() {
         Skin buttonSkin = new Skin(Gdx.files.internal("skin/vhs-ui.json"));
 
+        // calculate values for menu placement
+        int buttonWidth = Gdx.graphics.getWidth() / 3;
+        int buttonHeight = Gdx.graphics.getHeight() / 10;
+        int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
+        int firstButtonPositionY = Gdx.graphics.getHeight() / 3;
+
         // start game button
         TextButton startGameButton = new TextButton("Start Game", buttonSkin);
-        startGameButton.setSize(game.viewportX / 3, game.viewportY / 10);
-        startGameButton.setPosition(game.viewportX / 5, game.viewportY / 5);
+        startGameButton.setSize(buttonWidth, buttonHeight);
+        startGameButton.setPosition(buttonPositionX, firstButtonPositionY);
         startGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -101,8 +107,8 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
 
         // shop button
         TextButton shopButton = new TextButton("Shop", buttonSkin);
-        shopButton.setSize(game.viewportX / 3, game.viewportY / 10);
-        shopButton.setPosition(game.viewportX / 5, game.viewportY / 10);
+        shopButton.setSize(buttonWidth, buttonHeight);
+        shopButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight);
         shopButton.addListener(new InputListener() {
 
 
@@ -119,8 +125,8 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
 
         // quit game button
         TextButton quitButton = new TextButton("Quit", buttonSkin);
-        quitButton.setSize(game.viewportX / 3, game.viewportY / 10);
-        quitButton.setPosition(game.viewportX / 5, game.viewportY / 15);
+        quitButton.setSize(buttonWidth, buttonHeight);
+        quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
         quitButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
