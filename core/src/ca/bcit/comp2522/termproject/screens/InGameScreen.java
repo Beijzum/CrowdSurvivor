@@ -63,8 +63,8 @@ public class InGameScreen implements Screen, Background, ActorManager {
 
         // draw assets
         player.draw(game.batch);
-        this.drawAllPlayerProjectiles();
         this.drawEnemies();
+        this.drawAllPlayerProjectiles();
         game.stageUI.draw();
     }
 
