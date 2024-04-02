@@ -51,11 +51,7 @@ public class InGameScreen implements Screen, Background, ActorManager {
         renderBackground(game, background);
 
         // handle logic first
-        Vector3 cameraPosition = camera.position;
-        Vector2 playerPosition = player.getPosition();
-        float lerp = 8.5f;
-        cameraPosition.x += (playerPosition.x - cameraPosition.x) * lerp * v;
-        cameraPosition.y += (playerPosition.y - cameraPosition.y) * lerp * v;
+        camera.position.set(player.getCenterX(), player.getCenterY(), 0);
         camera.update();
 
         enemyManager.incrementTimers();

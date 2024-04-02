@@ -109,11 +109,7 @@ public class Player extends Entity implements InputProcessor {
     public float getCenterY() {
         return this.sprite.getY() + this.sprite.getHeight() / 2;
     }
-
-    public Vector2 getPosition() {
-        return new Vector2(this.sprite.getX(), this.sprite.getY());
-    }
-
+    
     public void resetStats() {
         this.maxHealth = DEFAULT_MAX_HEALTH;
         this.health = DEFAULT_MAX_HEALTH;
