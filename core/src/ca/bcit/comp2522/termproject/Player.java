@@ -1,9 +1,6 @@
 package ca.bcit.comp2522.termproject;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -15,17 +12,19 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.SnapshotArray;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Player extends Entity implements InputProcessor {
     final private static double DEFAULT_DEFENSE = 0.0;
     final private static int DEFAULT_MAX_HEALTH = 100;
     final private static int DEFAULT_SPEED = 200;
-    final private static double DEFAULT_ATTACK_SPEED = 2;
+    final private static double DEFAULT_ATTACK_SPEED = 0.5; // RMBR TO CHANGE, DEFAULT = 2
     final private static double DEFAULT_CRIT_RATE = 0.1;
     final private static double DEFAULT_CRIT_MULTIPLIER = 1.5;
     final private static int DEFAULT_ULTIMATE_CD = 5;
     final private static double DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01;
     final private static int DEFAULT_ATTACK = 20;
+    private int collectCurrency;
     private static Player instance = null;
     private double attackSpeed;
     private double critRate;
@@ -41,7 +40,7 @@ public class Player extends Entity implements InputProcessor {
     private Player() {
         resetStats();
         Sprite projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/tempSlash.png")));
-        this.projectileTemplate = new Projectile(projectileSprite, 350, 3);
+        this.projectileTemplate = new Projectile(projectileSprite, 500, 3);
         int spriteX = 100, spriteY = 100;
         this.sprite = new Sprite(new Texture(Gdx.files.internal("tempPlayerSprite.png")));
         this.sprite.setSize(spriteX, spriteY);
@@ -98,7 +97,16 @@ public class Player extends Entity implements InputProcessor {
     public int getUltimateCD() {
         return ultimateCD;
     }
+    public int getCollectCurrency() {
+        return this.collectCurrency;
+    }
+    public float getCenterX() {
+        return this.sprite.getX() + this.sprite.getWidth() / 2;
+    }
 
+    public float getCenterY() {
+        return this.sprite.getY() + this.sprite.getHeight() / 2;
+    }
     public void resetStats() {
         this.maxHealth = DEFAULT_MAX_HEALTH;
         this.health = DEFAULT_MAX_HEALTH;
@@ -110,6 +118,7 @@ public class Player extends Entity implements InputProcessor {
         this.critMultiplier = DEFAULT_CRIT_MULTIPLIER;
         this.ultimateCD = DEFAULT_ULTIMATE_CD;
         this.healthRegenMultiplier = DEFAULT_HEALTH_REGEN_MULTIPLIER;
+        this.collectCurrency = 0;
     }
 
     public void resetPosition() {
@@ -156,35 +165,41 @@ public class Player extends Entity implements InputProcessor {
         waitForCD();
     }
 
-    public void handleAttack(ArrayList<Projectile> playerProjectiles) {
-        ArrayList<Projectile> expiredProjectiles = new ArrayList<>();
+    public void handleAttack(LinkedList<Projectile> playerProjectiles) {
+        // check if first in linked list is expired
+        if (playerProjectiles.peek() != null && playerProjectiles.peek().isOverLifeTime()) {
+            playerProjectiles.removeFirst();
+        }
+
+        // move not expired projectiles
         for (Projectile projectile : playerProjectiles) {
             projectile.incrementLifetimeTimer();
-            if (projectile.isOverLifeTime()) {
-                expiredProjectiles.add(projectile);
-            }
+            projectile.moveProjectile();
         }
-        playerProjectiles.removeAll(expiredProjectiles);
+
+        System.out.println(playerProjectiles.size());
 
         // runs every attackSpeed seconds
         if (this.attackTimer >= this.attackSpeed) {
             Projectile newProjectile = this.projectileTemplate.copyProjectile();
 
-            newProjectile.setX(this.sprite.getX());
-            newProjectile.setY(this.sprite.getY());
+            newProjectile.getDirectionVector()
+                    .set(mousePositionX - this.getCenterX(), mousePositionY - this.getCenterY());
 
-            // calculate angle of rotation
-            double angle = Math.atan((mousePositionY - this.sprite.getY()) / (mousePositionX - this.sprite.getX()));
-            System.out.println(Math.toDegrees(angle));
-            angle = (Math.toDegrees(angle) + 360) % 360;
-            System.out.println(angle);
-            newProjectile.setSpriteRotation((float) Math.toDegrees(angle));
+            float angle = newProjectile.getDirectionVector().angleDeg();
+            newProjectile.setProjectileCenter(this.getCenterX(), this.getCenterY());
+            newProjectile.setSpriteRotation(angle);
 
             playerProjectiles.add(newProjectile);
             this.attackTimer = 0;
         } else {
             this.attackTimer += Gdx.graphics.getDeltaTime();
         }
+    }
+
+    // implement later enemies are done
+    public void handleDamage() {
+
     }
 
     private void waitForCD() {
@@ -267,5 +282,9 @@ public class Player extends Entity implements InputProcessor {
     @Override
     public boolean scrolled(float v, float v1) {
         return false;
+    }
+
+    private void incrementCollectedCurrency(int currency) {
+        this.collectCurrency += currency;
     }
 }
