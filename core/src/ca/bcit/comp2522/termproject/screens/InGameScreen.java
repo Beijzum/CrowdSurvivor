@@ -17,15 +17,17 @@ public class InGameScreen implements Screen, Background, ActorManager {
     final private CrowdSurvivor game;
     final private Music music;
     final private Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
-    private ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
-    final private LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
-    final private LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
-    final private Player player;
+    final public Player player;
+    final private EnemyManager enemyManager;
+    final public ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
+    final public LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
+    final public LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
 
     public InGameScreen(CrowdSurvivor crowdSurvivor) {
         this.camera = new OrthographicCamera();
         this.game = crowdSurvivor;
         this.player = Player.createPlayer();
+        this.enemyManager = EnemyManager.createManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
         camera.setToOrtho(false, game.viewportX, game.viewportY);
     }
@@ -46,14 +48,19 @@ public class InGameScreen implements Screen, Background, ActorManager {
         game.batch.setProjectionMatrix(camera.combined);
         renderBackground(game, background);
 
-        // handle logic firs
+        // handle logic first
+        enemyManager.incrementTimers();
         player.handleMovement();
         player.handleUltimateCD();
         player.handleAttack(this.playerProjectilesOnScreen);
+        enemyManager.handleEnemies();
+        enemyManager.handleEnemySpawn();
+        enemyManager.handleEnemyProjectiles();
 
         // draw assets
         player.draw(game.batch);
         this.drawAllPlayerProjectiles();
+        this.drawEnemies();
         game.stageUI.draw();
     }
 
@@ -100,6 +107,14 @@ public class InGameScreen implements Screen, Background, ActorManager {
         game.batch.begin();
         for (Projectile enemyProjectile : enemyProjectilesOnScreen) {
             enemyProjectile.draw(game.batch);
+        }
+        game.batch.end();
+    }
+
+    private void drawEnemies() {
+        game.batch.begin();
+        for (Enemy enemy : this.onFieldEnemies) {
+            enemy.draw(game.batch);
         }
         game.batch.end();
     }
