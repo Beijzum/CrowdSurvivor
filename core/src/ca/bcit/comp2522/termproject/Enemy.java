@@ -1,17 +1,25 @@
 package ca.bcit.comp2522.termproject;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.LinkedList;
 
 public class Enemy extends Entity {
     final private static double DEFAULT_DEFENSE = 0.0;
+    final private static float DAMAGE_TINT_TIME = 1;
+    final private Color damageTint = new Color(200, 0, 0, 1);
+    private Color normalColor;
+    private float tintTimer = 0;
     private float acceleration;
-    private LinkedList<Projectile> hitByProjectileList = new LinkedList<>();
+    private boolean isTakingDamage;
+    final private Vector2 movementDirecion = new Vector2();
+    final private LinkedList<Projectile> hitByProjectileList = new LinkedList<>();
 
     public Enemy() {
         // do later
@@ -25,6 +33,8 @@ public class Enemy extends Entity {
         this.attack = attack;
         this.defense = DEFAULT_DEFENSE;
         this.sprite = new Sprite(new Texture(Gdx.files.internal(imageFilePath)));
+        this.normalColor = new Color(this.sprite.getColor());
+
         this.sprite.setSize(100, 100);
     }
 
@@ -45,17 +55,27 @@ public class Enemy extends Entity {
     }
 
     public void draw(Batch batch) {
+        if (this.isTakingDamage) {
+            batch.setColor(this.damageTint);
+        }
         batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
                 this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                 this.sprite.getScaleY(), this.sprite.getRotation());
+        batch.setColor(this.normalColor);
     }
 
     public void takeDamage(Projectile projectile, int damage) {
         if (this.sprite.getBoundingRectangle().overlaps(projectile.getHitbox())
                 && !this.hitByProjectileList.contains(projectile)) {
+            this.isTakingDamage = true;
             this.hitByProjectileList.add(projectile);
             this.health -= damage;
-            System.out.println(this.health);
+        }
+        if (this.tintTimer > DAMAGE_TINT_TIME) {
+            this.tintTimer = 0;
+            isTakingDamage = false;
+        } else if (this.isTakingDamage) {
+            this.tintTimer += Gdx.graphics.getDeltaTime();
         }
         removeFromHitByProjectileList();
     }
