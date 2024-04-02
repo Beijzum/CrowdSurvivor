@@ -39,6 +39,7 @@ public class InGameScreen implements Screen, Background, ActorManager {
         music.setLooping(true);
         music.play();
         Gdx.input.setInputProcessor(player);
+        player.resetPosition();
     }
 
     @Override
