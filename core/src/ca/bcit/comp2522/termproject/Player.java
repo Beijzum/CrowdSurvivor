@@ -7,16 +7,20 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.utils.SnapshotArray;
+
+import java.util.ArrayList;
 
 public class Player extends Entity implements InputProcessor {
     final private static double DEFAULT_DEFENSE = 0.0;
     final private static int DEFAULT_MAX_HEALTH = 100;
     final private static int DEFAULT_SPEED = 200;
-    final private static double DEFAULT_ATTACK_SPEED = 1;
+    final private static double DEFAULT_ATTACK_SPEED = 2;
     final private static double DEFAULT_CRIT_RATE = 0.1;
     final private static double DEFAULT_CRIT_MULTIPLIER = 1.5;
     final private static int DEFAULT_ULTIMATE_CD = 5;
@@ -27,17 +31,21 @@ public class Player extends Entity implements InputProcessor {
     private double critRate;
     private double critMultiplier;
     private float ultimateCDTimer;
+    private float attackTimer;
     private int ultimateCD;
     private double healthRegenMultiplier;
-    private Projectile projectile;
+    private Projectile projectileTemplate;
+    private float mousePositionX;
+    private float mousePositionY;
 
     private Player() {
         resetStats();
+        Sprite projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/tempSlash.png")));
+        this.projectileTemplate = new Projectile(projectileSprite, 350, 3);
+        int spriteX = 100, spriteY = 100;
         this.sprite = new Sprite(new Texture(Gdx.files.internal("tempPlayerSprite.png")));
-        this.sprite.setSize(100, 100);
-        this.setSize(100, 100);
-        this.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-        this.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        this.sprite.setSize(spriteX, spriteY);
+        this.sprite.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
     }
 
     public static Player createPlayer() {
@@ -63,8 +71,8 @@ public class Player extends Entity implements InputProcessor {
         this.healthRegenMultiplier = healthRegenMultiplier;
     }
 
-    public void setProjectile(Projectile projectile) {
-        this.projectile = projectile;
+    public void setProjectileTemplate(Projectile projectile) {
+        this.projectileTemplate = projectile;
     }
 
     public void setUltimateCD(int ultimateCD) {
@@ -91,11 +99,6 @@ public class Player extends Entity implements InputProcessor {
         return ultimateCD;
     }
 
-    public Projectile getProjectile() {
-        return projectile;
-    }
-
-
     public void resetStats() {
         this.maxHealth = DEFAULT_MAX_HEALTH;
         this.health = DEFAULT_MAX_HEALTH;
@@ -110,14 +113,13 @@ public class Player extends Entity implements InputProcessor {
     }
 
     public void resetPosition() {
-
+        this.sprite.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
     }
 
     // implement later for when saving upgrades is being worked on
     public void loadPlayerUpgrades() {
 
     }
-
 
     // called every frame
     public void handleMovement() {
@@ -143,15 +145,46 @@ public class Player extends Entity implements InputProcessor {
             deltaX = deltaX * (float) Math.abs(Math.cos(Math.atan(deltaY / deltaX)));
             deltaY = deltaY * (float) Math.abs(Math.sin(Math.atan(deltaY / deltaX)));
         }
-        this.setX(getX() + deltaX);
-        this.setY(getY() + deltaY);
+        this.sprite.setX(this.sprite.getX() + deltaX);
+        this.sprite.setY(this.sprite.getY() + deltaY);
     }
 
-    public void handleUltimateTimer() {
+    public void handleUltimateCD() {
         if (this.ultimateIsReady()) {
             return;
         }
         waitForCD();
+    }
+
+    public void handleAttack(ArrayList<Projectile> playerProjectiles) {
+        ArrayList<Projectile> expiredProjectiles = new ArrayList<>();
+        for (Projectile projectile : playerProjectiles) {
+            projectile.incrementLifetimeTimer();
+            if (projectile.isOverLifeTime()) {
+                expiredProjectiles.add(projectile);
+            }
+        }
+        playerProjectiles.removeAll(expiredProjectiles);
+
+        // runs every attackSpeed seconds
+        if (this.attackTimer >= this.attackSpeed) {
+            Projectile newProjectile = this.projectileTemplate.copyProjectile();
+
+            newProjectile.setX(this.sprite.getX());
+            newProjectile.setY(this.sprite.getY());
+
+            // calculate angle of rotation
+            double angle = Math.atan((mousePositionY - this.sprite.getY()) / (mousePositionX - this.sprite.getX()));
+            System.out.println(Math.toDegrees(angle));
+            angle = (Math.toDegrees(angle) + 360) % 360;
+            System.out.println(angle);
+            newProjectile.setSpriteRotation((float) Math.toDegrees(angle));
+
+            playerProjectiles.add(newProjectile);
+            this.attackTimer = 0;
+        } else {
+            this.attackTimer += Gdx.graphics.getDeltaTime();
+        }
     }
 
     private void waitForCD() {
@@ -174,7 +207,7 @@ public class Player extends Entity implements InputProcessor {
                 ", critMultiplier=" + critMultiplier +
                 ", ultimateCD=" + ultimateCD +
                 ", healthRegenMultiplier=" + healthRegenMultiplier +
-                ", projectile=" + projectile +
+                ", projectile=" + projectileTemplate +
                 '}';
     }
 
@@ -218,12 +251,17 @@ public class Player extends Entity implements InputProcessor {
 
     @Override
     public boolean touchDragged(int i, int i1, int i2) {
-        return false;
+        this.mousePositionX = Gdx.input.getX();
+        // mousePositionY is flipped from the rest of the coordinates system in libgdx
+        this.mousePositionY = Gdx.graphics.getHeight() - Gdx.input.getY();
+        return true;
     }
 
     @Override
     public boolean mouseMoved(int i, int i1) {
-        return false;
+        this.mousePositionX = Gdx.input.getX();
+        this.mousePositionY = Gdx.graphics.getHeight() - Gdx.input.getY();
+        return true;
     }
 
     @Override
