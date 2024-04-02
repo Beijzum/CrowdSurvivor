@@ -75,7 +75,7 @@ final public class EnemyManager {
     public void handleEnemies() {
         for (Projectile playerProjectile : gameScreen.playerProjectilesOnScreen) {
             for (Enemy enemy : gameScreen.onFieldEnemies) {
-                enemy.takeDamage(playerProjectile.getHitbox(),
+                enemy.takeDamage(playerProjectile,
                         (int) Math.round(gameScreen.player.attack * (1 - enemy.getDefense())));
             }
         }
@@ -104,6 +104,7 @@ final public class EnemyManager {
             }
         }
         if (deadEnemy != null) {
+            deadEnemy.clearHitByProjectileList();
             gameScreen.onFieldEnemies.remove(deadEnemy);
         }
     }
