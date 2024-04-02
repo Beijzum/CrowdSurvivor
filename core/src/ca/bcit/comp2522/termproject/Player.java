@@ -97,9 +97,11 @@ public class Player extends Entity implements InputProcessor {
     public int getUltimateCD() {
         return ultimateCD;
     }
+
     public int getCollectCurrency() {
         return this.collectCurrency;
     }
+
     public float getCenterX() {
         return this.sprite.getX() + this.sprite.getWidth() / 2;
     }
@@ -107,6 +109,7 @@ public class Player extends Entity implements InputProcessor {
     public float getCenterY() {
         return this.sprite.getY() + this.sprite.getHeight() / 2;
     }
+    
     public void resetStats() {
         this.maxHealth = DEFAULT_MAX_HEALTH;
         this.health = DEFAULT_MAX_HEALTH;
@@ -194,6 +197,7 @@ public class Player extends Entity implements InputProcessor {
             this.attackTimer += Gdx.graphics.getDeltaTime();
         }
     }
+
 
     // implement later enemies are done
     public void handleDamage() {
