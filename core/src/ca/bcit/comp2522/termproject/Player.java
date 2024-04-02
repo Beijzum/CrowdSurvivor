@@ -18,7 +18,7 @@ public class Player extends Entity implements InputProcessor {
     final private static double DEFAULT_DEFENSE = 0.0;
     final private static int DEFAULT_MAX_HEALTH = 100;
     final private static int DEFAULT_SPEED = 200;
-    final private static double DEFAULT_ATTACK_SPEED = 0.5; // RMBR TO CHANGE, DEFAULT = 2
+    final private static double DEFAULT_ATTACK_SPEED = 1.5;
     final private static double DEFAULT_CRIT_RATE = 0.1;
     final private static double DEFAULT_CRIT_MULTIPLIER = 1.5;
     final private static int DEFAULT_ULTIMATE_CD = 5;
@@ -174,14 +174,12 @@ public class Player extends Entity implements InputProcessor {
         // move not expired projectiles
         for (Projectile projectile : playerProjectiles) {
             projectile.incrementLifetimeTimer();
-            projectile.moveProjectile();
+//            projectile.moveProjectile();
         }
-
-        System.out.println(playerProjectiles.size());
 
         // runs every attackSpeed seconds
         if (this.attackTimer >= this.attackSpeed) {
-            Projectile newProjectile = this.projectileTemplate.copyProjectile();
+            Projectile newProjectile = new Projectile(projectileTemplate);
 
             newProjectile.getDirectionVector()
                     .set(mousePositionX - this.getCenterX(), mousePositionY - this.getCenterY());
@@ -217,12 +215,17 @@ public class Player extends Entity implements InputProcessor {
     @Override
     public String toString() {
         return "Player{" +
-                "attackSpeed=" + attackSpeed +
+                "collectCurrency=" + collectCurrency +
+                ", attackSpeed=" + attackSpeed +
                 ", critRate=" + critRate +
                 ", critMultiplier=" + critMultiplier +
+                ", ultimateCDTimer=" + ultimateCDTimer +
+                ", attackTimer=" + attackTimer +
                 ", ultimateCD=" + ultimateCD +
                 ", healthRegenMultiplier=" + healthRegenMultiplier +
-                ", projectile=" + projectileTemplate +
+                ", projectileTemplate=" + projectileTemplate +
+                ", mousePositionX=" + mousePositionX +
+                ", mousePositionY=" + mousePositionY +
                 '}';
     }
 
