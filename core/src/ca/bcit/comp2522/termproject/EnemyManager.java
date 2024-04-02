@@ -73,11 +73,12 @@ final public class EnemyManager {
     }
 
     public void handleEnemies() {
-        for (Projectile playerProjectile : gameScreen.playerProjectilesOnScreen) {
-            for (Enemy enemy : gameScreen.onFieldEnemies) {
+        for (Enemy enemy : gameScreen.onFieldEnemies) {
+            for (Projectile playerProjectile : gameScreen.playerProjectilesOnScreen) {
                 enemy.takeDamage(playerProjectile,
                         (int) Math.round(gameScreen.player.attack * (1 - enemy.getDefense())));
             }
+            moveToPlayer(enemy);
         }
 
         // kill one enemy per frame
@@ -135,5 +136,15 @@ final public class EnemyManager {
         Enemy newEnemy = new Enemy(health, speed, 0, attack, "enemy.png");
         newEnemy.setCenterPosition(xCoord, yCoord);
         return newEnemy;
+    }
+
+    private void moveToPlayer(Enemy enemy) {
+        enemy.getDirectionVector().set(gameScreen.player.getCenterX() - enemy.getCenterX(),
+                gameScreen.player.getCenterY() - enemy.getCenterY());
+        enemy.move();
+    }
+
+    private void moveAwayFromPlayer() {
+
     }
 }
