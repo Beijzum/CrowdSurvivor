@@ -87,7 +87,7 @@ public class Enemy extends Entity {
                 && !this.hitByProjectileList.contains(projectile)) {
             this.isTakingDamage = true;
             this.hitByProjectileList.add(projectile);
-            this.health -= damage;
+            this.health -= (int) Math.round(damage * (1 - this.defense));
         }
         if (this.tintTimer > DAMAGE_TINT_TIME) {
             this.tintTimer = 0;
