@@ -7,27 +7,33 @@ Inspired by the game "Vampire Survivors".
 ## TODO
 Draw art assets
 
-** HAVE TO FIX **
+## HAVE TO FIX
 make pause menu dim when paused, stop background elements from jittering when paused
-finish game over menu
-Fix camera jittering (stuttering)
-Different enemies
-enemy drop currency 
-enemy drop exp (enemy manager, add xp worth instance variable to enemies -> randomize)
-implement boss
-player level up system
-player stat choice when level up
+fix camera stuttering
+
+## REMINDERS
 game UI in stageUI in CrowdSurvivor file
-implement SFX for game
+
+## PRIORITY TODO
+enemy drop exp (enemy manager, add xp worth instance variable to enemies -> randomize)
+player level up system (scoring system, where amount of xp gained = player score)
+player choose stats page
+currency system
+enemy drop currency
+implement bosses
+player stat choice when leveling up
 implement save feature
-implement currency
 
-** OPTIMIZATIONS **
+## TODO
+Different enemies
+implement SFX
 
-** UNIT TESTS  MAYBE **
+## OPTIMIZATIONS
+UNIT TESTS MAYBE
 
 
-** REMOVED IF NO TIME **
+
+## REMOVED IF NO TIME
 Create ultimate effect
 Create player loadout page
 create gacha
