@@ -53,13 +53,13 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
         game.batch.setProjectionMatrix(camera.combined);
 
-        // handle logic first
+        // handle camera
         camera.position.set(player.getCenterX(), player.getCenterY(), 0);
         camera.update();
-        
         Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(mousePos);
 
+        // handle game logic
         enemyManager.incrementTimers();
         playerManager.handleContinuousPlayerKeyboardInput();
         playerManager.handleUltimateCD();
@@ -75,6 +75,12 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.drawEnemies();
         this.drawAllPlayerProjectiles();
         game.stageUI.draw();
+
+        // check if player is dead, move to game over screen if so
+        if (player.isDead()) {
+            dispose();
+            game.setScreen(game.gameOverScreen);
+        }
     }
 
     @Override
@@ -99,7 +105,6 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     @Override
     public void dispose() {
-        Gdx.input.setInputProcessor(null);
         clearStage(game.stageUI);
         music.dispose();
     }
