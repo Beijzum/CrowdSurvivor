@@ -67,8 +67,8 @@ public class Enemy extends Entity {
     }
 
     public int getDropCurrency() {
-        return randomNumberGenerator.nextInt(BASE_CURRENCY_DROP_AMOUNT,
-                BASE_CURRENCY_DROP_AMOUNT * this.maxHealth / CURRENCY_CALCULATION_DIVISOR);
+        return randomNumberGenerator
+                .nextInt(this.maxHealth / CURRENCY_CALCULATION_DIVISOR) + BASE_CURRENCY_DROP_AMOUNT;
     }
 
     public void move() {
