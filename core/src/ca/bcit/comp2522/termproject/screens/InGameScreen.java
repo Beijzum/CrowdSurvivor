@@ -1,8 +1,7 @@
 package ca.bcit.comp2522.termproject.screens;
 
 import ca.bcit.comp2522.termproject.*;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,7 +13,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class InGameScreen implements Screen, Background, ActorManager {
+public class InGameScreen implements Screen, Background, ActorManager, InputProcessor {
     public OrthographicCamera camera;
     final private CrowdSurvivor game;
     final private Music music;
@@ -22,6 +21,7 @@ public class InGameScreen implements Screen, Background, ActorManager {
     final public Player player;
     final private EnemyManager enemyManager;
     final private PlayerManager playerManager;
+    final private InputMultiplexer inputManager = new InputMultiplexer();
     final public ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
     final public LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
     final public LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
@@ -40,18 +40,17 @@ public class InGameScreen implements Screen, Background, ActorManager {
     public void show() {
         music.setLooping(true);
         music.play();
-        Gdx.input.setInputProcessor(player);
+        inputManager.setProcessors(this, playerManager);
+        Gdx.input.setInputProcessor(inputManager);
         player.resetPosition();
     }
 
     @Override
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        player.handleMovement();
         game.stageUI.act();
 
         game.batch.setProjectionMatrix(camera.combined);
-        renderBackground(game, background);
 
         // handle logic first
         camera.position.set(player.getCenterX(), player.getCenterY(), 0);
@@ -61,14 +60,16 @@ public class InGameScreen implements Screen, Background, ActorManager {
         camera.unproject(mousePos);
 
         enemyManager.incrementTimers();
-        player.handleUltimateCD();
-        player.handleAttack(this.playerProjectilesOnScreen, mousePos.x, mousePos.y);
+        playerManager.handleContinuousPlayerKeyboardInput();
+        playerManager.handleUltimateCD();
+        playerManager.handleAttack();
         playerManager.handlePlayerHealth();
         enemyManager.handleEnemies();
         enemyManager.handleEnemySpawn();
         enemyManager.handleEnemyProjectiles();
 
         // draw assets
+        renderBackground(game, background);
         player.draw(game.batch);
         this.drawEnemies();
         this.drawAllPlayerProjectiles();
@@ -128,5 +129,54 @@ public class InGameScreen implements Screen, Background, ActorManager {
             enemy.draw(game.batch);
         }
         game.batch.end();
+    }
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        if (keyCode == Input.Keys.ESCAPE) {
+            this.game.setScreen(game.pauseMenuScreen);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int i) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char c) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int i, int i1, int i2, int i3) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int i, int i1, int i2, int i3) {
+        return false;
+    }
+
+    @Override
+    public boolean touchCancelled(int i, int i1, int i2, int i3) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int i, int i1, int i2) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int i, int i1) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float v, float v1) {
+        return false;
     }
 }
