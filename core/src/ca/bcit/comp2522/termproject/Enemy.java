@@ -9,17 +9,19 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Enemy extends Entity {
     final private static double DEFAULT_DEFENSE = 0.0;
     final private static float DAMAGE_TINT_TIME = 1;
     final private Color damageTint = new Color(200, 0, 0, 1);
     private Color normalColor;
-    private float tintTimer = 0;
+    protected float tintTimer = 0;
     private float acceleration;
-    private boolean isTakingDamage;
+    protected boolean isTakingDamage;
     final private Vector2 directionVector = new Vector2();
     final private LinkedList<Projectile> hitByProjectileList = new LinkedList<>();
+    final protected Random randomNumberGenerator = new Random();
 
     public Enemy() {
         // do later
@@ -56,6 +58,10 @@ public class Enemy extends Entity {
 
     public Vector2 getDirectionVector() {
         return this.directionVector;
+    }
+
+    public int getDropEXP() {
+        return this.randomNumberGenerator.nextInt(this.maxHealth / 2, this.maxHealth * 3 / 4);
     }
 
     public void move() {
