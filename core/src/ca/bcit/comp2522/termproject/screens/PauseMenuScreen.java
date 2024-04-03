@@ -1,15 +1,17 @@
 package ca.bcit.comp2522.termproject.screens;
 
+import ca.bcit.comp2522.termproject.ActorManager;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-public class PauseMenuScreen implements Screen {
+public class PauseMenuScreen implements Screen, ActorManager {
     final int numberOfButtons = 3;
     final private CrowdSurvivor game;
     final private TextButton[] menuItems = new TextButton[numberOfButtons]; // resume, see player stats, quit
@@ -21,12 +23,12 @@ public class PauseMenuScreen implements Screen {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(game.stageUI);
+        addActors(game.stageUI, menuItems);
     }
 
     @Override
     public void render(float v) {
-        ;
         game.stageUI.act();
         game.stageUI.draw();
     }
