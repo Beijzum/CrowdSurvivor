@@ -22,6 +22,9 @@ public class CrowdSurvivor extends Game {
 	public LoadoutMenuScreen loadoutMenuScreen;
 	public GachaScreen gachaScreen;
 	public InGameScreen inGameScreen;
+	public PauseMenuScreen pauseMenuScreen;
+	public UpgradeSelectionScreen upgradeSelectionScreen;
+	public GameOverScreen gameOverScreen;
 
 	@Override
 	public void create () {
@@ -38,6 +41,9 @@ public class CrowdSurvivor extends Game {
 		loadoutMenuScreen = new LoadoutMenuScreen(this);
 		gachaScreen = new GachaScreen(this);
 		inGameScreen = new InGameScreen(this);
+		pauseMenuScreen = new PauseMenuScreen(this);
+		upgradeSelectionScreen = new UpgradeSelectionScreen(this);
+		gameOverScreen = new GameOverScreen(this);
 
 		this.setScreen(startMenuScreen);
 	}
