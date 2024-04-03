@@ -10,6 +10,7 @@ Draw art assets
 ** HAVE TO FIX **
 Create spawning enemies (adjust to spawn outside of camera)
 Fix camera jittering (stuttering)
+research to see if texture can be rotated and only texture rotated, while keeping actual hitbox the same
 Test to see if batch.begin() on every sprite is causing performance issues
 mouse aiming with camera movement
 Create working pause menu
