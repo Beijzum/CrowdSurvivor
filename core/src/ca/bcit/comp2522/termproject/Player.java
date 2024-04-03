@@ -118,6 +118,11 @@ public class Player extends Entity {
     public int getLevelUpThreshold() {
         return this.levelUpThreshold;
     }
+
+    public int getCollectedCurrency() {
+        return this.collectedCurrency;
+    }
+
     public int getLevel(){
         return this.level;
     }
@@ -269,7 +274,7 @@ public class Player extends Entity {
             this.levelUpThreshold += this.levelUpThreshold / 4 * leveledAmount;
         }
     }
-    public void incrementCollectedCurrency(int currency) {
+    public void addCollectedCurrency(int currency) {
         this.collectedCurrency += currency;
     }
 
