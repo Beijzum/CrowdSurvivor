@@ -33,7 +33,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.enemyManager = EnemyManager.createManager(this);
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
-        camera.setToOrtho(false, game.viewportX, game.viewportY);
+        this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override
@@ -124,11 +125,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     }
 
     private void drawEnemies() {
-        game.batch.begin();
         for (Enemy enemy : this.onFieldEnemies) {
             enemy.draw(game.batch);
         }
-        game.batch.end();
     }
 
     @Override

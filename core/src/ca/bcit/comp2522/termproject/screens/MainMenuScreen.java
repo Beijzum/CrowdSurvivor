@@ -27,6 +27,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
     public MainMenuScreen(final CrowdSurvivor game) {
         this.camera = new OrthographicCamera();
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/mainMenuMusic.mp3"));
+        this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.game = game;
         createButtons();

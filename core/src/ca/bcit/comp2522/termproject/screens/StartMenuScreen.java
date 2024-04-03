@@ -23,6 +23,7 @@ public class StartMenuScreen implements Screen, Background {
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/startMenuMusic.mp3"));
         camera.setToOrtho(false, game.viewportX, game.viewportY);
         this.game = game;
+        this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     // run when the screen is first shown
