@@ -8,11 +8,9 @@ Inspired by the game "Vampire Survivors".
 Draw art assets
 
 ** HAVE TO FIX **
-Create spawning enemies (adjust to spawn outside of camera)
+pause menu visuals, keep background of screen = paused evnironment with a black tint over it
 Fix camera jittering (stuttering)
-research to see if texture can be rotated and only texture rotated, while keeping actual hitbox the same
 Test to see if batch.begin() on every sprite is causing performance issues
-Create working pause menu
 Different enemies
 enemy drop currency 
 enemy drop exp (enemy manager, add xp worth instance variable to enemies -> randomize)
@@ -26,7 +24,6 @@ implement currency
 
 ** OPTIMIZATIONS **
 consolidate all mouse functionality into one page (preferably InGameScreen)
-move player control handling into player manager
 
 ** UNIT TESTS  MAYBE **
 
