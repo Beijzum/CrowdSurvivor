@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class InGameScreen implements Screen, Background, ActorManager {
-    OrthographicCamera camera;
+    public OrthographicCamera camera;
     final private CrowdSurvivor game;
     final private Music music;
     final private Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
