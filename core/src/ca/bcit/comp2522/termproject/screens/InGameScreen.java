@@ -21,7 +21,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     final public Player player;
     final private EnemyManager enemyManager;
     final private PlayerManager playerManager;
-    final private InputMultiplexer inputManager = new InputMultiplexer();
+    final private InputMultiplexer inputManager;
     final public ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
     final public LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
     final public LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
@@ -34,6 +34,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.resetGameState();
+        this.inputManager = new InputMultiplexer(this, playerManager);
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
@@ -41,9 +43,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public void show() {
         music.setLooping(true);
         music.play();
-        inputManager.setProcessors(this, playerManager);
         Gdx.input.setInputProcessor(inputManager);
-        player.resetPosition();
     }
 
     @Override
@@ -99,7 +99,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     @Override
     public void dispose() {
-
+        Gdx.input.setInputProcessor(null);
+        clearStage(game.stageUI);
+        music.dispose();
     }
 
     private void drawAllPlayerProjectiles() {
@@ -128,6 +130,14 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         for (Enemy enemy : this.onFieldEnemies) {
             enemy.draw(game.batch);
         }
+    }
+
+    public void resetGameState() {
+        player.resetPosition();
+        player.resetStats();
+        this.onFieldEnemies.clear();
+        this.playerProjectilesOnScreen.clear();
+        this.enemyProjectilesOnScreen.clear();
     }
 
     @Override
