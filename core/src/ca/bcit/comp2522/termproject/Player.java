@@ -25,6 +25,7 @@ public class Player extends Entity implements InputProcessor {
     final private static double DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01;
     final private static int DEFAULT_ATTACK = 20;
     final private static double BASE_IFRAME_LENGTH = 2.5;
+    final private static double HEALTH_REGEN_TICK_TIME = 1.5;
     private int collectedCurrency;
     private static Player instance = null;
     private double attackSpeed;
@@ -35,6 +36,7 @@ public class Player extends Entity implements InputProcessor {
     private int ultimateCD;
     private double iFramesLength;
     private float iFramesTimer;
+    private float healthRegenTimer;
     private boolean iFrameIsOn = false;
     private double healthRegenMultiplier;
     private Projectile projectileTemplate;
@@ -137,6 +139,7 @@ public class Player extends Entity implements InputProcessor {
         this.collectedCurrency = 0;
         this.iFramesTimer = 0;
         this.attackTimer = 0;
+        this.healthRegenTimer = 0;
         this.ultimateCDTimer = 0;
     }
 
@@ -214,10 +217,17 @@ public class Player extends Entity implements InputProcessor {
         }
     }
 
-
-    // implement later enemies are done
-    public void handleDamage() {
-
+    public void regenHealth() {
+        if (this.health == this.maxHealth) {
+            return;
+        }
+        if (this.healthRegenTimer >= HEALTH_REGEN_TICK_TIME) {
+            int newHealth = this.health + (int) Math.round(this.maxHealth * healthRegenMultiplier);
+            this.health = Math.min(newHealth, this.maxHealth);
+            this.healthRegenTimer = 0;
+        } else {
+            this.healthRegenTimer += Gdx.graphics.getDeltaTime();
+        }
     }
 
     private void waitForCD() {
