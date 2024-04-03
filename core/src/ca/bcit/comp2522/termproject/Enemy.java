@@ -72,7 +72,9 @@ public class Enemy extends Entity {
         this.sprite.setCenter(x, y);
     }
 
+    @Override
     public void draw(Batch batch) {
+        batch.begin();
         if (this.isTakingDamage) {
             batch.setColor(this.damageTint);
         }
@@ -80,6 +82,7 @@ public class Enemy extends Entity {
                 this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                 this.sprite.getScaleY(), this.sprite.getRotation());
         batch.setColor(this.normalColor);
+        batch.end();
     }
 
     public void takeDamage(Projectile projectile, int damage) {
