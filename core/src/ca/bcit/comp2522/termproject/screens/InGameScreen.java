@@ -54,10 +54,13 @@ public class InGameScreen implements Screen, Background, ActorManager {
         // handle logic first
         camera.position.set(player.getCenterX(), player.getCenterY(), 0);
         camera.update();
+        
+        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(mousePos);
 
         enemyManager.incrementTimers();
         player.handleUltimateCD();
-        player.handleAttack(this.playerProjectilesOnScreen);
+        player.handleAttack(this.playerProjectilesOnScreen, mousePos.x, mousePos.y);
         enemyManager.handleEnemies();
         enemyManager.handleEnemySpawn();
         enemyManager.handleEnemyProjectiles();

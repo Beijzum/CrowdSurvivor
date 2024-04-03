@@ -108,7 +108,7 @@ public class Player extends Entity implements InputProcessor {
     public float getCenterY() {
         return this.sprite.getY() + this.sprite.getHeight() / 2;
     }
-    
+
     public void resetStats() {
         this.maxHealth = DEFAULT_MAX_HEALTH;
         this.health = DEFAULT_MAX_HEALTH;
@@ -167,7 +167,7 @@ public class Player extends Entity implements InputProcessor {
         waitForCD();
     }
 
-    public void handleAttack(LinkedList<Projectile> playerProjectiles) {
+    public void handleAttack(LinkedList<Projectile> playerProjectiles, float mouseX, float mouseY) {
         // check if first in linked list is expired
         if (playerProjectiles.peek() != null && playerProjectiles.peek().isOverLifeTime()) {
             playerProjectiles.removeFirst();
@@ -184,7 +184,7 @@ public class Player extends Entity implements InputProcessor {
             Projectile newProjectile = new Projectile(projectileTemplate);
 
             newProjectile.getDirectionVector()
-                    .set(mousePositionX - this.getCenterX(), mousePositionY - this.getCenterY());
+                    .set(mouseX - this.getCenterX(), mouseY - this.getCenterY());
 
             float angle = newProjectile.getDirectionVector().angleDeg();
             newProjectile.setProjectileCenter(this.getCenterX(), this.getCenterY());
