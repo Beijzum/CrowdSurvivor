@@ -12,7 +12,6 @@ Create spawning enemies (adjust to spawn outside of camera)
 Fix camera jittering (stuttering)
 research to see if texture can be rotated and only texture rotated, while keeping actual hitbox the same
 Test to see if batch.begin() on every sprite is causing performance issues
-mouse aiming with camera movement
 Create working pause menu
 Different enemies
 enemy drop currency 
@@ -24,6 +23,10 @@ game UI in stageUI in CrowdSurvivor file
 implement SFX for game
 implement save feature
 implement currency
+
+** OPTIMIZATIONS **
+consolidate all mouse functionality into one page (preferably InGameScreen)
+move player control handling into player manager
 
 ** UNIT TESTS  MAYBE **
 
