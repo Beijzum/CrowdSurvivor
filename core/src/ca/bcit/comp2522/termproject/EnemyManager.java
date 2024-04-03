@@ -90,8 +90,6 @@ final public class EnemyManager {
             // randomize spawn point outside of screen, camera position x, y returns center of screen
             float[] spawnPoint = generateSpawnPoint();
 
-            System.out.println(spawnPoint[0]);
-            System.out.println(spawnPoint[1]);
             gameScreen.onFieldEnemies.add(createBasicEnemy(spawnPoint[0], spawnPoint[1]));
             this.basicEnemyTimer = 0;
             this.currentBasicEnemySpawnTime = this.randomNumberGenerator
