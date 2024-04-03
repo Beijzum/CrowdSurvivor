@@ -21,6 +21,7 @@ public class InGameScreen implements Screen, Background, ActorManager {
     final private Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
     final public Player player;
     final private EnemyManager enemyManager;
+    final private PlayerManager playerManager;
     final public ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
     final public LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
     final public LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
@@ -30,6 +31,7 @@ public class InGameScreen implements Screen, Background, ActorManager {
         this.game = crowdSurvivor;
         this.player = Player.createPlayer();
         this.enemyManager = EnemyManager.createManager(this);
+        this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
         camera.setToOrtho(false, game.viewportX, game.viewportY);
     }
@@ -61,6 +63,7 @@ public class InGameScreen implements Screen, Background, ActorManager {
         enemyManager.incrementTimers();
         player.handleUltimateCD();
         player.handleAttack(this.playerProjectilesOnScreen, mousePos.x, mousePos.y);
+        playerManager.handleDamage();
         enemyManager.handleEnemies();
         enemyManager.handleEnemySpawn();
         enemyManager.handleEnemyProjectiles();
