@@ -12,8 +12,10 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class Enemy extends Entity {
-    final private static double DEFAULT_DEFENSE = 0.0;
-    final private static float DAMAGE_TINT_TIME = 1;
+    final protected static double DEFAULT_DEFENSE = 0.0;
+    final protected static float DAMAGE_TINT_TIME = 1;
+    final protected static int BASE_CURRENCY_DROP_AMOUNT = 2;
+    final private static int CURRENCY_CALCULATION_DIVISOR = 100;
     final private Color damageTint = new Color(200, 0, 0, 1);
     private Color normalColor;
     protected float tintTimer = 0;
@@ -62,6 +64,11 @@ public class Enemy extends Entity {
 
     public int getDropEXP() {
         return this.randomNumberGenerator.nextInt(this.maxHealth / 2, this.maxHealth * 3 / 4);
+    }
+
+    public int getDropCurrency() {
+        return randomNumberGenerator.nextInt(BASE_CURRENCY_DROP_AMOUNT,
+                BASE_CURRENCY_DROP_AMOUNT * this.maxHealth / CURRENCY_CALCULATION_DIVISOR);
     }
 
     public void move() {
