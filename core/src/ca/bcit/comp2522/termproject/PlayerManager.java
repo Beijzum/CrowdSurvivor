@@ -16,7 +16,8 @@ public class PlayerManager {
         return instance;
     }
 
-    public void handleDamage() {
+    public void handlePlayerHealth() {
+        gameScreen.player.regenHealth();
         for (Enemy enemy : gameScreen.onFieldEnemies) {
             gameScreen.player.takeDamage(enemy.getHitbox(), enemy.getAttack());
         }

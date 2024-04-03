@@ -63,7 +63,7 @@ public class InGameScreen implements Screen, Background, ActorManager {
         enemyManager.incrementTimers();
         player.handleUltimateCD();
         player.handleAttack(this.playerProjectilesOnScreen, mousePos.x, mousePos.y);
-        playerManager.handleDamage();
+        playerManager.handlePlayerHealth();
         enemyManager.handleEnemies();
         enemyManager.handleEnemySpawn();
         enemyManager.handleEnemyProjectiles();
