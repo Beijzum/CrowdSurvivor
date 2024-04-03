@@ -1,8 +1,17 @@
 package ca.bcit.comp2522.termproject.screens;
 
+import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class GameOverScreen implements Screen {
+    final int numberOfButtons = 2;
+    final private CrowdSurvivor game;
+    final private TextButton[] menuItems = new TextButton[numberOfButtons]; // try again, quit
+
+    public GameOverScreen(CrowdSurvivor game) {
+        this.game = game;
+    }
     @Override
     public void show() {
 
