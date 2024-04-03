@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class CrowdSurvivor extends Game {
@@ -16,6 +17,7 @@ public class CrowdSurvivor extends Game {
 	public SpriteBatch batch;
 	public BitmapFont font;
 	public Stage stageUI;
+	public Skin skin;
 	public MainMenuScreen mainMenuScreen;
 	public StartMenuScreen startMenuScreen;
 	public ShopScreen shopScreen;
@@ -31,6 +33,7 @@ public class CrowdSurvivor extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		stageUI = new Stage(new ScreenViewport());
+		skin = new Skin(Gdx.files.internal("skin/vhs-ui.json"));
 
 		viewportX = Gdx.graphics.getWidth();
 		viewportY = Gdx.graphics.getHeight();
