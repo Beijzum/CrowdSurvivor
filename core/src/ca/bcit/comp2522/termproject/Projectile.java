@@ -25,6 +25,7 @@ public class Projectile {
     public Projectile(Projectile projectileTemplate) {
         this.speed = projectileTemplate.getSpeed();
         this.lifetime = projectileTemplate.getLifetime();
+        this.lifetimeTimer = 0;
         this.directionVector = new Vector2(projectileTemplate.getDirectionVector());
         this.sprite = new Sprite(projectileTemplate.getSprite());
         this.sprite.setSize(projectileTemplate.getSprite().getWidth(), projectileTemplate.getSprite().getHeight());
