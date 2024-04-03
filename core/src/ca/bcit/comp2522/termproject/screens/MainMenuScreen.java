@@ -80,8 +80,6 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
     }
 
     private void createButtons() {
-        Skin buttonSkin = new Skin(Gdx.files.internal("skin/vhs-ui.json"));
-
         // calculate values for menu placement
         int buttonWidth = Gdx.graphics.getWidth() / 3;
         int buttonHeight = Gdx.graphics.getHeight() / 10;
@@ -89,7 +87,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
         int firstButtonPositionY = Gdx.graphics.getHeight() / 3;
 
         // start game button
-        TextButton startGameButton = new TextButton("Start Game", buttonSkin);
+        TextButton startGameButton = new TextButton("Start Game", game.skin);
         startGameButton.setSize(buttonWidth, buttonHeight);
         startGameButton.setPosition(buttonPositionX, firstButtonPositionY);
         startGameButton.addListener(new InputListener() {
@@ -106,7 +104,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
         this.menuItems[0] = startGameButton;
 
         // shop button
-        TextButton shopButton = new TextButton("Shop", buttonSkin);
+        TextButton shopButton = new TextButton("Shop", game.skin);
         shopButton.setSize(buttonWidth, buttonHeight);
         shopButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight);
         shopButton.addListener(new InputListener() {
@@ -124,7 +122,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
         this.menuItems[1] = shopButton;
 
         // quit game button
-        TextButton quitButton = new TextButton("Quit", buttonSkin);
+        TextButton quitButton = new TextButton("Quit", game.skin);
         quitButton.setSize(buttonWidth, buttonHeight);
         quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
         quitButton.addListener(new InputListener() {
