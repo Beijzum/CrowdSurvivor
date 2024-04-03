@@ -19,6 +19,11 @@ public class Player extends Entity {
     final private static int DEFAULT_ATTACK = 20;
     final private static double BASE_IFRAME_LENGTH = 2.5;
     final private static double HEALTH_REGEN_TICK_TIME = 1.5;
+    final private static int BASE_LEVEL_UP_THRESHOLD = 50;
+    private int levelUpThreshold;
+    private int accumulatedEXP;
+    private int level;
+    private int currentEXP;
     private int collectedCurrency;
     private static Player instance = null;
     private double attackSpeed;
@@ -101,6 +106,22 @@ public class Player extends Entity {
     public void setiFramesLength(double newLength) {
         this.iFramesLength = newLength;
     }
+
+    public int getCurrentEXP() {
+        return this.currentEXP;
+    }
+
+    public int getAccumulatedEXP() {
+        return this.accumulatedEXP;
+    }
+
+    public int getLevelUpThreshold() {
+        return this.levelUpThreshold;
+    }
+    public int getLevel(){
+        return this.level;
+    }
+
     public void setX(float x) {
         this.sprite.setX(x);
     }
@@ -138,6 +159,10 @@ public class Player extends Entity {
         this.healthRegenMultiplier = DEFAULT_HEALTH_REGEN_MULTIPLIER;
         this.iFramesLength = BASE_IFRAME_LENGTH;
         this.iFrameIsOn= false;
+        this.levelUpThreshold = BASE_LEVEL_UP_THRESHOLD;
+        this.accumulatedEXP = 0;
+        this.currentEXP = 0;
+        this.level = 1;
         this.collectedCurrency = 0;
         this.iFramesTimer = 0;
         this.attackTimer = 0;
@@ -234,7 +259,22 @@ public class Player extends Entity {
                 '}';
     }
 
+    public void addEXP(int EXP) {
+        this.accumulatedEXP += EXP;
+        this.currentEXP += EXP;
+        if (this.currentEXP >= this.levelUpThreshold) {
+            int leveledAmount = calculateLeveledAmount();
+            this.level += leveledAmount;
+            this.currentEXP %= this.levelUpThreshold;
+            this.levelUpThreshold += this.levelUpThreshold / 4 * leveledAmount;
+        }
+    }
     public void incrementCollectedCurrency(int currency) {
         this.collectedCurrency += currency;
     }
+
+    private int calculateLeveledAmount() {
+        return this.currentEXP / this.levelUpThreshold;
+    }
+
 }

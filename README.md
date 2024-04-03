@@ -15,8 +15,6 @@ fix camera stuttering
 game UI in stageUI in CrowdSurvivor file
 
 ## PRIORITY TODO
-enemy drop exp (enemy manager, add xp worth instance variable to enemies -> randomize)
-player level up system (scoring system, where amount of xp gained = player score)
 player choose stats page
 currency system
 enemy drop currency
