@@ -24,7 +24,8 @@ public class Player extends Entity implements InputProcessor {
     final private static int DEFAULT_ULTIMATE_CD = 5;
     final private static double DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01;
     final private static int DEFAULT_ATTACK = 20;
-    private int collectCurrency;
+    final private static double BASE_IFRAME_LENGTH = 2.5;
+    private int collectedCurrency;
     private static Player instance = null;
     private double attackSpeed;
     private double critRate;
@@ -32,10 +33,14 @@ public class Player extends Entity implements InputProcessor {
     private float ultimateCDTimer;
     private float attackTimer;
     private int ultimateCD;
+    private double iFramesLength;
+    private float iFramesTimer;
+    private boolean iFrameIsOn = false;
     private double healthRegenMultiplier;
     private Projectile projectileTemplate;
     private float mousePositionX;
     private float mousePositionY;
+
 
     private Player() {
         resetStats();
@@ -76,7 +81,6 @@ public class Player extends Entity implements InputProcessor {
     public void setUltimateCD(int ultimateCD) {
         this.ultimateCD = ultimateCD;
     }
-
     public double getAttackSpeed() {
         return attackSpeed;
     }
@@ -97,8 +101,16 @@ public class Player extends Entity implements InputProcessor {
         return ultimateCD;
     }
 
-    public int getCollectCurrency() {
-        return this.collectCurrency;
+    public int getCollectedCurrency() {
+        return this.collectedCurrency;
+    }
+
+    public double getiFramesLength() {
+        return iFramesLength;
+    }
+
+    public void setiFramesLength(double newLength) {
+        this.iFramesLength = newLength;
     }
 
     public float getCenterX() {
@@ -120,7 +132,12 @@ public class Player extends Entity implements InputProcessor {
         this.critMultiplier = DEFAULT_CRIT_MULTIPLIER;
         this.ultimateCD = DEFAULT_ULTIMATE_CD;
         this.healthRegenMultiplier = DEFAULT_HEALTH_REGEN_MULTIPLIER;
-        this.collectCurrency = 0;
+        this.iFramesLength = BASE_IFRAME_LENGTH;
+        this.iFrameIsOn= false;
+        this.collectedCurrency = 0;
+        this.iFramesTimer = 0;
+        this.attackTimer = 0;
+        this.ultimateCDTimer = 0;
     }
 
     public void resetPosition() {
@@ -215,10 +232,32 @@ public class Player extends Entity implements InputProcessor {
         this.ultimateCDTimer = 0;
     }
 
+    public void takeDamage(Rectangle enemyHitbox, int enemyAttack) {
+        if (this.sprite.getBoundingRectangle().overlaps(enemyHitbox) && !this.iFrameIsOn) {
+            System.out.println(this.health);
+            this.health -= (int) Math.round(enemyAttack * (1 - this.defense));
+            this.iFrameIsOn = true;
+            return;
+        }
+        if (!this.iFrameIsOn) {
+            return;
+        }
+        if (this.iFramesTimer >= this.iFramesLength) {
+            this.iFrameIsOn = false;
+            this.iFramesTimer = 0;
+            return;
+        }
+        this.iFramesTimer += Gdx.graphics.getDeltaTime();
+    }
+
+    private void turnOffIFrames() {
+        this.iFrameIsOn = false;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
-                "collectCurrency=" + collectCurrency +
+                "collectedCurrency=" + collectedCurrency +
                 ", attackSpeed=" + attackSpeed +
                 ", critRate=" + critRate +
                 ", critMultiplier=" + critMultiplier +
@@ -291,6 +330,6 @@ public class Player extends Entity implements InputProcessor {
     }
 
     private void incrementCollectedCurrency(int currency) {
-        this.collectCurrency += currency;
+        this.collectedCurrency += currency;
     }
 }
