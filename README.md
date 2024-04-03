@@ -8,9 +8,9 @@ Inspired by the game "Vampire Survivors".
 Draw art assets
 
 ** HAVE TO FIX **
-pause menu visuals, keep background of screen = paused evnironment with a black tint over it
+make pause menu dim when paused, stop background elements from jittering when paused
+finish game over menu
 Fix camera jittering (stuttering)
-Test to see if batch.begin() on every sprite is causing performance issues
 Different enemies
 enemy drop currency 
 enemy drop exp (enemy manager, add xp worth instance variable to enemies -> randomize)
@@ -23,7 +23,6 @@ implement save feature
 implement currency
 
 ** OPTIMIZATIONS **
-consolidate all mouse functionality into one page (preferably InGameScreen)
 
 ** UNIT TESTS  MAYBE **
 
