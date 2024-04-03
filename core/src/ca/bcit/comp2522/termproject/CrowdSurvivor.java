@@ -21,8 +21,6 @@ public class CrowdSurvivor extends Game {
 	public MainMenuScreen mainMenuScreen;
 	public StartMenuScreen startMenuScreen;
 	public ShopScreen shopScreen;
-	public LoadoutMenuScreen loadoutMenuScreen;
-	public GachaScreen gachaScreen;
 	public InGameScreen inGameScreen;
 	public PauseMenuScreen pauseMenuScreen;
 	public UpgradeSelectionScreen upgradeSelectionScreen;
@@ -41,8 +39,6 @@ public class CrowdSurvivor extends Game {
 		mainMenuScreen = new MainMenuScreen(this);
 		startMenuScreen = new StartMenuScreen(this);
 		shopScreen = new ShopScreen(this);
-		loadoutMenuScreen = new LoadoutMenuScreen(this);
-		gachaScreen = new GachaScreen(this);
 		inGameScreen = new InGameScreen(this);
 		pauseMenuScreen = new PauseMenuScreen(this);
 		upgradeSelectionScreen = new UpgradeSelectionScreen(this);

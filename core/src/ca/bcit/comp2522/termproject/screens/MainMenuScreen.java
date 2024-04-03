@@ -97,7 +97,6 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-//                game.setScreen(game.loadoutMenuScreen); TO IMPLEMENT LATER, GET THE GAME DONE FIRST
                 game.setScreen(game.inGameScreen);
                 return true;
             }
