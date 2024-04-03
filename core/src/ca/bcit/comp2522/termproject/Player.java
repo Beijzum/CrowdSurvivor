@@ -2,19 +2,12 @@ package ca.bcit.comp2522.termproject;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.utils.SnapshotArray;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Player extends Entity implements InputProcessor {
+public class Player extends Entity {
     final private static double DEFAULT_DEFENSE = 0.0;
     final private static int DEFAULT_MAX_HEALTH = 100;
     final private static int DEFAULT_SPEED = 200;
@@ -40,8 +33,6 @@ public class Player extends Entity implements InputProcessor {
     private boolean iFrameIsOn = false;
     private double healthRegenMultiplier;
     private Projectile projectileTemplate;
-    private float mousePositionX;
-    private float mousePositionY;
 
 
     private Player() {
@@ -103,16 +94,27 @@ public class Player extends Entity implements InputProcessor {
         return ultimateCD;
     }
 
-    public int getCollectedCurrency() {
-        return this.collectedCurrency;
-    }
-
     public double getiFramesLength() {
         return iFramesLength;
     }
 
     public void setiFramesLength(double newLength) {
         this.iFramesLength = newLength;
+    }
+    public void setX(float x) {
+        this.sprite.setX(x);
+    }
+
+    public void setY(float y) {
+        this.sprite.setY(y);
+    }
+
+    public float getX() {
+        return this.sprite.getX();
+    }
+
+    public float getY() {
+        return this.sprite.getY();
     }
 
     public float getCenterX() {
@@ -147,58 +149,7 @@ public class Player extends Entity implements InputProcessor {
         this.sprite.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
     }
 
-    // implement later for when saving upgrades is being worked on
-    public void loadPlayerUpgrades() {
-
-    }
-
-    // called every frame
-    public void handleMovement() {
-        if (!Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
-            return;
-        }
-        float deltaY = 0, deltaX = 0;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            deltaY = this.speed * Gdx.graphics.getDeltaTime();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            deltaY = -this.speed * Gdx.graphics.getDeltaTime();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            deltaX = -this.speed * Gdx.graphics.getDeltaTime();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            deltaX = this.speed * Gdx.graphics.getDeltaTime();
-        }
-        // normalize vector
-        if (deltaX != 0 && deltaY != 0) {
-            deltaX = deltaX * (float) Math.abs(Math.cos(Math.atan(deltaY / deltaX)));
-            deltaY = deltaY * (float) Math.abs(Math.sin(Math.atan(deltaY / deltaX)));
-        }
-        this.sprite.setX(this.sprite.getX() + deltaX);
-        this.sprite.setY(this.sprite.getY() + deltaY);
-    }
-
-    public void handleUltimateCD() {
-        if (this.ultimateIsReady()) {
-            return;
-        }
-        waitForCD();
-    }
-
-    public void handleAttack(LinkedList<Projectile> playerProjectiles, float mouseX, float mouseY) {
-        // check if first in linked list is expired
-        if (playerProjectiles.peek() != null && playerProjectiles.peek().isOverLifeTime()) {
-            playerProjectiles.removeFirst();
-        }
-
-        // move not expired projectiles
-        for (Projectile projectile : playerProjectiles) {
-            projectile.incrementLifetimeTimer();
-            projectile.moveProjectile();
-        }
-
+    public void fireProjectile(LinkedList<Projectile> playerProjectiles, float mouseX, float mouseY) {
         // runs every attackSpeed seconds
         if (this.attackTimer >= this.attackSpeed) {
             Projectile newProjectile = new Projectile(projectileTemplate);
@@ -230,11 +181,11 @@ public class Player extends Entity implements InputProcessor {
         }
     }
 
-    private void waitForCD() {
+    public void waitForCD() {
         ultimateCDTimer += Gdx.graphics.getDeltaTime();
     }
 
-    private boolean ultimateIsReady() {
+    public boolean ultimateIsReady() {
         return ultimateCDTimer >= ultimateCD;
     }
 
@@ -260,8 +211,12 @@ public class Player extends Entity implements InputProcessor {
         this.iFramesTimer += Gdx.graphics.getDeltaTime();
     }
 
-    private void turnOffIFrames() {
-        this.iFrameIsOn = false;
+    public void useUltimate() {
+        if (ultimateCDTimer >= ultimateCD) {
+            // some ultimate effect here
+            System.out.println("BIG ULTIMATE HERE");
+            resetUltimateTimer();
+        }
     }
 
     @Override
@@ -276,70 +231,10 @@ public class Player extends Entity implements InputProcessor {
                 ", ultimateCD=" + ultimateCD +
                 ", healthRegenMultiplier=" + healthRegenMultiplier +
                 ", projectileTemplate=" + projectileTemplate +
-                ", mousePositionX=" + mousePositionX +
-                ", mousePositionY=" + mousePositionY +
                 '}';
     }
 
-    @Override
-    public boolean keyDown(int keyCode) {
-        if (keyCode == Input.Keys.F) {
-            if (ultimateCDTimer > ultimateCD) {
-                // some ultimate effect here
-                System.out.println("Ultimate Used!!!!");
-                resetUltimateTimer();
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int i) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char c) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int i, int i1, int i2, int i3) {
-        return false;
-    }
-
-    @Override
-    public boolean touchCancelled(int i, int i1, int i2, int i3) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int i, int i1, int i2) {
-        this.mousePositionX = Gdx.input.getX();
-        // mousePositionY is flipped from the rest of the coordinates system in libgdx
-        this.mousePositionY = Gdx.graphics.getHeight() - Gdx.input.getY();
-        return true;
-    }
-
-    @Override
-    public boolean mouseMoved(int i, int i1) {
-        this.mousePositionX = Gdx.input.getX();
-        this.mousePositionY = Gdx.graphics.getHeight() - Gdx.input.getY();
-        return true;
-    }
-
-    @Override
-    public boolean scrolled(float v, float v1) {
-        return false;
-    }
-
-    private void incrementCollectedCurrency(int currency) {
+    public void incrementCollectedCurrency(int currency) {
         this.collectedCurrency += currency;
     }
 }
