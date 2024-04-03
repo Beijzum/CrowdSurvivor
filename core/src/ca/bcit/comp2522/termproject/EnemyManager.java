@@ -13,7 +13,7 @@ final public class EnemyManager {
     final private static int BASE_BASIC_ENEMY_HEALTH = 100;
     final private static int BASE_BOSS_HEALTH = 500;
     final private static int BASE_PROJECTILE_ENEMY_HEALTH = 50;
-    final private static int BASE_BASIC_ENEMY_SPAWN_TIME = 5;
+    final private static int BASE_BASIC_ENEMY_SPAWN_TIME = 3;
     final private static int BASE_CHARGER_ENEMY_SPAWN_TIME = 20;
     final private static int BASE_RANGED_ENEMY_SPAWN_TIME = 10;
     final private static int BASE_CHARGER_HEALTH = 125;
@@ -87,9 +87,12 @@ final public class EnemyManager {
 
     public void handleEnemySpawn() {
         if (this.basicEnemyTimer > this.currentBasicEnemySpawnTime) {
-            int spawnPointX = randomNumberGenerator.nextInt(Gdx.graphics.getWidth());
-            int spawnPointY = randomNumberGenerator.nextInt(Gdx.graphics.getHeight());
-            gameScreen.onFieldEnemies.add(createBasicEnemy(spawnPointX, spawnPointY));
+            // randomize spawn point outside of screen, camera position x, y returns center of screen
+            float[] spawnPoint = generateSpawnPoint();
+
+            System.out.println(spawnPoint[0]);
+            System.out.println(spawnPoint[1]);
+            gameScreen.onFieldEnemies.add(createBasicEnemy(spawnPoint[0], spawnPoint[1]));
             this.basicEnemyTimer = 0;
             this.currentBasicEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
@@ -108,6 +111,34 @@ final public class EnemyManager {
             deadEnemy.clearHitByProjectileList();
             gameScreen.onFieldEnemies.remove(deadEnemy);
         }
+    }
+
+    private float[] generateSpawnPoint() {
+        float randomX = randomNumberGenerator.nextFloat(
+                0 - Gdx.graphics.getWidth() / (float) 4.0, Gdx.graphics.getWidth() * 5 / (float) 4.0);
+        float randomY = randomNumberGenerator.nextFloat(
+                0 - Gdx.graphics.getHeight() / (float) 5.0, Gdx.graphics.getHeight() * 6 / (float) 5.0);
+
+        // adjust if spawn point in camera view
+        if (this.gameScreen.camera.frustum.pointInFrustum(randomX, randomY, 0)) {
+            if (randomNumberGenerator.nextBoolean()) {
+                // modify x if true
+                if (randomX < this.gameScreen.camera.position.x) {
+                    randomX -= Gdx.graphics.getWidth() / (float) 1.5;
+                } else {
+                    randomX += Gdx.graphics.getWidth() / (float) 1.5;
+                }
+            } else {
+                // modify y if true
+                if (randomY < this.gameScreen.camera.position.y) {
+                    randomY -= Gdx.graphics.getWidth() / (float) 1.5;
+                } else {
+                    randomY += Gdx.graphics.getWidth() / (float) 1.5;
+                }
+            }
+            return new float[] {randomX, randomY};
+        }
+        return new float[] {randomX, randomY};
     }
 
     private Boss createBoss(float xCoord, float yCoord) {
@@ -129,7 +160,7 @@ final public class EnemyManager {
         return new RangedEnemy();
     }
 
-    private Enemy createBasicEnemy(int xCoord, int yCoord) {
+    private Enemy createBasicEnemy(float xCoord, float yCoord) {
         int health = Math.round(BASE_BASIC_ENEMY_HEALTH + timeElapsed / 5); // temp scaling
         int speed = Math.round(BASE_ENEMY_SPEED + timeElapsed / 5);
         int attack = 10;
