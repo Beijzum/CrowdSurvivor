@@ -16,7 +16,7 @@ public class CrowdSurvivor extends Game {
 	public int viewportY;
 	public SpriteBatch batch;
 	public BitmapFont font;
-	public Stage stageUI;
+	public Stage buttonsUI;
 	public Skin skin;
 	public MainMenuScreen mainMenuScreen;
 	public StartMenuScreen startMenuScreen;
@@ -31,7 +31,7 @@ public class CrowdSurvivor extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		stageUI = new Stage(new ScreenViewport());
+		buttonsUI = new Stage(new ScreenViewport());
 		skin = new Skin(Gdx.files.internal("skin/vhs-ui.json"));
 
 		viewportX = Gdx.graphics.getWidth();
