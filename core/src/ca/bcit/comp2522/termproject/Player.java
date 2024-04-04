@@ -20,6 +20,8 @@ public class Player extends Entity {
     final private static double BASE_IFRAME_LENGTH = 2.5;
     final private static double HEALTH_REGEN_TICK_TIME = 1.5;
     final private static int BASE_LEVEL_UP_THRESHOLD = 50;
+    final private static int BASE_EXP_MULTIPLIER = 1;
+    final private static int BASE_CURRENCY_MULTIPLIER = 1;
     private int levelUpThreshold;
     private int accumulatedEXP;
     private int level;
@@ -101,11 +103,11 @@ public class Player extends Entity {
         return ultimateCD;
     }
 
-    public double getiFramesLength() {
+    public double getIFramesLength() {
         return iFramesLength;
     }
 
-    public void setiFramesLength(double newLength) {
+    public void setIFramesLength(double newLength) {
         this.iFramesLength = newLength;
     }
 
@@ -178,8 +180,8 @@ public class Player extends Entity {
         this.ultimateCD = DEFAULT_ULTIMATE_CD;
         this.healthRegenMultiplier = DEFAULT_HEALTH_REGEN_MULTIPLIER;
         this.iFramesLength = BASE_IFRAME_LENGTH;
-        this.EXPMultiplier = 1;
-        this.currencyMultiplier = 1;
+        this.EXPMultiplier = BASE_EXP_MULTIPLIER;
+        this.currencyMultiplier = BASE_CURRENCY_MULTIPLIER;
         this.iFrameIsOn= false;
         this.levelUpThreshold = BASE_LEVEL_UP_THRESHOLD;
         this.accumulatedEXP = 0;
@@ -269,13 +271,23 @@ public class Player extends Entity {
     @Override
     public String toString() {
         return "Player{" +
-                "collectedCurrency=" + collectedCurrency +
+                "levelUpThreshold=" + levelUpThreshold +
+                ", accumulatedEXP=" + accumulatedEXP +
+                ", level=" + level +
+                ", currentEXP=" + currentEXP +
+                ", EXPMultiplier=" + EXPMultiplier +
+                ", collectedCurrency=" + collectedCurrency +
+                ", currencyMultiplier=" + currencyMultiplier +
                 ", attackSpeed=" + attackSpeed +
                 ", critRate=" + critRate +
                 ", critMultiplier=" + critMultiplier +
                 ", ultimateCDTimer=" + ultimateCDTimer +
                 ", attackTimer=" + attackTimer +
                 ", ultimateCD=" + ultimateCD +
+                ", iFramesLength=" + iFramesLength +
+                ", iFramesTimer=" + iFramesTimer +
+                ", healthRegenTimer=" + healthRegenTimer +
+                ", iFrameIsOn=" + iFrameIsOn +
                 ", healthRegenMultiplier=" + healthRegenMultiplier +
                 ", projectileTemplate=" + projectileTemplate +
                 '}';
