@@ -118,7 +118,7 @@ final public class PlayerProfile {
         player.setDefense(player.getDefense() + this.defenseBooster);
         player.setSpeed(player.getSpeed() + this.speedBooster);
         player.setEXPMultiplier(player.getEXPMultiplier() + this.EXPMultiplierBooster);
-        player.setCurrencyMultiplier(player.getCurrencyMultipler() + this.currencyMultiplierBooster);
+        player.setCurrencyMultiplier(player.getCurrencyMultiplier() + this.currencyMultiplierBooster);
         player.setAttackSpeed(player.getAttackSpeed() + this.attackSpeedBooster);
         player.setCritRate(player.getCritRate() + this.critRateBooster);
         player.setCritMultiplier(player.getCritMultiplier() + this.critMultiplierBooster);
