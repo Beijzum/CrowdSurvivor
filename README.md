@@ -18,9 +18,9 @@ fix camera stuttering
 game UI in stageUI in CrowdSurvivor file
 
 ## PRIORITY TODO
-player choose stats page
+implement HUD during gameplay
+implement shop
 implement bosses
-player stat choice when leveling up
 implement auto-save feature
 
 ## TODO
