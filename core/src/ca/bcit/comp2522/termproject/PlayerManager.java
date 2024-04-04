@@ -7,20 +7,11 @@ import com.badlogic.gdx.InputProcessor;
 
 public class PlayerManager implements InputProcessor {
     final private InGameScreen gameScreen;
-    private boolean isPaused = false;
     private static PlayerManager instance = null;
     private float mousePositionX;
     private float mousePositionY;
     private PlayerManager(InGameScreen gameScreen) {
         this.gameScreen = gameScreen;
-    }
-
-    public boolean getIsPaused() {
-        return this.isPaused;
-    }
-
-    public void resumeGame() {
-        this.isPaused = false;
     }
 
     public static PlayerManager createPlayerManager(InGameScreen gameScreen) {
@@ -86,11 +77,6 @@ public class PlayerManager implements InputProcessor {
         // fire projectile
         gameScreen.player
                 .fireProjectile(this.gameScreen.playerProjectilesOnScreen, this.mousePositionX, this.mousePositionY);
-
-    }
-
-    // implement later for when saving upgrades is being worked on
-    public void loadPlayerUpgrades() {
 
     }
 
