@@ -40,7 +40,7 @@ abstract public class Entity {
         this.attack = attack;
     }
 
-    public void setDefense(int defense) {
+    public void setDefense(double defense) {
         this.defense = defense;
     }
 
