@@ -10,8 +10,89 @@ final public class PlayerProfile {
     private double attackSpeedBooster;
     private double critRateBooster;
     private double critMultiplierBooster;
-    private float healhRegenMultiplierBooster;
+    private float healthRegenMultiplierBooster;
     private static PlayerProfile instance = null;
+
+    // getters and setters to be used in shop
+    public double getAttackSpeedBooster() {
+        return attackSpeedBooster;
+    }
+
+    public double getCritMultiplierBooster() {
+        return critMultiplierBooster;
+    }
+
+    public double getCritRateBooster() {
+        return critRateBooster;
+    }
+
+    public double getDefenseBooster() {
+        return defenseBooster;
+    }
+
+    public float getCurrencyMultiplierBooster() {
+        return currencyMultiplierBooster;
+    }
+
+    public float getEXPMultiplierBooster() {
+        return EXPMultiplierBooster;
+    }
+
+    public float getHealthRegenMultiplierBooster() {
+        return healthRegenMultiplierBooster;
+    }
+
+    public int getAttackBooster() {
+        return attackBooster;
+    }
+
+    public int getMaxHealthBooster() {
+        return maxHealthBooster;
+    }
+
+    public int getSpeedBooster() {
+        return speedBooster;
+    }
+
+    public void setAttackBooster(int attackBooster) {
+        this.attackBooster = attackBooster;
+    }
+
+    public void setAttackSpeedBooster(double attackSpeedBooster) {
+        this.attackSpeedBooster = attackSpeedBooster;
+    }
+
+    public void setCritMultiplierBooster(double critMultiplierBooster) {
+        this.critMultiplierBooster = critMultiplierBooster;
+    }
+
+    public void setCritRateBooster(double critRateBooster) {
+        this.critRateBooster = critRateBooster;
+    }
+
+    public void setCurrencyMultiplierBooster(float currencyMultiplierBooster) {
+        this.currencyMultiplierBooster = currencyMultiplierBooster;
+    }
+
+    public void setDefenseBooster(double defenseBooster) {
+        this.defenseBooster = defenseBooster;
+    }
+
+    public void setEXPMultiplierBooster(float EXPMultiplierBooster) {
+        this.EXPMultiplierBooster = EXPMultiplierBooster;
+    }
+
+    public void setHealthRegenMultiplierBooster(float healthRegenMultiplierBooster) {
+        this.healthRegenMultiplierBooster = healthRegenMultiplierBooster;
+    }
+
+    public void setMaxHealthBooster(int maxHealthBooster) {
+        this.maxHealthBooster = maxHealthBooster;
+    }
+
+    public void setSpeedBooster(int speedBooster) {
+        this.speedBooster = speedBooster;
+    }
 
     private PlayerProfile() {
         // do later when serialization is done
@@ -41,7 +122,7 @@ final public class PlayerProfile {
         player.setAttackSpeed(player.getAttackSpeed() + this.attackSpeedBooster);
         player.setCritRate(player.getCritRate() + this.critRateBooster);
         player.setCritMultiplier(player.getCritMultiplier() + this.critMultiplierBooster);
-        player.setHealthRegenMultiplier(player.getHealthRegenMultiplier() + this.healhRegenMultiplierBooster);
+        player.setHealthRegenMultiplier(player.getHealthRegenMultiplier() + this.healthRegenMultiplierBooster);
     }
 
     private void setThisToDefault() {
@@ -54,7 +135,7 @@ final public class PlayerProfile {
         this.attackSpeedBooster = 0;
         this.critRateBooster = 0;
         this.critMultiplierBooster = 0;
-        this.healhRegenMultiplierBooster = 0;
+        this.healthRegenMultiplierBooster = 0;
     }
 
     private boolean loadProfile() {
