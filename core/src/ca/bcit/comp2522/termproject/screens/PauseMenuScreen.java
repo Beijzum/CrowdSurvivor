@@ -3,11 +3,14 @@ package ca.bcit.comp2522.termproject.screens;
 import ca.bcit.comp2522.termproject.ActorManager;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+
+import java.awt.*;
 
 public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     final int numberOfButtons = 2;
@@ -17,20 +20,21 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
 
     public PauseMenuScreen(CrowdSurvivor game) {
         this.game = game;
-        this.inputManager = new InputMultiplexer(this, game.stageUI);
+        this.inputManager = new InputMultiplexer(this, game.buttonsUI);
         createButtons();
     }
 
     @Override
     public void show() {
-        addActors(game.stageUI, menuItems);
+        addActors(game.buttonsUI, menuItems);
         Gdx.input.setInputProcessor(this.inputManager);
     }
 
     @Override
     public void render(float v) {
-        game.stageUI.act();
-        game.stageUI.draw();
+        game.inGameScreen.renderFrameAsBackground();
+        game.buttonsUI.act();
+        game.buttonsUI.draw();
     }
 
     @Override
@@ -76,7 +80,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.setScreen(game.inGameScreen);
                 return true;
             }
@@ -94,7 +98,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                     return false;
                 }
                 game.inGameScreen.resetGameState();
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.dispose();
                 game.setScreen(game.mainMenuScreen);
                 return true;
@@ -106,7 +110,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     @Override
     public boolean keyDown(int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
-            clearStage(game.stageUI);
+            clearStage(game.buttonsUI);
             game.setScreen(game.inGameScreen);
             return true;
         }
