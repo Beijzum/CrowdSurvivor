@@ -158,7 +158,7 @@ public class Player extends Entity {
     public void setEXPMultiplier(float EXPMultiplier) {
         this.EXPMultiplier = EXPMultiplier;
     }
-    public float getCurrencyMultipler() {
+    public float getCurrencyMultiplier() {
         return this.currencyMultiplier;
     }
 
@@ -281,7 +281,8 @@ public class Player extends Entity {
                 '}';
     }
 
-    public void addEXP(int EXP) {
+    // returns the amount of levels gained from adding exp to player
+    public int addEXP(int EXP) {
         this.accumulatedEXP += EXP;
         this.currentEXP += EXP * EXPMultiplier;
         if (this.currentEXP >= this.levelUpThreshold) {
@@ -289,7 +290,9 @@ public class Player extends Entity {
             this.level += leveledAmount;
             this.currentEXP %= this.levelUpThreshold;
             this.levelUpThreshold += this.levelUpThreshold / 4 * leveledAmount;
+            return leveledAmount;
         }
+        return 0;
     }
     public void addCollectedCurrency(int currency) {
         this.collectedCurrency += currency * currencyMultiplier;
