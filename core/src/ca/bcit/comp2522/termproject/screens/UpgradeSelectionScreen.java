@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.screens;
 
 import ca.bcit.comp2522.termproject.ActorManager;
+import ca.bcit.comp2522.termproject.Background;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import java.util.Random;
 
-public class UpgradeSelectionScreen implements Screen, ActorManager {
+public class UpgradeSelectionScreen implements Screen, ActorManager, Background {
     final private static int BUTTON_COUNT_ON_SCREEN = 4;
     final private CrowdSurvivor game;
     final private Random randomNumberGenerator = new Random();
@@ -27,15 +28,16 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
         for (int i = 0; i < BUTTON_COUNT_ON_SCREEN; i++) {
             TextButton chosenUpgrade = chooseRandomButton();
             positionButton(chosenUpgrade, i);
-            game.stageUI.addActor(chosenUpgrade);
+            game.buttonsUI.addActor(chosenUpgrade);
         }
-        Gdx.input.setInputProcessor(game.stageUI);
+        Gdx.input.setInputProcessor(game.buttonsUI);
     }
 
     @Override
     public void render(float v) {
-        game.stageUI.act();
-        game.stageUI.draw();
+        game.inGameScreen.renderFrameAsBackground();
+        game.buttonsUI.act();
+        game.buttonsUI.draw();
     }
 
     @Override
@@ -65,7 +67,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
 
     private TextButton chooseRandomButton() {
         int buttonIndex = randomNumberGenerator.nextInt(possibleUpgrades.length);
-        if (game.stageUI.getActors().contains(possibleUpgrades[buttonIndex], true)) {
+        if (game.buttonsUI.getActors().contains(possibleUpgrades[buttonIndex], true)) {
             return chooseRandomButton();
         }
         return possibleUpgrades[buttonIndex];
@@ -89,7 +91,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player.setAttack(game.inGameScreen.player.getAttack() + 10);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -103,7 +105,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player.setSpeed(game.inGameScreen.player.getSpeed() + 10);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -118,7 +120,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player.setMaxHealth(game.inGameScreen.player.getMaxHealth() + 10);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -132,7 +134,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player.setEXPMultiplier(game.inGameScreen.player.getEXPMultiplier() * (float) 1.1);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -146,7 +148,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player
                         .setCurrencyMultiplier(game.inGameScreen.player.getCollectedCurrency() * (float) 1.1);
                 game.setScreen(game.inGameScreen);
@@ -161,7 +163,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player.setAttackSpeed(game.inGameScreen.player.getAttackSpeed() * (float) 0.9);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -175,7 +177,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player.setIFramesLength(game.inGameScreen.player.getIFramesLength() * (float) 1.1);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -189,7 +191,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player.setCritMultiplier(game.inGameScreen.player.getCritMultiplier() + 0.1);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -203,7 +205,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player.setCritRate(game.inGameScreen.player.getCritRate() + 0.05);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -217,7 +219,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player.setDefense(game.inGameScreen.player.getDefense() + 0.05);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -231,7 +233,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.player
                         .setHealthRegenMultiplier(game.inGameScreen.player.getHealthRegenMultiplier() + 0.05);
                 game.setScreen(game.inGameScreen);

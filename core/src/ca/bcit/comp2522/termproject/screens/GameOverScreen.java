@@ -4,7 +4,6 @@ import ca.bcit.comp2522.termproject.ActorManager;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -38,7 +37,7 @@ public class GameOverScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.resetGameState();
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -57,7 +56,7 @@ public class GameOverScreen implements Screen, ActorManager {
                     return false;
                 }
                 game.inGameScreen.resetGameState();
-                clearStage(game.stageUI);
+                clearStage(game.buttonsUI);
                 game.inGameScreen.dispose();
                 game.setScreen(game.mainMenuScreen);
                 return true;
@@ -68,14 +67,15 @@ public class GameOverScreen implements Screen, ActorManager {
 
     @Override
     public void show() {
-        addActors(game.stageUI, menuItems);
-        Gdx.input.setInputProcessor(game.stageUI);
+        addActors(game.buttonsUI, menuItems);
+        Gdx.input.setInputProcessor(game.buttonsUI);
     }
 
     @Override
     public void render(float v) {
-        game.stageUI.act();
-        game.stageUI.draw();
+        game.inGameScreen.renderFrameAsBackground();
+        game.buttonsUI.act();
+        game.buttonsUI.draw();
     }
 
     @Override
