@@ -24,7 +24,9 @@ public class Player extends Entity {
     private int accumulatedEXP;
     private int level;
     private int currentEXP;
+    private float EXPMultiplier;
     private int collectedCurrency;
+    private float currencyMultiplier;
     private static Player instance = null;
     private double attackSpeed;
     private double critRate;
@@ -56,19 +58,19 @@ public class Player extends Entity {
         return instance;
     }
 
-    public void setAttackSpeed(int attackSpeed) {
+    public void setAttackSpeed(double attackSpeed) {
         this.attackSpeed = attackSpeed;
     }
 
-    public void setCritMultiplier(float critMultiplier) {
+    public void setCritMultiplier(double critMultiplier) {
         this.critMultiplier = critMultiplier;
     }
 
-    public void setCritRate(float critRate) {
+    public void setCritRate(double critRate) {
         this.critRate = critRate;
     }
 
-    public void setHealthRegenMultiplier(float healthRegenMultiplier) {
+    public void setHealthRegenMultiplier(double healthRegenMultiplier) {
         this.healthRegenMultiplier = healthRegenMultiplier;
     }
 
@@ -150,6 +152,19 @@ public class Player extends Entity {
     public float getCenterY() {
         return this.sprite.getY() + this.sprite.getHeight() / 2;
     }
+    public float getEXPMultiplier() {
+        return this.EXPMultiplier;
+    }
+    public void setEXPMultiplier(float EXPMultiplier) {
+        this.EXPMultiplier = EXPMultiplier;
+    }
+    public float getCurrencyMultipler() {
+        return this.currencyMultiplier;
+    }
+
+    public void setCurrencyMultiplier(float currencyMultiplier) {
+        this.currencyMultiplier = currencyMultiplier;
+    }
 
     public void resetStats() {
         this.maxHealth = DEFAULT_MAX_HEALTH;
@@ -163,6 +178,8 @@ public class Player extends Entity {
         this.ultimateCD = DEFAULT_ULTIMATE_CD;
         this.healthRegenMultiplier = DEFAULT_HEALTH_REGEN_MULTIPLIER;
         this.iFramesLength = BASE_IFRAME_LENGTH;
+        this.EXPMultiplier = 1;
+        this.currencyMultiplier = 1;
         this.iFrameIsOn= false;
         this.levelUpThreshold = BASE_LEVEL_UP_THRESHOLD;
         this.accumulatedEXP = 0;
@@ -266,7 +283,7 @@ public class Player extends Entity {
 
     public void addEXP(int EXP) {
         this.accumulatedEXP += EXP;
-        this.currentEXP += EXP;
+        this.currentEXP += EXP * EXPMultiplier;
         if (this.currentEXP >= this.levelUpThreshold) {
             int leveledAmount = calculateLeveledAmount();
             this.level += leveledAmount;
@@ -275,7 +292,7 @@ public class Player extends Entity {
         }
     }
     public void addCollectedCurrency(int currency) {
-        this.collectedCurrency += currency;
+        this.collectedCurrency += currency * currencyMultiplier;
     }
 
     private int calculateLeveledAmount() {
