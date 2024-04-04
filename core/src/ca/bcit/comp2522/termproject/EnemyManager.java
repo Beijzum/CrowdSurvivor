@@ -108,11 +108,7 @@ final public class EnemyManager {
         if (deadEnemy != null) {
             deadEnemy.clearHitByProjectileList();
             gameScreen.onFieldEnemies.remove(deadEnemy);
-            gameScreen.player.addEXP(deadEnemy.getDropEXP());
-            gameScreen.player.addCollectedCurrency(deadEnemy.getDropCurrency());
-
-            System.out.println(gameScreen.player.getCollectedCurrency());
-            System.out.println(gameScreen.player.getLevel());
+            gameScreen.handlePlayerKill(deadEnemy);
         }
     }
 
