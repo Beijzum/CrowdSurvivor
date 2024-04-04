@@ -145,6 +145,14 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.enemyProjectilesOnScreen.clear();
     }
 
+    public void handlePlayerKill(Enemy enemy) {
+        player.addCollectedCurrency(enemy.getDropCurrency());
+        int leveledAmount = player.addEXP(enemy.getDropEXP());
+        if (leveledAmount > 0) {
+            game.setScreen(game.upgradeSelectionScreen);
+        }
+    }
+
     @Override
     public boolean keyDown(int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
