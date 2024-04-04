@@ -25,6 +25,7 @@ public class CrowdSurvivor extends Game {
 	public PauseMenuScreen pauseMenuScreen;
 	public UpgradeSelectionScreen upgradeSelectionScreen;
 	public GameOverScreen gameOverScreen;
+	public PlayerProfile playerProfile;
 
 	@Override
 	public void create () {
@@ -43,6 +44,7 @@ public class CrowdSurvivor extends Game {
 		pauseMenuScreen = new PauseMenuScreen(this);
 		upgradeSelectionScreen = new UpgradeSelectionScreen(this);
 		gameOverScreen = new GameOverScreen(this);
+		playerProfile = PlayerProfile.createPlayerProfile();
 
 		this.setScreen(startMenuScreen);
 	}
