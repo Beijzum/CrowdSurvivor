@@ -4,6 +4,9 @@ https://adoptium.net/temurin/releases/?version=18&package=jdk&arch=any
 ## Crowd Survivor
 Inspired by the game "Vampire Survivors".
 
+## Notes
+Notes go here
+
 ## TODO
 Draw art assets
 
@@ -16,15 +19,14 @@ game UI in stageUI in CrowdSurvivor file
 
 ## PRIORITY TODO
 player choose stats page
-currency system
-enemy drop currency
 implement bosses
 player stat choice when leveling up
-implement save feature
+implement auto-save feature
 
 ## TODO
 Different enemies
 implement SFX
+improve menu UI
 
 ## OPTIMIZATIONS
 UNIT TESTS MAYBE
