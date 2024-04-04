@@ -22,6 +22,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     final private EnemyManager enemyManager;
     final private PlayerManager playerManager;
     final private InputMultiplexer inputManager;
+    private int enterUpgradeScreenAmount;
     final public ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
     final public LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
     final public LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
@@ -75,6 +76,12 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.drawEnemies();
         this.drawAllPlayerProjectiles();
         game.stageUI.draw();
+
+        // go to level up screen if leveled up
+        if (enterUpgradeScreenAmount > 0) {
+            game.setScreen(game.upgradeSelectionScreen);
+            this.enterUpgradeScreenAmount--;
+        }
 
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {
@@ -145,12 +152,10 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.enemyProjectilesOnScreen.clear();
     }
 
+
     public void handlePlayerKill(Enemy enemy) {
         player.addCollectedCurrency(enemy.getDropCurrency());
-        int leveledAmount = player.addEXP(enemy.getDropEXP());
-        for (int i = 0; i < leveledAmount; i++) {
-            game.setScreen(game.upgradeSelectionScreen);
-        }
+        this.enterUpgradeScreenAmount = player.addEXP(enemy.getDropEXP());
     }
 
     @Override
