@@ -78,6 +78,7 @@ final public class EnemyManager {
                 enemy.takeDamage(playerProjectile,
                         (int) Math.round(gameScreen.player.attack * (1 - enemy.getDefense())));
             }
+            enemy.updateDamageNumbers(Gdx.graphics.getDeltaTime());
             moveToPlayer(enemy);
         }
 
