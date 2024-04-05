@@ -11,6 +11,7 @@ final public class PlayerProfile {
     private double critRateBooster;
     private double critMultiplierBooster;
     private float healthRegenMultiplierBooster;
+    private int currency;
     private static PlayerProfile instance = null;
 
     // getters and setters to be used in shop
@@ -54,6 +55,9 @@ final public class PlayerProfile {
         return speedBooster;
     }
 
+    public int getCurrency() {
+        return currency;
+    }
     public void setAttackBooster(int attackBooster) {
         this.attackBooster = attackBooster;
     }
@@ -92,6 +96,9 @@ final public class PlayerProfile {
 
     public void setSpeedBooster(int speedBooster) {
         this.speedBooster = speedBooster;
+    }
+    public void setCurrency(int currency) {
+        this.currency = currency;
     }
 
     private PlayerProfile() {
