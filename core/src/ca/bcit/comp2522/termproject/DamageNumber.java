@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -11,9 +12,10 @@ public class DamageNumber {
     private float Y;
     final private float LIFETIME;
     private float timer;
+    final private boolean isCritical;
 
 
-    public DamageNumber(float x, float y, int damage) {
+    public DamageNumber(float x, float y, int damage, boolean isCritical) {
         this.X = x;
         this.Y = y;
         this.DAMAGE = damage;
@@ -21,6 +23,7 @@ public class DamageNumber {
         this.timer = 0.0f;
         this.originalX = x;
         this.originalY = y;
+        this.isCritical = isCritical;
     }
 
     public void update(float deltaTime) {
@@ -41,6 +44,14 @@ public class DamageNumber {
     }
 
     public void draw(SpriteBatch batch, BitmapFont font) {
+        if (this.isCritical) {
+            font.setColor(Color.YELLOW);
+            font.getData().setScale(2);
+            font.draw(batch, String.format("%d!", this.DAMAGE), this.X, this.Y);
+            font.getData().setScale(1);
+            font.setColor(Color.WHITE);
+            return;
+        }
         font.getData().setScale(2);
         font.draw(batch, String.valueOf(this.DAMAGE), this.X, this.Y);
         font.getData().setScale(1);
