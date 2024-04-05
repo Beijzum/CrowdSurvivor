@@ -44,9 +44,9 @@ public class HPBar {
         this.currentHP = MathUtils.clamp(currentHP, 0, this.maxHP);
     }
 
-    public void setMaxHP(int maxValue) {
+    public void setMaxHP(int maxHP) {
         // set max HP
-        this.maxHP = maxValue;
+        this.maxHP = maxHP;
     }
 
     public void draw(ShapeRenderer shapeRenderer) {
