@@ -38,7 +38,6 @@ public class GameOverScreen implements Screen, ActorManager {
                     return false;
                 }
                 clearStage(game.buttonsUI);
-                game.inGameScreen.resetGameState();
                 game.setScreen(game.inGameScreen);
                 return true;
             }
@@ -55,7 +54,6 @@ public class GameOverScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                game.inGameScreen.resetGameState();
                 clearStage(game.buttonsUI);
                 game.inGameScreen.dispose();
                 game.setScreen(game.mainMenuScreen);
