@@ -12,7 +12,7 @@ abstract public class Entity {
     protected int maxHealth;
     protected int speed;
     protected int attack;
-    protected double defense;
+    protected float defense;
     protected Sprite sprite;
 
 
@@ -20,7 +20,7 @@ abstract public class Entity {
         return attack;
     }
 
-    public double getDefense() {
+    public float getDefense() {
         return defense;
     }
 
@@ -40,7 +40,7 @@ abstract public class Entity {
         this.attack = attack;
     }
 
-    public void setDefense(double defense) {
+    public void setDefense(float defense) {
         this.defense = defense;
     }
 
