@@ -175,7 +175,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         game.inGameScreen.drawEnemies();
         game.inGameScreen.drawAllPlayerProjectiles();
         this.gameUI.draw();
-        game.batch.setColor(game.standardColor);
+        game.batch.setColor(CrowdSurvivor.STANDARD_COLOR);
     }
 
     @Override
