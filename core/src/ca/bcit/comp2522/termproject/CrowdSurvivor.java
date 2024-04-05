@@ -19,7 +19,7 @@ public class CrowdSurvivor extends Game {
 	public BitmapFont font;
 	public Stage buttonsUI;
 	public Skin skin;
-	public Color standardColor;
+	public static Color STANDARD_COLOR = new Color(1, 1, 1, 1);
 	public MainMenuScreen mainMenuScreen;
 	public StartMenuScreen startMenuScreen;
 	public ShopScreen shopScreen;
@@ -35,7 +35,6 @@ public class CrowdSurvivor extends Game {
 		font = new BitmapFont();
 		buttonsUI = new Stage(new ScreenViewport());
 		skin = new Skin(Gdx.files.internal("skin/vhs-ui.json"));
-		standardColor = new Color(1, 1, 1, 1);
 
 		viewportX = Gdx.graphics.getWidth();
 		viewportY = Gdx.graphics.getHeight();
