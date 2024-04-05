@@ -3,25 +3,34 @@ package ca.bcit.comp2522.termproject.screens;
 import ca.bcit.comp2522.termproject.*;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
+import jdk.tools.jlink.internal.ExecutableImage;
+import jdk.tools.jlink.internal.PostProcessor;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor {
     public OrthographicCamera camera;
     final private CrowdSurvivor game;
     final private Music music;
     final private Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
+    final private Stage gameUI = new Stage();
     final public Player player;
     final private EnemyManager enemyManager;
     final private PlayerManager playerManager;
     final private InputMultiplexer inputManager;
+    final private Color darkTint = new Color(75 / 255f, 75 / 255f, 75 / 255f, 1);
     private int enterUpgradeScreenAmount;
     final public ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
     final public LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
@@ -50,7 +59,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     @Override
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        game.stageUI.act();
+        game.buttonsUI.act();
 
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -75,18 +84,19 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         player.draw(game.batch);
         this.drawEnemies();
         this.drawAllPlayerProjectiles();
-        game.stageUI.draw();
-
-        // go to level up screen if leveled up
-        if (enterUpgradeScreenAmount > 0) {
-            game.setScreen(game.upgradeSelectionScreen);
-            this.enterUpgradeScreenAmount--;
-        }
+        game.buttonsUI.draw();
 
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {
             dispose();
             game.setScreen(game.gameOverScreen);
+            return;
+        }
+
+        // go to level up screen if leveled up
+        if (enterUpgradeScreenAmount > 0) {
+            game.setScreen(game.upgradeSelectionScreen);
+            this.enterUpgradeScreenAmount--;
         }
     }
 
@@ -112,7 +122,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     @Override
     public void dispose() {
-        clearStage(game.stageUI);
+        clearStage(game.buttonsUI);
         music.dispose();
     }
 
@@ -156,6 +166,16 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public void handlePlayerKill(Enemy enemy) {
         player.addCollectedCurrency(enemy.getDropCurrency());
         this.enterUpgradeScreenAmount = player.addEXP(enemy.getDropEXP());
+    }
+
+    public void renderFrameAsBackground() {
+        game.batch.setColor(this.darkTint);
+        renderBackground(game, background);
+        game.inGameScreen.player.draw(game.batch);
+        game.inGameScreen.drawEnemies();
+        game.inGameScreen.drawAllPlayerProjectiles();
+        this.gameUI.draw();
+        game.batch.setColor(game.standardColor);
     }
 
     @Override
