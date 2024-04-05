@@ -9,17 +9,17 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.LinkedList;
 
 public class Player extends Entity {
-    final private static double DEFAULT_DEFENSE = 0.0;
+    final private static float DEFAULT_DEFENSE = 0.0f;
     final private static int DEFAULT_MAX_HEALTH = 100;
     final private static int DEFAULT_SPEED = 200;
-    final private static double DEFAULT_ATTACK_SPEED = 1.5;
-    final private static double DEFAULT_CRIT_RATE = 0.1;
-    final private static double DEFAULT_CRIT_MULTIPLIER = 1.5;
+    final private static float DEFAULT_ATTACK_SPEED = 1.5f;
+    final private static float DEFAULT_CRIT_RATE = 0.1f;
+    final private static float DEFAULT_CRIT_MULTIPLIER = 1.5f;
     final private static int DEFAULT_ULTIMATE_CD = 5;
-    final private static double DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01;
+    final private static float DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01f;
     final private static int DEFAULT_ATTACK = 20;
-    final private static double BASE_IFRAME_LENGTH = 2.5;
-    final private static double HEALTH_REGEN_TICK_TIME = 1.5;
+    final private static float BASE_IFRAME_LENGTH = 2.5f;
+    final private static float HEALTH_REGEN_TICK_TIME = 1.5f;
     final private static int BASE_LEVEL_UP_THRESHOLD = 50;
     final private static int BASE_EXP_MULTIPLIER = 1;
     final private static int BASE_CURRENCY_MULTIPLIER = 1;
@@ -31,17 +31,17 @@ public class Player extends Entity {
     private int collectedCurrency;
     private float currencyMultiplier;
     private static Player instance = null;
-    private double attackSpeed;
-    private double critRate;
-    private double critMultiplier;
+    private float attackSpeed;
+    private float critRate;
+    private float critMultiplier;
     private float ultimateCDTimer;
     private float attackTimer;
     private int ultimateCD;
-    private double iFramesLength;
+    private float iFramesLength;
     private float iFramesTimer;
     private float healthRegenTimer;
     private boolean iFrameIsOn = false;
-    private double healthRegenMultiplier;
+    private float healthRegenMultiplier;
     private Projectile projectileTemplate;
 
 
@@ -61,19 +61,19 @@ public class Player extends Entity {
         return instance;
     }
 
-    public void setAttackSpeed(double attackSpeed) {
+    public void setAttackSpeed(float attackSpeed) {
         this.attackSpeed = attackSpeed;
     }
 
-    public void setCritMultiplier(double critMultiplier) {
+    public void setCritMultiplier(float critMultiplier) {
         this.critMultiplier = critMultiplier;
     }
 
-    public void setCritRate(double critRate) {
+    public void setCritRate(float critRate) {
         this.critRate = critRate;
     }
 
-    public void setHealthRegenMultiplier(double healthRegenMultiplier) {
+    public void setHealthRegenMultiplier(float healthRegenMultiplier) {
         this.healthRegenMultiplier = healthRegenMultiplier;
     }
 
@@ -85,19 +85,19 @@ public class Player extends Entity {
         this.ultimateCD = ultimateCD;
     }
 
-    public double getAttackSpeed() {
+    public float getAttackSpeed() {
         return attackSpeed;
     }
 
-    public double getCritMultiplier() {
+    public float getCritMultiplier() {
         return critMultiplier;
     }
 
-    public double getCritRate() {
+    public float getCritRate() {
         return critRate;
     }
 
-    public double getHealthRegenMultiplier() {
+    public float getHealthRegenMultiplier() {
         return healthRegenMultiplier;
     }
 
@@ -105,11 +105,11 @@ public class Player extends Entity {
         return ultimateCD;
     }
 
-    public double getIFramesLength() {
+    public float getIFramesLength() {
         return iFramesLength;
     }
 
-    public void setIFramesLength(double newLength) {
+    public void setIFramesLength(float newLength) {
         this.iFramesLength = newLength;
     }
 
