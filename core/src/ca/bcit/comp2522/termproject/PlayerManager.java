@@ -4,12 +4,14 @@ import ca.bcit.comp2522.termproject.screens.InGameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector3;
 
 public class PlayerManager implements InputProcessor {
     final private InGameScreen gameScreen;
     private static PlayerManager instance = null;
     private float mousePositionX;
     private float mousePositionY;
+
     private PlayerManager(InGameScreen gameScreen) {
         this.gameScreen = gameScreen;
     }
@@ -64,7 +66,7 @@ public class PlayerManager implements InputProcessor {
     public void handleAttack() {
         // remove expired projectiles
         if (gameScreen.playerProjectilesOnScreen.peek() != null
-        && gameScreen.playerProjectilesOnScreen.peek().isOverLifeTime()) {
+                && gameScreen.playerProjectilesOnScreen.peek().isOverLifeTime()) {
             gameScreen.playerProjectilesOnScreen.removeFirst();
         }
 
@@ -75,8 +77,9 @@ public class PlayerManager implements InputProcessor {
         }
 
         // fire projectile
+        Vector3 mousePos = gameScreen.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
         gameScreen.player
-                .fireProjectile(this.gameScreen.playerProjectilesOnScreen, this.mousePositionX, this.mousePositionY);
+                .fireProjectile(this.gameScreen.playerProjectilesOnScreen, mousePos.x, mousePos.y);
 
     }
 

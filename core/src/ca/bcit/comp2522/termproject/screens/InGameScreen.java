@@ -70,8 +70,6 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         // handle camera
         camera.position.set(player.getCenterX(), player.getCenterY(), 0);
         camera.update();
-        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera.unproject(mousePos);
 
         // handle game logic
         enemyManager.incrementTimers();
