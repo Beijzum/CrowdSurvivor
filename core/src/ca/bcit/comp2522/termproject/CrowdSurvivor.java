@@ -1,11 +1,6 @@
 package ca.bcit.comp2522.termproject;
 
-import ca.bcit.comp2522.termproject.screens.GameOverScreen;
-import ca.bcit.comp2522.termproject.screens.InGameScreen;
-import ca.bcit.comp2522.termproject.screens.MainMenuScreen;
-import ca.bcit.comp2522.termproject.screens.PauseMenuScreen;
-import ca.bcit.comp2522.termproject.screens.ShopScreen;
-import ca.bcit.comp2522.termproject.screens.UpgradeSelectionScreen;
+import ca.bcit.comp2522.termproject.screens.*;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -30,6 +25,7 @@ public class CrowdSurvivor extends Game {
     public PauseMenuScreen pauseMenuScreen;
     public UpgradeSelectionScreen upgradeSelectionScreen;
     public GameOverScreen gameOverScreen;
+    public WinScreen winScreen;
     public PlayerProfile playerProfile;
 
     @Override
@@ -48,6 +44,7 @@ public class CrowdSurvivor extends Game {
         pauseMenuScreen = new PauseMenuScreen(this);
         upgradeSelectionScreen = new UpgradeSelectionScreen(this);
         gameOverScreen = new GameOverScreen(this);
+        winScreen = new WinScreen(this);
         playerProfile = PlayerProfile.createPlayerProfile();
 
         this.setScreen(mainMenuScreen);
