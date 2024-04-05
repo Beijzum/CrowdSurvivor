@@ -16,8 +16,7 @@ public class Enemy extends Entity {
     final protected static float DAMAGE_TINT_TIME = 1;
     final protected static int BASE_CURRENCY_DROP_AMOUNT = 2;
     final private static int CURRENCY_CALCULATION_DIVISOR = 100;
-    final private Color damageTint = new Color(200, 0, 0, 1);
-    private Color normalColor;
+    final private Color damageTint = new Color(1, 0, 0, 1);
     protected float tintTimer = 0;
     private float acceleration;
     protected boolean isTakingDamage;
@@ -37,8 +36,6 @@ public class Enemy extends Entity {
         this.attack = attack;
         this.defense = DEFAULT_DEFENSE;
         this.sprite = new Sprite(new Texture(Gdx.files.internal(imageFilePath)));
-        this.normalColor = new Color(this.sprite.getColor());
-
         this.sprite.setSize(100, 100);
     }
 
@@ -89,12 +86,22 @@ public class Enemy extends Entity {
     public void draw(Batch batch) {
         batch.begin();
         if (this.isTakingDamage) {
-            batch.setColor(this.damageTint);
+            Color originalColor = new Color(batch.getColor());
+            if (originalColor.equals(CrowdSurvivor.STANDARD_COLOR)) {
+                batch.setColor(this.damageTint);
+            } else {
+                batch.setColor(originalColor.r + 0.3f, originalColor.g, originalColor.b, originalColor.a);
+            }
+            batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
+                    this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
+                    this.sprite.getScaleY(), this.sprite.getRotation());
+            batch.setColor(originalColor);
+            batch.end();
+            return;
         }
         batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
                 this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                 this.sprite.getScaleY(), this.sprite.getRotation());
-        batch.setColor(this.normalColor);
         batch.end();
     }
 
