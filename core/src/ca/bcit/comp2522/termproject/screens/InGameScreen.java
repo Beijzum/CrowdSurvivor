@@ -21,13 +21,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor {
+    final private static int MAX_GAME_LENGTH = 300;
+    public float timeElapsed = 0;
     public OrthographicCamera camera;
     final private CrowdSurvivor game;
     final private Music music;
     final private Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
     final private Stage gameUI = new Stage();
     final public Player player;
-
     final private HPBar hpBar;
     final private EnemyManager enemyManager;
     final private PlayerManager playerManager;
@@ -37,6 +38,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     final public ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
     final public LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
     final public LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
+
 
     public InGameScreen(CrowdSurvivor crowdSurvivor) {
         this.camera = new OrthographicCamera();
@@ -62,6 +64,10 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     @Override
     public void render(float v) {
+        if (timeElapsed >= MAX_GAME_LENGTH) {
+            dispose();
+            game.setScreen(game.winScreen);
+        }
         ScreenUtils.clear(0, 0, 0.2f, 1);
         game.buttonsUI.act();
 
@@ -94,6 +100,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {
             dispose();
+            resetGameState();
+            addCurrencyToPlayerProfile();
             game.setScreen(game.gameOverScreen);
             return;
         }
@@ -103,6 +111,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
             game.setScreen(game.upgradeSelectionScreen);
             this.enterUpgradeScreenAmount--;
         }
+
+        timeElapsed += Gdx.graphics.getDeltaTime();
     }
 
     @Override
@@ -174,6 +184,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public void resetGameState() {
         player.resetPosition();
         player.resetStats();
+        this.timeElapsed = 0;
         this.onFieldEnemies.clear();
         this.playerProjectilesOnScreen.clear();
         this.enemyProjectilesOnScreen.clear();
@@ -202,6 +213,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
             return true;
         }
         return false;
+    }
+    private void addCurrencyToPlayerProfile() {
+        game.playerProfile.setCurrency(game.playerProfile.getCurrency() + player.getCollectedCurrency());
     }
 
     @Override
