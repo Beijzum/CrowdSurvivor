@@ -90,11 +90,6 @@ public class Enemy extends Entity {
     public void draw(Batch batch) {
         batch.begin();
 
-        updateDamageNumbers(Gdx.graphics.getDeltaTime());
-        for (DamageNumber damageNumber : activeDamageNumbers) {
-            damageNumber.draw((SpriteBatch) batch, CrowdSurvivor.font);
-        }
-
         if (this.isTakingDamage) {
             Color originalColor = new Color(batch.getColor());
             if (originalColor.equals(CrowdSurvivor.STANDARD_COLOR)) {
@@ -106,12 +101,23 @@ public class Enemy extends Entity {
                     this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                     this.sprite.getScaleY(), this.sprite.getRotation());
             batch.setColor(originalColor);
+
+            for (DamageNumber damageNumber : activeDamageNumbers) {
+                damageNumber.draw((SpriteBatch) batch, CrowdSurvivor.font);
+            }
+
             batch.end();
             return;
         }
         batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
                 this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                 this.sprite.getScaleY(), this.sprite.getRotation());
+
+
+        for (DamageNumber damageNumber : activeDamageNumbers) {
+            damageNumber.draw((SpriteBatch) batch, CrowdSurvivor.font);
+        }
+
         batch.end();
     }
 
