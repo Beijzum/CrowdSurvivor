@@ -5,7 +5,6 @@ import ca.bcit.comp2522.termproject.screens.InGameScreen;
 import ca.bcit.comp2522.termproject.screens.MainMenuScreen;
 import ca.bcit.comp2522.termproject.screens.PauseMenuScreen;
 import ca.bcit.comp2522.termproject.screens.ShopScreen;
-import ca.bcit.comp2522.termproject.screens.StartMenuScreen;
 import ca.bcit.comp2522.termproject.screens.UpgradeSelectionScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -26,7 +25,6 @@ public class CrowdSurvivor extends Game {
     public Skin skin;
     public static Color STANDARD_COLOR = new Color(1, 1, 1, 1);
     public MainMenuScreen mainMenuScreen;
-    public StartMenuScreen startMenuScreen;
     public ShopScreen shopScreen;
     public InGameScreen inGameScreen;
     public PauseMenuScreen pauseMenuScreen;
@@ -45,7 +43,6 @@ public class CrowdSurvivor extends Game {
         viewportY = Gdx.graphics.getHeight();
 
         mainMenuScreen = new MainMenuScreen(this);
-        startMenuScreen = new StartMenuScreen(this);
         shopScreen = new ShopScreen(this);
         inGameScreen = new InGameScreen(this);
         pauseMenuScreen = new PauseMenuScreen(this);
@@ -53,7 +50,7 @@ public class CrowdSurvivor extends Game {
         gameOverScreen = new GameOverScreen(this);
         playerProfile = PlayerProfile.createPlayerProfile();
 
-        this.setScreen(startMenuScreen);
+        this.setScreen(mainMenuScreen);
     }
 
     @Override
