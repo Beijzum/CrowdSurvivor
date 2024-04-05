@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Enemy extends Entity {
-    final protected static double DEFAULT_DEFENSE = 0.0;
-    final protected static float DAMAGE_TINT_TIME = 1;
+    final protected static float DEFAULT_DEFENSE = 0.0f;
+    final protected static float DAMAGE_TINT_TIME = 0.6f;
     final protected static int BASE_CURRENCY_DROP_AMOUNT = 2;
     final private static int CURRENCY_CALCULATION_DIVISOR = 100;
     final private Color damageTint = new Color(1, 0, 0, 1);
@@ -131,23 +131,28 @@ public class Enemy extends Entity {
     }
 
     public void takeDamage(Projectile projectile, int damage) {
-        if (this.sprite.getBoundingRectangle().overlaps(projectile.getHitbox())
-                && !this.hitByProjectileList.contains(projectile)) {
+        if (!this.hitByProjectileList.contains(projectile)) {
             this.isTakingDamage = true;
             this.hitByProjectileList.add(projectile);
-            this.health -= (int) Math.round(damage * (1 - this.defense));
+            this.health -= Math.round(damage * (1 - this.defense));
 
             // adds damage number
             DamageNumber damageNumber = new DamageNumber(this.getCenterX(), this.getCenterY(), damage);
             activeDamageNumbers.add(damageNumber);
         }
+        removeFromHitByProjectileList();
+    }
+
+    public void incrementDamageTintTimer() {
+        if (!this.isTakingDamage) {
+            return;
+        }
         if (this.tintTimer > DAMAGE_TINT_TIME) {
             this.tintTimer = 0;
             isTakingDamage = false;
-        } else if (this.isTakingDamage) {
+        } else {
             this.tintTimer += Gdx.graphics.getDeltaTime();
         }
-        removeFromHitByProjectileList();
     }
 
     public void clearHitByProjectileList() {
