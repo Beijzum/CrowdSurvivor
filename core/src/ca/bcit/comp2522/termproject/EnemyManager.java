@@ -75,9 +75,12 @@ final public class EnemyManager {
     public void handleEnemies() {
         for (Enemy enemy : gameScreen.onFieldEnemies) {
             for (Projectile playerProjectile : gameScreen.playerProjectilesOnScreen) {
-                enemy.takeDamage(playerProjectile,
-                        (int) Math.round(gameScreen.player.attack * (1 - enemy.getDefense())));
+                if (!enemy.getHitbox().overlaps(playerProjectile.getHitbox())) {
+                    continue;
+                }
+                enemy.takeDamage(playerProjectile, calculateDamage());
             }
+            enemy.incrementDamageTintTimer();
             enemy.updateDamageNumbers(Gdx.graphics.getDeltaTime());
             moveToPlayer(enemy);
         }
@@ -97,6 +100,16 @@ final public class EnemyManager {
                     .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
         }
 
+    }
+
+    private int calculateDamage() {
+        int damage;
+        if (randomNumberGenerator.nextFloat(1) <= gameScreen.player.getCritRate()) {
+            damage = Math.round(gameScreen.player.getAttack() * gameScreen.player.getCritMultiplier());
+        } else {
+            damage = gameScreen.player.getAttack();
+        }
+        return damage;
     }
 
     private void killEnemy() {
