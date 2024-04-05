@@ -3,31 +3,31 @@ package ca.bcit.comp2522.termproject;
 final public class PlayerProfile {
     private int maxHealthBooster;
     private int attackBooster;
-    private double defenseBooster;
+    private float defenseBooster;
     private int speedBooster;
     private float EXPMultiplierBooster;
     private float currencyMultiplierBooster;
-    private double attackSpeedBooster;
-    private double critRateBooster;
-    private double critMultiplierBooster;
+    private float attackSpeedBooster;
+    private float critRateBooster;
+    private float critMultiplierBooster;
     private float healthRegenMultiplierBooster;
     private int currency;
     private static PlayerProfile instance = null;
 
     // getters and setters to be used in shop
-    public double getAttackSpeedBooster() {
+    public float getAttackSpeedBooster() {
         return attackSpeedBooster;
     }
 
-    public double getCritMultiplierBooster() {
+    public float getCritMultiplierBooster() {
         return critMultiplierBooster;
     }
 
-    public double getCritRateBooster() {
+    public float getCritRateBooster() {
         return critRateBooster;
     }
 
-    public double getDefenseBooster() {
+    public float getDefenseBooster() {
         return defenseBooster;
     }
 
@@ -62,15 +62,15 @@ final public class PlayerProfile {
         this.attackBooster = attackBooster;
     }
 
-    public void setAttackSpeedBooster(double attackSpeedBooster) {
+    public void setAttackSpeedBooster(float attackSpeedBooster) {
         this.attackSpeedBooster = attackSpeedBooster;
     }
 
-    public void setCritMultiplierBooster(double critMultiplierBooster) {
+    public void setCritMultiplierBooster(float critMultiplierBooster) {
         this.critMultiplierBooster = critMultiplierBooster;
     }
 
-    public void setCritRateBooster(double critRateBooster) {
+    public void setCritRateBooster(float critRateBooster) {
         this.critRateBooster = critRateBooster;
     }
 
@@ -78,7 +78,7 @@ final public class PlayerProfile {
         this.currencyMultiplierBooster = currencyMultiplierBooster;
     }
 
-    public void setDefenseBooster(double defenseBooster) {
+    public void setDefenseBooster(float defenseBooster) {
         this.defenseBooster = defenseBooster;
     }
 

@@ -192,7 +192,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.buttonsUI);
-                game.inGameScreen.player.setCritMultiplier(game.inGameScreen.player.getCritMultiplier() + 0.1);
+                game.inGameScreen.player.setCritMultiplier(game.inGameScreen.player.getCritMultiplier() + 0.1f);
                 game.setScreen(game.inGameScreen);
                 return true;
             }
@@ -206,7 +206,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.buttonsUI);
-                game.inGameScreen.player.setCritRate(game.inGameScreen.player.getCritRate() + 0.05);
+                game.inGameScreen.player.setCritRate(game.inGameScreen.player.getCritRate() + 0.05f);
                 game.setScreen(game.inGameScreen);
                 return true;
             }
@@ -220,7 +220,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.buttonsUI);
-                game.inGameScreen.player.setDefense(game.inGameScreen.player.getDefense() + 0.05);
+                game.inGameScreen.player.setDefense(game.inGameScreen.player.getDefense() + 0.05f);
                 game.setScreen(game.inGameScreen);
                 return true;
             }
@@ -235,7 +235,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                 }
                 clearStage(game.buttonsUI);
                 game.inGameScreen.player
-                        .setHealthRegenMultiplier(game.inGameScreen.player.getHealthRegenMultiplier() + 0.05);
+                        .setHealthRegenMultiplier(game.inGameScreen.player.getHealthRegenMultiplier() + 0.05f);
                 game.setScreen(game.inGameScreen);
                 return true;
             }
