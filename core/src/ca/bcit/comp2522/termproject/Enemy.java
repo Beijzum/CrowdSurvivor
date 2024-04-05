@@ -89,7 +89,6 @@ public class Enemy extends Entity {
     @Override
     public void draw(Batch batch) {
         batch.begin();
-
         if (this.isTakingDamage) {
             Color originalColor = new Color(batch.getColor());
             if (originalColor.equals(CrowdSurvivor.STANDARD_COLOR)) {
@@ -101,23 +100,20 @@ public class Enemy extends Entity {
                     this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                     this.sprite.getScaleY(), this.sprite.getRotation());
             batch.setColor(originalColor);
-
-            for (DamageNumber damageNumber : activeDamageNumbers) {
-                damageNumber.draw((SpriteBatch) batch, CrowdSurvivor.font);
-            }
-
             batch.end();
             return;
         }
         batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
                 this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                 this.sprite.getScaleY(), this.sprite.getRotation());
+        batch.end();
+    }
 
-
+    public void drawDamageNumbers(Batch batch) {
+        batch.begin();
         for (DamageNumber damageNumber : activeDamageNumbers) {
             damageNumber.draw((SpriteBatch) batch, CrowdSurvivor.font);
         }
-
         batch.end();
     }
 
@@ -130,14 +126,14 @@ public class Enemy extends Entity {
         }
     }
 
-    public void takeDamage(Projectile projectile, int damage) {
+    public void takeDamage(Projectile projectile, int damage, boolean isCritical) {
         if (!this.hitByProjectileList.contains(projectile)) {
             this.isTakingDamage = true;
             this.hitByProjectileList.add(projectile);
             this.health -= Math.round(damage * (1 - this.defense));
 
             // adds damage number
-            DamageNumber damageNumber = new DamageNumber(this.getCenterX(), this.getCenterY(), damage);
+            DamageNumber damageNumber = new DamageNumber(this.getCenterX(), this.getCenterY(), damage, isCritical);
             activeDamageNumbers.add(damageNumber);
         }
         removeFromHitByProjectileList();
