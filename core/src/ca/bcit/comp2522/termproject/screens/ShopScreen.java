@@ -34,6 +34,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
         this.shopButtonStyle.downFontColor = Color.GREEN;
         this.shopButtonStyle.checkedFontColor = Color.RED;
         this.menuItems = createButtons();
+        positionMenuItems();
     }
 
     @Override
@@ -301,10 +302,19 @@ public class ShopScreen implements Screen, Background, ActorManager {
            }
         });
 
+        positionBackButton(backButton);
         return new TextButton[] {
                 buyAttack, buySpeed, buyHealth, buyHealthRegen, buyEXP, buyAttackSpeed, buyDefense, buyCritRate,
                 buyCritDamage, buyCurrency, backButton
         };
+    }
+
+    private void positionMenuItems() {
+        for (int col = 0; col < 2; col++) {
+            for (int row = 0; row < 5; row++) {
+                positionItemButton(menuItems[col + row + 4 * col], col, row);
+            }
+        }
     }
 
     private void adjustButtonColor(int price, TextButton button) {
@@ -317,11 +327,24 @@ public class ShopScreen implements Screen, Background, ActorManager {
         // implement later
     }
 
-    private void positionButton(TextButton button, int buttonNumber) {
-        int buttonWidth = Gdx.graphics.getWidth() / 3;
-        int buttonHeight = Gdx.graphics.getHeight() / 6;
+    private void positionBackButton(TextButton button) {
+        int buttonWidth = Gdx.graphics.getWidth() / 2;
+        int buttonHeight = Gdx.graphics.getHeight() / 10;
+
         int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
-        int buttonPositionY = Gdx.graphics.getHeight() * 2 / 3 - buttonHeight * buttonNumber;
+        int buttonPositionY = buttonHeight / 2;
+
+        button.setSize(buttonWidth, buttonHeight);
+        button.setPosition(buttonPositionX, buttonPositionY);
+    }
+
+    private void positionItemButton(TextButton button, int col, int row) {
+        // col max = 1, row max = 4
+        int buttonWidth = Gdx.graphics.getWidth() / 4;
+        int buttonHeight = Gdx.graphics.getHeight() / 10;
+
+        int buttonPositionX = Gdx.graphics.getWidth() / 4 - buttonWidth / 2 + Gdx.graphics.getWidth() / 2 * col;
+        int buttonPositionY = Gdx.graphics.getHeight() / 4 + buttonHeight * row;
 
         button.setSize(buttonWidth, buttonHeight);
         button.setPosition(buttonPositionX, buttonPositionY);
