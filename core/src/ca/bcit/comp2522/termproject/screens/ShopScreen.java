@@ -83,7 +83,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
 
     private TextButton[] createButtons() {
         int buyAttackPrice = BASE_ITEM_PRICE;
-        TextButton buyAttack = new TextButton(String.format("%d: Buy Attack", buyAttackPrice), game.skin);
+        TextButton buyAttack = new TextButton(String.format("$%d - Buy Attack", buyAttackPrice), game.skin);
         buyAttack.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -103,7 +103,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
         });
 
         int buyHealthPrice = BASE_ITEM_PRICE;
-        TextButton buyHealth = new TextButton(String.format("%d: Buy Health", buyHealthPrice), game.skin);
+        TextButton buyHealth = new TextButton(String.format("$%d - Buy Health", buyHealthPrice), game.skin);
         buyHealth.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -123,7 +123,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
         });
 
         int buySpeedPrice = BASE_ITEM_PRICE;
-        TextButton buySpeed = new TextButton(String.format("%d: Buy Speed", buySpeedPrice), game.skin);
+        TextButton buySpeed = new TextButton(String.format("$%d - Buy Speed", buySpeedPrice), game.skin);
         buySpeed.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -143,7 +143,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
         });
 
         int buyDefensePrice = Math.round(BASE_ITEM_PRICE * 1.5f);
-        TextButton buyDefense = new TextButton(String.format("%d: Buy Defense", buyDefensePrice), game.skin);
+        TextButton buyDefense = new TextButton(String.format("$%d - Buy Defense", buyDefensePrice), game.skin);
         buyDefense.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -163,7 +163,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
         });
 
         int buyEXPPrice = BASE_ITEM_PRICE;
-        TextButton buyEXP = new TextButton(String.format("%d: Buy Base EXP Gain", buyEXPPrice), game.skin);
+        TextButton buyEXP = new TextButton(String.format("$%d - Buy Base EXP Gain", buyEXPPrice), game.skin);
         buyEXP.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -184,7 +184,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
 
         int buyCurrencyPrice = BASE_ITEM_PRICE * 2;
         TextButton buyCurrency = new TextButton(
-                String.format("%d: Buy Base Currency Gain", buyCurrencyPrice), game.skin);
+                String.format("$%d - Buy Base Currency Gain", buyCurrencyPrice), game.skin);
         buyCurrency.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -206,7 +206,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
 
         int buyAtttackSpeedPrice = Math.round(BASE_ITEM_PRICE * 1.75f);
         TextButton buyAttackSpeed = new TextButton(
-                String.format("%d: Buy Attack Speed", buyAtttackSpeedPrice), game.skin);
+                String.format("$%d - Buy Attack Speed", buyAtttackSpeedPrice), game.skin);
         buyAttackSpeed.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -227,7 +227,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
 
         int buyCritRatePrice = BASE_ITEM_PRICE * 2;
         TextButton buyCritRate = new TextButton(
-                String.format("%d: Buy Critical Hit Rate", buyCritRatePrice), game.skin);
+                String.format("$%d - Buy Critical Hit Rate", buyCritRatePrice), game.skin);
         buyCritRate.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -248,7 +248,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
 
         int buyCritDamagePrice = BASE_ITEM_PRICE * 2;
         TextButton buyCritDamage = new TextButton(
-                String.format("%d: Buy Critical Hit Damage", buyCritDamagePrice), game.skin);
+                String.format("$%d - Buy Critical Hit Damage", buyCritDamagePrice), game.skin);
         buyCritDamage.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -269,7 +269,7 @@ public class ShopScreen implements Screen, Background, ActorManager {
 
         int buyHealthRegenPrice = BASE_ITEM_PRICE;
         TextButton buyHealthRegen = new TextButton(
-                String.format("%d: Buy Health Regeneration", buyHealthRegenPrice), game.skin);
+                String.format("$%d - Buy Health Regeneration", buyHealthRegenPrice), game.skin);
         buyHealthRegen.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
