@@ -16,12 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MainMenuScreen implements Screen, Background, ActorManager {
-    final int numberOfButtons = 3;
+    final private static int NUMBER_OF_BUTTONS = 3;
     OrthographicCamera camera;
     final private CrowdSurvivor game;
     final private Music music;
     final private Sprite background = new Sprite(new Texture("backgrounds/mainMenuBackground.jpg"));
-    final private TextButton[] menuItems = new TextButton[numberOfButtons]; // start game, shop, quit buttons
+    final private TextButton[] menuItems = new TextButton[NUMBER_OF_BUTTONS]; // start game, shop, quit buttons
 
     public MainMenuScreen(final CrowdSurvivor game) {
         this.camera = new OrthographicCamera();
@@ -69,7 +69,6 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
     // runs when screen is left
     @Override
     public void hide() {
-        Gdx.input.setInputProcessor(null);
         clearStage(game.buttonsUI);
         dispose();
     }
