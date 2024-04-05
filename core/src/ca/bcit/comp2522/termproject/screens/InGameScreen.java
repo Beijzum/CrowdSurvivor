@@ -156,6 +156,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private void drawEnemies() {
         for (Enemy enemy : this.onFieldEnemies) {
             enemy.draw(game.batch);
+            enemy.drawDamageNumbers(game.batch);
         }
     }
 
