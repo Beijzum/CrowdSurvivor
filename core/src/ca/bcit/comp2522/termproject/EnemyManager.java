@@ -78,7 +78,8 @@ final public class EnemyManager {
                 if (!enemy.getHitbox().overlaps(playerProjectile.getHitbox())) {
                     continue;
                 }
-                enemy.takeDamage(playerProjectile, calculateDamage());
+                int damage = calculateDamage();
+                enemy.takeDamage(playerProjectile, damage, damage != gameScreen.player.getAttack());
             }
             enemy.incrementDamageTintTimer();
             enemy.updateDamageNumbers(Gdx.graphics.getDeltaTime());
@@ -99,7 +100,6 @@ final public class EnemyManager {
             this.currentBasicEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
         }
-
     }
 
     private int calculateDamage() {
