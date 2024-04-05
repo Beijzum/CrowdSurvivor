@@ -1,6 +1,8 @@
 package ca.bcit.comp2522.termproject;
 
-final public class PlayerProfile {
+import java.io.Serializable;
+
+final public class PlayerProfile implements Serializable {
     private int maxHealthBooster;
     private int attackBooster;
     private float defenseBooster;
