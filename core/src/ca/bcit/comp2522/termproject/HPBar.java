@@ -34,6 +34,7 @@ public class HPBar {
     }
 
     public void setPosition(float x, float y) {
+        // set x, y position
         this.x = x;
         this.y = y;
     }

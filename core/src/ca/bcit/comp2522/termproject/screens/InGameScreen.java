@@ -42,7 +42,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.camera = new OrthographicCamera();
         this.game = crowdSurvivor;
         this.player = Player.createPlayer();
-        this.hpBar = new HPBar(20, Gdx.graphics.getHeight() - 30, 200, 20, player.getMaxHP(), Color.RED, Color.GREEN);
+        this.hpBar = new HPBar(20, Gdx.graphics.getHeight() - 30, 200, 20, player.getMaxHP(),
+                Color.RED, Color.GREEN);
         this.enemyManager = EnemyManager.createManager(this);
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));

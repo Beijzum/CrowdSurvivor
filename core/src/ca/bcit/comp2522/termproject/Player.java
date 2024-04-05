@@ -1,6 +1,6 @@
 package ca.bcit.comp2522.termproject;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -316,7 +316,7 @@ public class Player extends Entity {
     public int getMaxHP() {
         return this.maxHealth;
     }
-    
+
     public int getCurrentHP() {
         return this.health;
     }
