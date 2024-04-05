@@ -10,8 +10,6 @@ public class PlayerManager implements InputProcessor {
     final private InGameScreen gameScreen;
     private static PlayerManager instance = null;
     final private Vector3 mouseVector = new Vector3(0, 0, 0);
-    private float mousePositionX;
-    private float mousePositionY;
 
     private PlayerManager(InGameScreen gameScreen) {
         this.gameScreen = gameScreen;
