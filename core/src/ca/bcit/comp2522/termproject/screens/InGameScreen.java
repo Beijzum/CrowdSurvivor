@@ -27,6 +27,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     final private Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
     final private Stage gameUI = new Stage();
     final public Player player;
+
+    final private HPBar hpBar;
     final private EnemyManager enemyManager;
     final private PlayerManager playerManager;
     final private InputMultiplexer inputManager;
@@ -40,6 +42,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.camera = new OrthographicCamera();
         this.game = crowdSurvivor;
         this.player = Player.createPlayer();
+        this.hpBar = new HPBar(20, Gdx.graphics.getHeight() - 30, 200, 20, player.getMaxHP(), Color.RED, Color.GREEN);
         this.enemyManager = EnemyManager.createManager(this);
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
@@ -85,6 +88,16 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.drawEnemies();
         this.drawAllPlayerProjectiles();
         game.buttonsUI.draw();
+
+        // draws HP bar
+        hpBar.setPosition(player.getX(), player.getY() - hpBar.getHeight());
+        hpBar.setMaxHP(player.getMaxHP());
+        hpBar.setCurrentHP(player.getCurrentHP());
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        hpBar.draw(shapeRenderer);
+        shapeRenderer.end();
 
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {

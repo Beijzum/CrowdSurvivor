@@ -3,6 +3,7 @@ package ca.bcit.comp2522.termproject;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.LinkedList;
@@ -83,6 +84,7 @@ public class Player extends Entity {
     public void setUltimateCD(int ultimateCD) {
         this.ultimateCD = ultimateCD;
     }
+
     public double getAttackSpeed() {
         return attackSpeed;
     }
@@ -127,7 +129,7 @@ public class Player extends Entity {
         return this.collectedCurrency;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return this.level;
     }
 
@@ -154,12 +156,15 @@ public class Player extends Entity {
     public float getCenterY() {
         return this.sprite.getY() + this.sprite.getHeight() / 2;
     }
+
     public float getEXPMultiplier() {
         return this.EXPMultiplier;
     }
+
     public void setEXPMultiplier(float EXPMultiplier) {
         this.EXPMultiplier = EXPMultiplier;
     }
+
     public float getCurrencyMultiplier() {
         return this.currencyMultiplier;
     }
@@ -182,7 +187,7 @@ public class Player extends Entity {
         this.iFramesLength = BASE_IFRAME_LENGTH;
         this.EXPMultiplier = BASE_EXP_MULTIPLIER;
         this.currencyMultiplier = BASE_CURRENCY_MULTIPLIER;
-        this.iFrameIsOn= false;
+        this.iFrameIsOn = false;
         this.levelUpThreshold = BASE_LEVEL_UP_THRESHOLD;
         this.accumulatedEXP = 0;
         this.currentEXP = 0;
@@ -216,6 +221,7 @@ public class Player extends Entity {
             this.attackTimer += Gdx.graphics.getDeltaTime();
         }
     }
+
 
     public void regenHealth() {
         if (this.health == this.maxHealth) {
@@ -306,6 +312,15 @@ public class Player extends Entity {
         }
         return 0;
     }
+
+    public int getMaxHP() {
+        return this.maxHealth;
+    }
+    
+    public int getCurrentHP() {
+        return this.health;
+    }
+
     public void addCollectedCurrency(int currency) {
         this.collectedCurrency += currency * currencyMultiplier;
     }
@@ -314,4 +329,11 @@ public class Player extends Entity {
         return this.currentEXP / this.levelUpThreshold;
     }
 
+    public void setMaxHP(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public void setCurrentHP() {
+        this.health = MathUtils.clamp(this.health, 0, this.maxHealth);
+    }
 }
