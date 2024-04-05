@@ -20,7 +20,7 @@ public class Enemy extends Entity {
     final protected static int BASE_CURRENCY_DROP_AMOUNT = 2;
     final private static int CURRENCY_CALCULATION_DIVISOR = 100;
     final private Color damageTint = new Color(1, 0, 0, 1);
-    final private List<DamageNumber> activeDamageNumbers = new ArrayList<>();
+    final private LinkedList<DamageNumber> activeDamageNumbers = new LinkedList<>();
     protected float tintTimer = 0;
     private float acceleration;
     protected boolean isTakingDamage;
@@ -122,12 +122,11 @@ public class Enemy extends Entity {
     }
 
     public void updateDamageNumbers(float deltaTime) {
-        for (int i = activeDamageNumbers.size() - 1; i >= 0; i--) {
-            DamageNumber damageNumber = activeDamageNumbers.get(i);
-            damageNumber.update(deltaTime);
-            if (damageNumber.isExpired()) {
-                activeDamageNumbers.remove(i);
-            }
+        for (DamageNumber number : activeDamageNumbers) {
+            number.update(deltaTime);
+        }
+        if (!activeDamageNumbers.isEmpty() && activeDamageNumbers.peek().isExpired()) {
+            activeDamageNumbers.removeFirst();
         }
     }
 
