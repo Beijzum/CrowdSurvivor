@@ -90,14 +90,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         game.buttonsUI.draw();
 
         // draws HP bar
-        hpBar.setPosition(player.getX(), player.getY() - hpBar.getHeight());
-        hpBar.setMaxHP(player.getMaxHP());
-        hpBar.setCurrentHP(player.getCurrentHP());
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        hpBar.draw(shapeRenderer);
-        shapeRenderer.end();
+        drawHPBar();
 
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {
@@ -165,6 +158,17 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         for (Enemy enemy : this.onFieldEnemies) {
             enemy.draw(game.batch);
         }
+    }
+
+    private void drawHPBar() {
+        hpBar.setPosition(player.getX(), player.getY() - hpBar.getHeight());
+        hpBar.setMaxHP(player.getMaxHP());
+        hpBar.setCurrentHP(player.getCurrentHP());
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        hpBar.draw(shapeRenderer);
+        shapeRenderer.end();
     }
 
     public void resetGameState() {
