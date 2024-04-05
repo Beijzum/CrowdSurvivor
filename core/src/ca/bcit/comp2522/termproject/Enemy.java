@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Enemy extends Entity {
@@ -17,6 +20,7 @@ public class Enemy extends Entity {
     final protected static int BASE_CURRENCY_DROP_AMOUNT = 2;
     final private static int CURRENCY_CALCULATION_DIVISOR = 100;
     final private Color damageTint = new Color(1, 0, 0, 1);
+    final private List<DamageNumber> activeDamageNumbers = new ArrayList<>();
     protected float tintTimer = 0;
     private float acceleration;
     protected boolean isTakingDamage;
@@ -85,6 +89,12 @@ public class Enemy extends Entity {
     @Override
     public void draw(Batch batch) {
         batch.begin();
+
+        updateDamageNumbers(Gdx.graphics.getDeltaTime());
+        for (DamageNumber damageNumber : activeDamageNumbers) {
+            damageNumber.draw((SpriteBatch) batch, CrowdSurvivor.font);
+        }
+
         if (this.isTakingDamage) {
             Color originalColor = new Color(batch.getColor());
             if (originalColor.equals(CrowdSurvivor.STANDARD_COLOR)) {
@@ -105,12 +115,26 @@ public class Enemy extends Entity {
         batch.end();
     }
 
+    public void updateDamageNumbers(float deltaTime) {
+        for (int i = activeDamageNumbers.size() - 1; i >= 0; i--) {
+            DamageNumber damageNumber = activeDamageNumbers.get(i);
+            damageNumber.update(deltaTime);
+            if (damageNumber.isExpired()) {
+                activeDamageNumbers.remove(i);
+            }
+        }
+    }
+
     public void takeDamage(Projectile projectile, int damage) {
         if (this.sprite.getBoundingRectangle().overlaps(projectile.getHitbox())
                 && !this.hitByProjectileList.contains(projectile)) {
             this.isTakingDamage = true;
             this.hitByProjectileList.add(projectile);
             this.health -= (int) Math.round(damage * (1 - this.defense));
+
+            // adds damage number
+            DamageNumber damageNumber = new DamageNumber(this.getCenterX(), this.getCenterY(), damage);
+            activeDamageNumbers.add(damageNumber);
         }
         if (this.tintTimer > DAMAGE_TINT_TIME) {
             this.tintTimer = 0;

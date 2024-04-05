@@ -21,7 +21,7 @@ public class CrowdSurvivor extends Game {
     public int viewportX;
     public int viewportY;
     public SpriteBatch batch;
-    public BitmapFont font;
+    public static BitmapFont font;
     public Stage buttonsUI;
     public Skin skin;
     public static Color STANDARD_COLOR = new Color(1, 1, 1, 1);
@@ -64,5 +64,6 @@ public class CrowdSurvivor extends Game {
     @Override
     public void dispose() {
         batch.dispose();
+        font.dispose();
     }
 }
