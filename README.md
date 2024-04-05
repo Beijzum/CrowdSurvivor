@@ -18,6 +18,7 @@ fix camera stuttering
 game UI in stageUI in CrowdSurvivor file
 
 ## PRIORITY TODO
+make a definitive arena size
 implement HUD during gameplay
 implement shop
 implement bosses
@@ -35,7 +36,5 @@ UNIT TESTS MAYBE
 
 ## REMOVED IF NO TIME
 Create ultimate effect
-Create player loadout page
-create gacha
 create shop
 create perma upgrades
