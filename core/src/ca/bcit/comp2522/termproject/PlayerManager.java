@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 public class PlayerManager implements InputProcessor {
     final private InGameScreen gameScreen;
     private static PlayerManager instance = null;
+    final private Vector3 mouseVector = new Vector3(0, 0, 0);
     private float mousePositionX;
     private float mousePositionY;
 
@@ -77,9 +78,10 @@ public class PlayerManager implements InputProcessor {
         }
 
         // fire projectile
-        Vector3 mousePos = gameScreen.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+        this.mouseVector.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        Vector3 mousePosition = gameScreen.camera.unproject(mouseVector);
         gameScreen.player
-                .fireProjectile(this.gameScreen.playerProjectilesOnScreen, mousePos.x, mousePos.y);
+                .fireProjectile(this.gameScreen.playerProjectilesOnScreen, mousePosition.x, mousePosition.y);
 
     }
 
@@ -119,17 +121,12 @@ public class PlayerManager implements InputProcessor {
 
     @Override
     public boolean touchDragged(int i, int i1, int i2) {
-        this.mousePositionX = Gdx.input.getX();
-        // mousePositionY is flipped from the rest of the coordinates system in libgdx
-        this.mousePositionY = Gdx.graphics.getHeight() - Gdx.input.getY();
-        return true;
+        return false;
     }
 
     @Override
     public boolean mouseMoved(int i, int i1) {
-        this.mousePositionX = Gdx.input.getX();
-        this.mousePositionY = Gdx.graphics.getHeight() - Gdx.input.getY();
-        return true;
+        return false;
     }
 
     @Override
