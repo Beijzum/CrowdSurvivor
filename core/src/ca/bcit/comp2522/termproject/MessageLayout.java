@@ -15,8 +15,6 @@ public interface MessageLayout {
         CrowdSurvivor.font.getData().setScale(scale);
         batch.begin();
         for (int i = 0; i < layouts.length; i++) {
-            System.out.println(layouts[i].width);
-            System.out.println(layouts[i].glyphCount);
             CrowdSurvivor.font.draw(batch, layouts[i], x - layouts[i].width / 2,
                     y - layouts[i].height - layouts[i].height * i * 1.5f);
         }
