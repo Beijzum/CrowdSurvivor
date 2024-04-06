@@ -2,20 +2,28 @@ package ca.bcit.comp2522.termproject.screens;
 
 import ca.bcit.comp2522.termproject.ActorManager;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
+import ca.bcit.comp2522.termproject.MessageLayout;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-public class GameOverScreen implements Screen, ActorManager {
+public class GameOverScreen implements Screen, ActorManager, MessageLayout {
     final int numberOfButtons = 2;
     final private CrowdSurvivor game;
     final private TextButton[] menuItems = new TextButton[numberOfButtons]; // try again, quit
+    private GlyphLayout[] messageLayouts;
+    final private Music music;
+    final private Music startOfMusic;
 
     public GameOverScreen(CrowdSurvivor game) {
         this.game = game;
+        this.music = Gdx.audio.newMusic(Gdx.files.internal("music/gameOverMusic.mp3"));
+        this.startOfMusic = Gdx.audio.newMusic(Gdx.files.internal("sfx/gameOverSFX.mp3"));
         createButtons();
     }
 
@@ -37,6 +45,7 @@ public class GameOverScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                dispose();
                 clearStage(game.buttonsUI);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -54,6 +63,7 @@ public class GameOverScreen implements Screen, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                dispose();
                 clearStage(game.buttonsUI);
                 game.inGameScreen.dispose();
                 game.setScreen(game.mainMenuScreen);
@@ -63,17 +73,37 @@ public class GameOverScreen implements Screen, ActorManager {
         this.menuItems[1] = quitButton;
     }
 
+    private GlyphLayout[] createMessageLayout() {
+        GlyphLayout youDiedMessage = createLayout("YOU DIED", 2f);
+        GlyphLayout gameOverMessage = createLayout("GAME OVER", 2f);
+        GlyphLayout timeElapsedMessage = createLayout(String.format("TIME ELAPSED: %d:%02d",
+                Math.round(game.inGameScreen.timeElapsed) / 60,
+                Math.round(game.inGameScreen.timeElapsed) % 60), 2f);
+        GlyphLayout scoreMessage = createLayout(String.format("SCORE: %d",
+                        game.inGameScreen.player.getCollectedCurrency() + game.inGameScreen.player.getAccumulatedEXP()),
+                2f);
+        return new GlyphLayout[] {youDiedMessage, gameOverMessage, timeElapsedMessage, scoreMessage};
+    }
+
     @Override
     public void show() {
+        this.messageLayouts = createMessageLayout();
         addActors(game.buttonsUI, menuItems);
         Gdx.input.setInputProcessor(game.buttonsUI);
+        music.setLooping(true);
+        startOfMusic.play();
     }
 
     @Override
     public void render(float v) {
+        if (!startOfMusic.isPlaying()) {
+            music.play();
+        }
         game.inGameScreen.renderFrameAsBackground();
         game.buttonsUI.act();
         game.buttonsUI.draw();
+        drawMultipleMessageFromCenter(this.messageLayouts, game.batch,
+                Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight(), 2f);
     }
 
     @Override
@@ -98,6 +128,7 @@ public class GameOverScreen implements Screen, ActorManager {
 
     @Override
     public void dispose() {
-
+        startOfMusic.dispose();
+        music.dispose();
     }
 }
