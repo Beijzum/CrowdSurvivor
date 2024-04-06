@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -107,6 +108,19 @@ public class Enemy extends Entity {
                 this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                 this.sprite.getScaleY(), this.sprite.getRotation());
         batch.end();
+    }
+
+    public void drawHPBar(ShapeRenderer shapeRenderer) {
+        float hpBarWidth = this.sprite.getWidth();
+        float hpBarHeight = 5;
+        float hpBarX = this.sprite.getX();
+        float hpBarY = this.sprite.getY() + this.sprite.getHeight() + 5;
+
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.rect(hpBarX, hpBarY, hpBarWidth, hpBarHeight);
+
+        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.rect(hpBarX, hpBarY, hpBarWidth * ((float) this.health / this.maxHealth), hpBarHeight);
     }
 
     public void drawDamageNumbers(Batch batch) {

@@ -23,6 +23,8 @@ import java.util.List;
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor {
     final private static int MAX_GAME_LENGTH = 300;
     public float timeElapsed = 0;
+    ShapeRenderer shapeRenderer = new ShapeRenderer();
+
     public OrthographicCamera camera;
     final private CrowdSurvivor game;
     final private Music music;
@@ -165,9 +167,15 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     }
 
     private void drawEnemies() {
+        shapeRenderer.setProjectionMatrix(camera.combined);
+
         for (Enemy enemy : this.onFieldEnemies) {
             enemy.draw(game.batch);
             enemy.drawDamageNumbers(game.batch);
+
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            enemy.drawHPBar(shapeRenderer);
+            shapeRenderer.end();
         }
     }
 
@@ -215,6 +223,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         }
         return false;
     }
+
     private void addCurrencyToPlayerProfile() {
         game.playerProfile.setCurrency(game.playerProfile.getCurrency() + player.getCollectedCurrency());
     }
