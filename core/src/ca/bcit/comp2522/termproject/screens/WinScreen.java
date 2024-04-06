@@ -2,22 +2,21 @@ package ca.bcit.comp2522.termproject.screens;
 
 import ca.bcit.comp2522.termproject.ActorManager;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
+import ca.bcit.comp2522.termproject.MessageLayout;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import org.w3c.dom.Text;
-import sun.font.TrueTypeFont;
 
-public class WinScreen implements Screen, ActorManager {
-
+public class WinScreen implements Screen, ActorManager, MessageLayout {
     public CrowdSurvivor game;
     final private TextButton[] menuItems;
     final private Music music;
+    private GlyphLayout[] messageLayouts;
 
     public WinScreen(CrowdSurvivor game) {
         this.game = game;
@@ -68,33 +67,23 @@ public class WinScreen implements Screen, ActorManager {
                 return true;
             }
         });
-
-//        TextButton youWinMessage = new TextButton("YOU WIN!", game.skin);
-//        TextButton score = new TextButton(String.format("SCORE: %d",
-//                        game.inGameScreen.player.getCollectedCurrency() + game.inGameScreen.player.getAccumulatedEXP()),
-//                        game.skin);
-//
-//        youWinMessage.setDisabled(true);
-//        score.setDisabled(true);
-//        youWinMessage.setSize(buttonWidth * 1.5f, buttonHeight);
-//        score.setSize(buttonWidth, buttonHeight);
-//        youWinMessage.setPosition(buttonPositionX, Gdx.graphics.getHeight() - buttonHeight);
-//        score.setSize(buttonPositionX, Gdx.graphics.getHeight() - buttonHeight - youWinMessage.getHeight());
-
         return new TextButton[] {playAgain, returnToMenu};
     }
 
-    private void drawWinMessage() {
-        game.batch.begin();
-        CrowdSurvivor.font.getData().setScale(2.5f);
-        CrowdSurvivor.font.draw(game.batch, "YOU WIN!", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - 200);
-        CrowdSurvivor.font.draw(game.batch, String.format("SCORE: %d", game.inGameScreen.player.getCollectedCurrency() + game.inGameScreen.player.getAccumulatedEXP()), Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - 400);
-        CrowdSurvivor.font.getData().setScale(1);
-        game.batch.end();
+    private GlyphLayout[] createMessageLayout() {
+        GlyphLayout congratulationMessage = createLayout("CONGRATULATIONS YOU WIN!", 2.5f);
+        GlyphLayout timeElapsedMessage = createLayout(String.format("TIME ELAPSED: %d:%02d",
+                Math.round(game.inGameScreen.timeElapsed) / 60,
+                Math.round(game.inGameScreen.timeElapsed) % 60), 2.5f);
+        GlyphLayout scoreMessage = createLayout(String.format("SCORE: %d",
+                game.inGameScreen.player.getCollectedCurrency() + game.inGameScreen.player.getAccumulatedEXP()),
+                2.5f);
+        return new GlyphLayout[] {congratulationMessage, timeElapsedMessage, scoreMessage};
     }
 
     @Override
     public void show() {
+        messageLayouts = createMessageLayout();
         music.setLooping(true);
         music.play();
         addActors(game.buttonsUI, menuItems);
@@ -106,7 +95,9 @@ public class WinScreen implements Screen, ActorManager {
         game.inGameScreen.renderFrameAsBackground();
         game.buttonsUI.act();
         game.buttonsUI.draw();
-        drawWinMessage();
+        drawMultipleMessageFromCenter(messageLayouts, game.batch,
+                Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight(), 2.5f);
+
     }
 
     @Override
