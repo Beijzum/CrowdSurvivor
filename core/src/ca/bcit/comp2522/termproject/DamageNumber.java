@@ -46,14 +46,12 @@ public class DamageNumber {
     public void draw(SpriteBatch batch, BitmapFont font) {
         if (this.isCritical) {
             font.setColor(Color.YELLOW);
-            font.getData().setScale(3);
+            font.getData().setScale(1.5f);
             font.draw(batch, String.format("%d!", this.DAMAGE), this.X, this.Y);
             font.getData().setScale(1);
             font.setColor(Color.WHITE);
             return;
         }
-        font.getData().setScale(2);
         font.draw(batch, String.valueOf(this.DAMAGE), this.X, this.Y);
-        font.getData().setScale(1);
     }
 }
