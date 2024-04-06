@@ -64,9 +64,10 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     @Override
     public void render(float v) {
-        if (timeElapsed >= MAX_GAME_LENGTH) {
+        if (timeElapsed >= MAX_GAME_LENGTH) { // later add the stipulation that the boss needs to be killed too
             dispose();
             game.setScreen(game.winScreen);
+            return;
         }
         ScreenUtils.clear(0, 0, 0.2f, 1);
         game.buttonsUI.act();
