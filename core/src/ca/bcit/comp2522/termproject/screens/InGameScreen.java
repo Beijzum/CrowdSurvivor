@@ -32,6 +32,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     final private Stage gameUI = new Stage();
     final public Player player;
     final private HPBar hpBar;
+    final private EXPBar expBar;
     final private EnemyManager enemyManager;
     final private PlayerManager playerManager;
     final private InputMultiplexer inputManager;
@@ -46,8 +47,10 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.camera = new OrthographicCamera();
         this.game = crowdSurvivor;
         this.player = Player.createPlayer();
-        this.hpBar = new HPBar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 100, 10,
+        this.hpBar = new HPBar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 300, 20,
                 player.getMaxHP(), Color.RED, Color.GREEN);
+        this.expBar = new EXPBar((float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight(), (float) (Gdx.graphics.getWidth() / 1.05), 20,
+                player.getLevelUpThreshold(), Color.BLUE, Color.CYAN);
         this.enemyManager = EnemyManager.createManager(this);
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
@@ -99,6 +102,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
         // draws HP bar
         drawHPBar();
+
+        drawEXPBar();
 
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {
@@ -180,13 +185,26 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     }
 
     private void drawHPBar() {
-        hpBar.setPosition(player.getX(), player.getY() - hpBar.getHeight());
+        hpBar.setPosition((float) (player.getX() - Gdx.graphics.getWidth() / 2.2),
+                player.getY() + (float) Gdx.graphics.getHeight() / 2);
         hpBar.setMaxHP(player.getMaxHP());
         hpBar.setCurrentHP(player.getCurrentHP());
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         hpBar.draw(shapeRenderer);
+        shapeRenderer.end();
+    }
+
+    private void drawEXPBar() {
+        expBar.setPosition((float) (player.getX() - Gdx.graphics.getWidth() / 2.2),
+                player.getY() + (float) Gdx.graphics.getHeight() / 2 + 25);
+        expBar.setMaxEXP(player.getLevelUpThreshold());
+        expBar.setCurrentEXP(player.getCurrentEXP());
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        expBar.draw(shapeRenderer);
         shapeRenderer.end();
     }
 
