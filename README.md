@@ -31,6 +31,3 @@ UNIT TESTS MAYBE
 
 
 ## REMOVED IF NO TIME
-Create ultimate effect
-create shop
-create perma upgrades
