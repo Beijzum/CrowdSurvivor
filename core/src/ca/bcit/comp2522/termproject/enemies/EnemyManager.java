@@ -3,16 +3,17 @@ package ca.bcit.comp2522.termproject.enemies;
 import ca.bcit.comp2522.termproject.Projectile;
 import ca.bcit.comp2522.termproject.screens.InGameScreen;
 import com.badlogic.gdx.Gdx;
+import org.w3c.dom.ranges.Range;
 
 import java.util.Random;
 
 final public class EnemyManager {
     final private static int BASE_BASIC_ENEMY_HEALTH = 100;
     final private static int BASE_BOSS_HEALTH = 500;
-    final private static int BASE_PROJECTILE_ENEMY_HEALTH = 50;
+    final private static int BASE_RANGED_ENEMY_HEALTH = 50;
     final private static int BASE_BASIC_ENEMY_SPAWN_TIME = 3;
-    final private static int BASE_CHARGER_ENEMY_SPAWN_TIME = 2;
-    final private static int BASE_RANGED_ENEMY_SPAWN_TIME = 10;
+    final private static int BASE_CHARGER_ENEMY_SPAWN_TIME = 10;
+    final private static int BASE_RANGED_ENEMY_SPAWN_TIME = 1;
     final private static int BASE_CHARGER_HEALTH = 125;
     final private static int BASE_ENEMY_SPEED = 100;
     final private static int BASE_WAVE_SIZE = 10;
@@ -54,7 +55,28 @@ final public class EnemyManager {
     }
 
     public void handleEnemyProjectiles() {
+        // remove projectile
+        if (gameScreen.enemyProjectilesOnScreen.peek() != null
+                && gameScreen.enemyProjectilesOnScreen.peek().isOverLifeTime()) {
+            gameScreen.enemyProjectilesOnScreen.removeFirst();
+        }
 
+        // move projectile
+        for (Projectile enemyProjectile : gameScreen.enemyProjectilesOnScreen) {
+            enemyProjectile.incrementLifetimeTimer();
+            enemyProjectile.moveProjectile();
+            enemyProjectile.spinProjectile();
+        }
+
+        //
+        for (Enemy enemy : gameScreen.onFieldEnemies) {
+            if (!(enemy instanceof RangedEnemy)) {
+                continue;
+            }
+            RangedEnemy rangedEnemy = (RangedEnemy) enemy;
+            rangedEnemy.fireProjectile(gameScreen.enemyProjectilesOnScreen,
+                    gameScreen.player.getCenterX(), gameScreen.player.getCenterY());
+        }
     }
 
     public void handleEnemies() {
@@ -76,22 +98,32 @@ final public class EnemyManager {
     }
 
     public void handleEnemySpawn() {
-        if (this.basicEnemyTimer > this.currentBasicEnemySpawnTime) {
-            // randomize spawn point outside of screen, camera position x, y returns center of screen
+//        if (this.basicEnemyTimer > this.currentBasicEnemySpawnTime) {
+//            // randomize spawn point outside of screen, camera position x, y returns center of screen
+//            float[] spawnPoint = generateSpawnPoint();
+//
+//            gameScreen.onFieldEnemies.add(createBasicEnemy(spawnPoint[0], spawnPoint[1]));
+//            this.basicEnemyTimer = 0;
+//            this.currentBasicEnemySpawnTime = this.randomNumberGenerator
+//                    .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
+//        }
+//
+//        if (this.chargerEnemyTimer > this.currentChargerEnemySpawnTime) {
+//            float[] spawnPoint = generateSpawnPoint();
+//
+//            gameScreen.onFieldEnemies.add(createCharger(spawnPoint[0], spawnPoint[1]));
+//            this.chargerEnemyTimer = 0;
+//            this.currentChargerEnemySpawnTime = this.randomNumberGenerator
+//                    .nextInt(BASE_CHARGER_ENEMY_SPAWN_TIME) + BASE_CHARGER_ENEMY_SPAWN_TIME;
+//        }
+
+        if (this.rangedEnemyTimer > this.currentRangedEnemySpawnTime) {
             float[] spawnPoint = generateSpawnPoint();
 
-            gameScreen.onFieldEnemies.add(createBasicEnemy(spawnPoint[0], spawnPoint[1]));
-            this.basicEnemyTimer = 0;
-            this.currentBasicEnemySpawnTime = this.randomNumberGenerator
-                    .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
-        }
-        if (this.chargerEnemyTimer > this.currentChargerEnemySpawnTime) {
-            float[] spawnPoint = generateSpawnPoint();
-
-            gameScreen.onFieldEnemies.add(createCharger(spawnPoint[0], spawnPoint[1]));
-            this.chargerEnemyTimer = 0;
-            this.currentChargerEnemySpawnTime = this.randomNumberGenerator
-                    .nextInt(BASE_CHARGER_ENEMY_SPAWN_TIME) + BASE_CHARGER_ENEMY_SPAWN_TIME;
+            gameScreen.onFieldEnemies.add(createRangedEnemy(spawnPoint[0], spawnPoint[1]));
+            this.rangedEnemyTimer = 0;
+            this.currentRangedEnemySpawnTime = this.randomNumberGenerator
+                    .nextInt(BASE_RANGED_ENEMY_SPAWN_TIME) + BASE_RANGED_ENEMY_SPAWN_TIME;
         }
     }
 
@@ -162,7 +194,21 @@ final public class EnemyManager {
     }
 
     private RangedEnemy createRangedEnemy(float xCoord, float yCoord) {
-        return new RangedEnemy();
+        int choice = randomNumberGenerator.nextInt(3); // basic, spewer, sniper
+        RangedEnemy newEnemy;
+        switch (choice) {
+            case 0:
+                newEnemy = RangedEnemy.createSniper(gameScreen.timeElapsed);
+                break;
+            case 1:
+                newEnemy = RangedEnemy.createSpewer(gameScreen.timeElapsed);
+                break;
+            default:
+                newEnemy = RangedEnemy.createBasic(gameScreen.timeElapsed);
+                break;
+        }
+        newEnemy.setCenterPosition(xCoord, yCoord);
+        return newEnemy;
     }
 
     private Enemy createBasicEnemy(float xCoord, float yCoord) {
