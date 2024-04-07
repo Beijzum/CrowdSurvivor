@@ -49,8 +49,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.hpBar = new HPBar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 300, 20,
                 player.getMaxHP(), Color.RED, Color.GREEN);
         this.expBar = new EXPBar((float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight(),
-                (float) (Gdx.graphics.getWidth() / 1.05), 20, player.getLevel(), player.getLevelUpThreshold(),
-                Color.BLUE, Color.CYAN);
+                (float) (Gdx.graphics.getWidth() / 1.05), 20, player.getLevel(), player.getLevelUpThreshold());
         this.enemyManager = EnemyManager.createManager(this);
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));

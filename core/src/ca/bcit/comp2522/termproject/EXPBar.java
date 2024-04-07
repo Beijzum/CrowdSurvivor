@@ -7,71 +7,134 @@ import com.badlogic.gdx.math.MathUtils;
 
 import static ca.bcit.comp2522.termproject.CrowdSurvivor.font;
 
+/**
+ * Represents the experience points (EXP) bar for the player HUD.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public class EXPBar {
-    private float x, y;
+    private float x;
+    private float y;
     private final float width;
     private final float height;
     private int levelThreshold;
     private int currentEXP;
-    private final Color backgroundColor;
-    private final Color foregroundColor;
+    private final Color backgroundColour = Color.BLUE;
+    private final Color foregroundColour = Color.CYAN;
     private int playerLevel;
 
-    public EXPBar(float x, float y, float width, float height, int playerLevel, int levelThreshold,
-                  Color backgroundColor, Color foregroundColor) {
+    /**
+     * Constructs an EXP bar with custom parameters.
+     *
+     * @param x              float representing the x-axis.
+     * @param y              float representing the y-axis.
+     * @param width          float representing the width.
+     * @param height         float representing the height.
+     * @param playerLevel    int representing the player's level.
+     * @param levelThreshold int representing the EXP needed to level up.
+     */
+    public EXPBar(final float x, final float y, final float width, final float height, final int playerLevel,
+                  final int levelThreshold) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.levelThreshold = levelThreshold;
         this.currentEXP = 0;
-        this.backgroundColor = backgroundColor;
-        this.foregroundColor = foregroundColor;
         this.playerLevel = playerLevel;
     }
 
+    /**
+     * Retrieves the width of the EXP bar.
+     *
+     * @return the width of the EXP bar.
+     */
     public float getWidth() {
         return this.width;
     }
 
+    /**
+     * Retrieves the height of the EXP bar.
+     *
+     * @return the height of the EXP bar.
+     */
     public float getHeight() {
         return this.height;
     }
 
-    public void setPosition(float x, float y) {
+    /**
+     * Sets the position of the EXP bar.
+     *
+     * @param posX float representing the x-coordinate of the position.
+     * @param posY float representing the y-coordinate of the position.
+     */
+    public void setPosition(final float posX, final float posY) {
         // set x, y position
-        this.x = x;
-        this.y = y;
+        this.x = posX;
+        this.y = posY;
     }
 
-    public void setCurrentEXP(int currentEXP) {
+    /**
+     * Sets the current EXP of the player.
+     * The currentEXP is clamped between 0 and the levelThreshold.
+     *
+     * @param currentEXP int representing the current EXP of the player.
+     */
+    public void setCurrentEXP(final int currentEXP) {
         // set current experience
         this.currentEXP = MathUtils.clamp(currentEXP, 0, this.levelThreshold);
     }
 
-    public void setMaxEXP(int maxEXP) {
+    /**
+     * Sets the maximum EXP required to level up.
+     *
+     * @param maxEXP int representing the maximum EXP required to level up.
+     */
+    public void setMaxEXP(final int maxEXP) {
         // set max experience
         this.levelThreshold = maxEXP;
     }
 
-    public void setCurrentLevel(int currentLevel) {
+    /**
+     * Sets the current level of the player.
+     *
+     * @param currentLevel int representing the current level of the player.
+     */
+    public void setCurrentLevel(final int currentLevel) {
         this.playerLevel = currentLevel;
     }
 
-    public void draw(ShapeRenderer shapeRenderer, Batch batch) {
+    /**
+     * Draws the EXP bar using the provided ShapeRenderer and Batch.
+     * The background and foreground of the EXP bar are drawn with colors backgroundColour and foregroundColour.
+     * The player's level is also displayed beside the EXP bar.
+     *
+     * @param shapeRenderer ShapeRenderer object used for rendering shapes.
+     * @param batch         Batch object used for rendering text.
+     */
+    public void draw(final ShapeRenderer shapeRenderer, final Batch batch) {
         // draw background
-        shapeRenderer.setColor(this.backgroundColor);
-        shapeRenderer.rect(this.x, this.y, (float) (this.width / 1.075), this.height);
+        shapeRenderer.setColor(this.backgroundColour);
+        final float rectWidth = 1.075F;
+        shapeRenderer.rect(this.x, this.y, (this.width / rectWidth), this.height);
 
         // draw foreground (experience)
         float foregroundWidth = (float) this.currentEXP / this.levelThreshold * this.width;
-        shapeRenderer.setColor(this.foregroundColor);
+        shapeRenderer.setColor(this.foregroundColour);
         shapeRenderer.rect(this.x, this.y, foregroundWidth, this.height);
 
         batch.begin();
-        float textX = (float) (this.x + this.getWidth() / 1.05);
-        float textY = this.y + this.getHeight() / 2 + 5;
-        font.getData().setScale(0.75F);
+        final float textXWidth = 1.05F;
+        float textX = (this.x + this.getWidth() / textXWidth);
+        float textY = this.y + this.getHeight() / 2;
+        final float textSmallScale = 0.75F;
+        font.getData().setScale(textSmallScale);
         font.draw(batch, "Level: " + this.playerLevel, textX, textY);
         font.getData().setScale(1);
         batch.end();
