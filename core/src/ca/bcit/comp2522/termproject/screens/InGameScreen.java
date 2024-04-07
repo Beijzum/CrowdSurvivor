@@ -49,8 +49,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.player = Player.createPlayer();
         this.hpBar = new HPBar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 300, 20,
                 player.getMaxHP(), Color.RED, Color.GREEN);
-        this.expBar = new EXPBar((float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight(), (float) (Gdx.graphics.getWidth() / 1.05), 20,
-                player.getLevelUpThreshold(), Color.BLUE, Color.CYAN);
+        this.expBar = new EXPBar((float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight(),
+                (float) (Gdx.graphics.getWidth() / 1.05), 20, player.getLevel(), player.getLevelUpThreshold(),
+                Color.BLUE, Color.CYAN);
         this.enemyManager = EnemyManager.createManager(this);
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
@@ -200,10 +201,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
                 player.getY() + (float) Gdx.graphics.getHeight() / 2 + 25);
         expBar.setMaxEXP(player.getLevelUpThreshold());
         expBar.setCurrentEXP(player.getCurrentEXP());
+        expBar.setCurrentLevel(player.getLevel());
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        expBar.draw(shapeRenderer);
+        expBar.draw(shapeRenderer, game.batch);
         shapeRenderer.end();
     }
 
