@@ -2,19 +2,35 @@ package ca.bcit.comp2522.termproject;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import ca.bcit.comp2522.termproject.CrowdSurvivor;
 
-// Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
+/**
+ * Represents the DesktopLauncher class, which runs the Crowd Survivor game.
+ * MacOS users need to start the application with the -XstartOnFirstThread JVM argument.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public class DesktopLauncher {
 
-	private static final int width = 1920;
-	private static final int height = 1080;
+    private static final int WIDTH = 1920;
+    private static final int HEIGHT = 1080;
 
-	public static void main (String[] arg) {
-		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(60);
-		config.setTitle("Crowd Survivor");
-		config.setWindowedMode(width, height);
-		new Lwjgl3Application(new CrowdSurvivor(), config);
-	}
+    /**
+     * Drives the program.
+     *
+     * @param arg is the command-line argument
+     */
+    public static void main(final String[] arg) {
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        final int foregroundFPS = 60;
+        config.setForegroundFPS(foregroundFPS);
+        config.setTitle("Crowd Survivor");
+        config.setWindowedMode(WIDTH, HEIGHT);
+        new Lwjgl3Application(new CrowdSurvivor(), config);
+    }
 }
