@@ -1,8 +1,8 @@
 package ca.bcit.comp2522.termproject.screens;
 
-import interfaces.ActorManager;
+import ca.bcit.comp2522.termproject.interfaces.ActorManager;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
-import interfaces.MessageLayout;
+import ca.bcit.comp2522.termproject.interfaces.MessageLayout;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -118,7 +118,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
     @Override
     public void hide() {
         game.playerProfile.setCurrency(game.playerProfile.getCurrency()
-                + game.inGameScreen.player.getCollectedCurrency());
+                + game.inGameScreen.player.getCollectedCurrency() + Math.round(game.inGameScreen.timeElapsed * 2));
     }
 
     @Override
