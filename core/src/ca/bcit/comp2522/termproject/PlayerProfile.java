@@ -148,7 +148,7 @@ final public class PlayerProfile implements Serializable {
         this.critRateBooster = 0;
         this.critMultiplierBooster = 0;
         this.healthRegenMultiplierBooster = 0;
-        this.currency = 500000;
+        this.currency = 0;
     }
 
     public void saveProfileState() {
