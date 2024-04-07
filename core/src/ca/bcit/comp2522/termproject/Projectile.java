@@ -97,6 +97,10 @@ public class Projectile {
         this.setProjectileCenter(this.getCenterX() + deltaX, this.getCenterY() + deltaY);
     }
 
+    public void spinProjectile() {
+        this.sprite.rotate(this.speed / 100f);
+    }
+
     private float getCenterX() {
         return this.sprite.getX() + this.sprite.getWidth() / 2;
     }
