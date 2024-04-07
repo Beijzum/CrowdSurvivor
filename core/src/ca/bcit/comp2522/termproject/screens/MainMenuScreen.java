@@ -34,10 +34,11 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
 
     @Override
     public void show() {
+        game.playerProfile.saveProfileState();
         Gdx.input.setInputProcessor(game.buttonsUI);
+        addActors(game.buttonsUI, menuItems);
         music.setLooping(true);
         music.play();
-        addActors(game.buttonsUI, menuItems);
     }
 
     @Override
@@ -95,6 +96,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.playerProfile.applyPlayerUpgrades(game.inGameScreen.player);
                 game.setScreen(game.inGameScreen);
                 return true;
             }
