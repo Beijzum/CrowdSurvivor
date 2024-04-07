@@ -46,6 +46,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                     return false;
                 }
                 dispose();
+                game.inGameScreen.resetGameState();
                 clearStage(game.buttonsUI);
                 game.setScreen(game.inGameScreen);
                 return true;
@@ -65,6 +66,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                 }
                 dispose();
                 clearStage(game.buttonsUI);
+                game.inGameScreen.resetGameState();
                 game.inGameScreen.dispose();
                 game.setScreen(game.mainMenuScreen);
                 return true;

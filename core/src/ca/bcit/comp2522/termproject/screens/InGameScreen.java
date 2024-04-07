@@ -108,7 +108,6 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {
             dispose();
-            resetGameState();
             addCurrencyToPlayerProfile();
             game.setScreen(game.gameOverScreen);
             return;
