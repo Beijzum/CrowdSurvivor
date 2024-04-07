@@ -150,7 +150,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                 }
                 clearStage(game.buttonsUI);
                 game.inGameScreen.player
-                        .setCurrencyMultiplier(game.inGameScreen.player.getCollectedCurrency() * (float) 1.1);
+                        .setCurrencyMultiplier(game.inGameScreen.player.getCurrencyMultiplier() * (float) 1.1);
                 game.setScreen(game.inGameScreen);
                 return true;
             }
