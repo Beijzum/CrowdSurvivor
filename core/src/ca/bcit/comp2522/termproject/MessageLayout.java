@@ -22,10 +22,18 @@ public interface MessageLayout {
         CrowdSurvivor.font.getData().setScale(1);
     }
 
-    default void drawMessageFromCenter(GlyphLayout layout, Batch batch, float x, float y) {
+    default void setTextAndScale(GlyphLayout layout, String message, float scale) {
+        CrowdSurvivor.font.getData().setScale(scale);
+        layout.setText(CrowdSurvivor.font, message);
+        CrowdSurvivor.font.getData().setScale(1);
+    }
+
+    default void drawMessage(GlyphLayout layout, Batch batch, float x, float y, float scale)  {
+        CrowdSurvivor.font.getData().setScale(scale);
         batch.begin();
-        CrowdSurvivor.font.draw(batch, layout, x - layout.width / 2, y - layout.height / 2);
+        CrowdSurvivor.font.draw(batch, layout, x, y);
         batch.end();
+        CrowdSurvivor.font.getData().setScale(1);
     }
 
     default void drawMessageFromCenter(GlyphLayout layout, Batch batch, float x, float y, float scale) {
