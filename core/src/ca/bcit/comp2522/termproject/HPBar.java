@@ -1,8 +1,11 @@
 package ca.bcit.comp2522.termproject;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+
+import static ca.bcit.comp2522.termproject.CrowdSurvivor.font;
 
 public class HPBar {
     private float x, y;
@@ -49,7 +52,7 @@ public class HPBar {
         this.maxHP = maxHP;
     }
 
-    public void draw(ShapeRenderer shapeRenderer) {
+    public void draw(ShapeRenderer shapeRenderer, Batch batch) {
         // draw background
         shapeRenderer.setColor(this.backgroundColor);
         shapeRenderer.rect(this.x, this.y, this.width, this.height);
@@ -58,5 +61,15 @@ public class HPBar {
         float foregroundWidth = (float) this.currentHP / this.maxHP * this.width;
         shapeRenderer.setColor(this.foregroundColor);
         shapeRenderer.rect(this.x, this.y, foregroundWidth, this.height);
+
+        // draw HP current/max text
+        batch.begin();
+        float textX = this.x + 310;
+        float textY = this.y + this.getHeight() / 2 + 5;
+        font.getData().setScale(0.5F);
+        font.draw(batch, currentHP + "/" + maxHP, textX, textY);
+        font.getData().setScale(1);
+        batch.end();
     }
+
 }
