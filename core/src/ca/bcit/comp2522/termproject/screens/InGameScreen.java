@@ -18,6 +18,8 @@ import ca.bcit.comp2522.termproject.interfaces.Background;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import static ca.bcit.comp2522.termproject.CrowdSurvivor.font;
+
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor {
     final private static int MAX_GAME_LENGTH = 300;
     public float timeElapsed = 0;
@@ -96,10 +98,10 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.drawAllPlayerProjectiles();
         game.buttonsUI.draw();
 
-        // draws HP bar
+        // draws HUD
         drawHPBar();
-
         drawEXPBar();
+        drawCurrencyCounter();
 
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {
@@ -201,6 +203,16 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         expBar.draw(shapeRenderer, game.batch);
         shapeRenderer.end();
+    }
+
+    private void drawCurrencyCounter() {
+        game.batch.begin();
+        font.setColor(Color.YELLOW);
+        font.draw(game.batch, "Currency: " + player.getCollectedCurrency(),
+                player.getX() - Gdx.graphics.getWidth() / 2.2f,
+                player.getY() + (float) Gdx.graphics.getHeight() / 2 - 30);
+        font.setColor(Color.WHITE);
+        game.batch.end();
     }
 
     public void resetGameState() {
