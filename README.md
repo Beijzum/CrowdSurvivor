@@ -33,6 +33,7 @@ implement bosses
 Different enemies
 implement SFX
 improve menu UI
+Add counter for shop upgrades. How many bought and the total effect %.
 
 ## OPTIMIZATIONS
 
