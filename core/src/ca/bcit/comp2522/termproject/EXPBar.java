@@ -75,7 +75,6 @@ public class EXPBar {
      * @param posY float representing the y-coordinate of the position.
      */
     public void setPosition(final float posX, final float posY) {
-        // set x, y position
         this.x = posX;
         this.y = posY;
     }
@@ -87,7 +86,6 @@ public class EXPBar {
      * @param currentEXP int representing the current EXP of the player.
      */
     public void setCurrentEXP(final int currentEXP) {
-        // set current experience
         this.currentEXP = MathUtils.clamp(currentEXP, 0, this.levelThreshold);
     }
 
@@ -97,7 +95,6 @@ public class EXPBar {
      * @param maxEXP int representing the maximum EXP required to level up.
      */
     public void setMaxEXP(final int maxEXP) {
-        // set max experience
         this.levelThreshold = maxEXP;
     }
 
@@ -112,8 +109,7 @@ public class EXPBar {
 
     /**
      * Draws the EXP bar using the provided ShapeRenderer and Batch.
-     * The background and foreground of the EXP bar are drawn with colors backgroundColour and foregroundColour.
-     * The player's level is also displayed beside the EXP bar.
+     * This method draws the background, foreground colours, and the player level text.
      *
      * @param shapeRenderer ShapeRenderer object used for rendering shapes.
      * @param batch         Batch object used for rendering text.
@@ -133,8 +129,8 @@ public class EXPBar {
         final float textXWidth = 1.05F;
         float textX = (this.x + this.getWidth() / textXWidth);
         float textY = this.y + this.getHeight() / 2;
-        final float textSmallScale = 0.75F;
-        font.getData().setScale(textSmallScale);
+        final float textEXPScale = 0.75F;
+        font.getData().setScale(textEXPScale);
         font.draw(batch, "Level: " + this.playerLevel, textX, textY);
         font.getData().setScale(1);
         batch.end();
