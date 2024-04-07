@@ -3,6 +3,7 @@ package ca.bcit.comp2522.termproject.screens;
 import ca.bcit.comp2522.termproject.ActorManager;
 import ca.bcit.comp2522.termproject.Background;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
+import ca.bcit.comp2522.termproject.MessageLayout;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class MainMenuScreen implements Screen, Background, ActorManager {
+public class MainMenuScreen implements Screen, Background, ActorManager, MessageLayout {
     final private static int NUMBER_OF_BUTTONS = 3;
     OrthographicCamera camera;
     final private CrowdSurvivor game;
@@ -48,6 +49,8 @@ public class MainMenuScreen implements Screen, Background, ActorManager {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         renderBackground(game, background);
+        drawMessageFromCenter(createLayout("CROWD SURVIVOR", 3), game.batch,
+                Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() * 8 / 10f, 2);
         game.buttonsUI.act();
         game.buttonsUI.draw();
     }
