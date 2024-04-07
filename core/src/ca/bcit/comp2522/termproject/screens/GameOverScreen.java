@@ -102,8 +102,8 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         game.inGameScreen.renderFrameAsBackground();
         game.buttonsUI.act();
         game.buttonsUI.draw();
-        drawMultipleMessageFromCenter(this.messageLayouts, game.batch,
-                Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight(), 2f);
+        drawMultipleMessageFromCenter(this.messageLayouts, game.batch, game.inGameScreen.camera.position.x,
+                game.inGameScreen.camera.position.y + Gdx.graphics.getHeight() / 2f, 2f);
     }
 
     @Override

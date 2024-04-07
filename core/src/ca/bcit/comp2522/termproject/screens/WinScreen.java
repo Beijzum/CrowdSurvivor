@@ -95,8 +95,8 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
         game.inGameScreen.renderFrameAsBackground();
         game.buttonsUI.act();
         game.buttonsUI.draw();
-        drawMultipleMessageFromCenter(messageLayouts, game.batch,
-                Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight(), 2.5f);
+        drawMultipleMessageFromCenter(messageLayouts, game.batch, game.inGameScreen.camera.position.x,
+                game.inGameScreen.camera.position.y + Gdx.graphics.getHeight() / 2f, 2.5f);
 
     }
 
