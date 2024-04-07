@@ -11,18 +11,14 @@ Notes go here
 Draw art assets
 
 ## HAVE TO FIX
-make pause menu dim when paused, stop background elements from jittering when paused
 fix camera stuttering
 
 ## REMINDERS
 game UI in stageUI in CrowdSurvivor file
 
 ## PRIORITY TODO
-make a definitive arena size
-implement HUD during gameplay
-implement shop
+implement enemy variation
 implement bosses
-implement auto-save feature
 
 ## TODO
 Different enemies
