@@ -287,18 +287,10 @@ public class Player extends Entity {
     }
 
     public void addCollectedCurrency(int currency) {
-        this.collectedCurrency += currency * currencyMultiplier;
+        this.collectedCurrency += Math.round(currency * currencyMultiplier);
     }
 
     private int calculateLeveledAmount() {
         return this.currentEXP / this.levelUpThreshold;
-    }
-
-    public void setMaxHP(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
-    public void setCurrentHP() {
-        this.health = MathUtils.clamp(this.health, 0, this.maxHealth);
     }
 }
