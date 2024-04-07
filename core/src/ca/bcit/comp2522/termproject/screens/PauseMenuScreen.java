@@ -1,6 +1,6 @@
 package ca.bcit.comp2522.termproject.screens;
 
-import interfaces.ActorManager;
+import ca.bcit.comp2522.termproject.interfaces.ActorManager;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
