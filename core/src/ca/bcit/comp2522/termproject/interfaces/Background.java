@@ -1,4 +1,4 @@
-package interfaces;
+package ca.bcit.comp2522.termproject.interfaces;
 
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.graphics.Color;

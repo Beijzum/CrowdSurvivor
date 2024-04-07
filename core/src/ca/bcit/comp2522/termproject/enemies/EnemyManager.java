@@ -1,4 +1,4 @@
-package enemies;
+package ca.bcit.comp2522.termproject.enemies;
 
 import ca.bcit.comp2522.termproject.Projectile;
 import ca.bcit.comp2522.termproject.screens.InGameScreen;

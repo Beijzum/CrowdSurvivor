@@ -1,7 +1,7 @@
 package ca.bcit.comp2522.termproject.screens;
 
-import interfaces.ActorManager;
-import interfaces.Background;
+import ca.bcit.comp2522.termproject.interfaces.ActorManager;
+import ca.bcit.comp2522.termproject.interfaces.Background;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
