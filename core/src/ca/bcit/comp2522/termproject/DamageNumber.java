@@ -92,4 +92,23 @@ public class DamageNumber {
         }
         font.draw(batch, String.valueOf(this.damage), this.newX, this.newY);
     }
+
+    /**
+     * Returns a string representation of the DamageNumber object.
+     *
+     * @return toString description
+     */
+    @Override
+    public String toString() {
+        return "DamageNumber{"
+                + "x=" + x
+                + ", y=" + y
+                + ", damage=" + damage
+                + ", lifetime=" + lifetime
+                + ", isCritical=" + isCritical
+                + ", newX=" + newX
+                + ", newY=" + newY
+                + ", timer=" + timer
+                + '}';
+    }
 }

@@ -135,4 +135,24 @@ public class EXPBar {
         font.getData().setScale(1);
         batch.end();
     }
+
+    /**
+     * Returns a string representation of the EXPBar object.
+     *
+     * @return toString description
+     */
+    @Override
+    public String toString() {
+        return "EXPBar{"
+                + "x=" + x
+                + ", y=" + y
+                + ", width=" + width
+                + ", height=" + height
+                + ", levelThreshold=" + levelThreshold
+                + ", currentEXP=" + currentEXP
+                + ", backgroundColour=" + backgroundColour
+                + ", foregroundColour=" + foregroundColour
+                + ", playerLevel=" + playerLevel
+                + '}';
+    }
 }

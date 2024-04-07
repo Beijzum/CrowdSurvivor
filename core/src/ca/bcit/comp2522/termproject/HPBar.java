@@ -123,4 +123,22 @@ public class HPBar {
         batch.end();
     }
 
+    /**
+     * Returns a string representation of the HPBar object.
+     *
+     * @return toString description
+     */
+    @Override
+    public String toString() {
+        return "HPBar{"
+                + "x=" + x
+                + ", y=" + y
+                + ", width=" + width
+                + ", height=" + height
+                + ", maxHP=" + maxHP
+                + ", currentHP=" + currentHP
+                + ", backgroundColor=" + backgroundColor
+                + ", foregroundColor=" + foregroundColor
+                + '}';
+    }
 }
