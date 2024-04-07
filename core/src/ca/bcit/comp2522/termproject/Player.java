@@ -44,7 +44,7 @@ public class Player extends Entity {
 
     private Player() {
         resetStats();
-        Sprite projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/tempSlash.png")));
+        Sprite projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/playerProjectile.png")));
         this.projectileTemplate = new Projectile(projectileSprite, 500, 3, 150);
         int spriteX = 100, spriteY = 100;
         this.sprite = new Sprite(new Texture(Gdx.files.internal("tempPlayerSprite.png")));
