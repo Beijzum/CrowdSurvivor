@@ -3,6 +3,7 @@ package ca.bcit.comp2522.termproject.screens;
 import ca.bcit.comp2522.termproject.ActorManager;
 import ca.bcit.comp2522.termproject.Background;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
+import ca.bcit.comp2522.termproject.MessageLayout;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import org.w3c.dom.Text;
 
-public class ShopScreen implements Screen, Background, ActorManager {
+public class ShopScreen implements Screen, Background, ActorManager, MessageLayout {
     final private static int BASE_ITEM_PRICE = 500;
     final private CrowdSurvivor game;
     final private Music music;
@@ -26,6 +28,8 @@ public class ShopScreen implements Screen, Background, ActorManager {
     final private TextButton.TextButtonStyle shopButtonStyle;
     final private Color backgroundFilter = new Color(50 / 255f, 50 / 255f, 100 / 255f, 1);
     final private Sprite background = new Sprite(new Texture("backgrounds/shopMenuBackground.jpg"));
+    final private GlyphLayout shopMessage;
+    private GlyphLayout currencyMessage;
     public ShopScreen(CrowdSurvivor crowdSurvivor) {
         this.game = crowdSurvivor;
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -33,6 +37,8 @@ public class ShopScreen implements Screen, Background, ActorManager {
         this.shopButtonStyle = new TextButton.TextButtonStyle();
         this.shopButtonStyle.downFontColor = Color.GREEN;
         this.shopButtonStyle.checkedFontColor = Color.RED;
+        this.shopMessage = createLayout("SHOP", 2f);
+        this.currencyMessage = new GlyphLayout();
         this.menuItems = createButtons();
         positionMenuItems();
     }
@@ -42,7 +48,6 @@ public class ShopScreen implements Screen, Background, ActorManager {
         Gdx.input.setInputProcessor(game.buttonsUI);
         music.setLooping(true);
         music.play();
-
         addActors(game.buttonsUI, menuItems);
     }
 
@@ -50,7 +55,11 @@ public class ShopScreen implements Screen, Background, ActorManager {
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
+        setTextAndScale(this.currencyMessage, String.format("CURRENCY: $%d", game.playerProfile.getCurrency()), 2f);
         renderBackgroundWithFilter(game, background, backgroundFilter);
+        drawMessage(shopMessage, game.batch, 20, Gdx.graphics.getHeight() / 1.01f, 2f);
+        drawMessage(currencyMessage, game.batch,
+                20, Gdx.graphics.getHeight() / 1.01f - this.shopMessage.height - 20, 2f);
         game.buttonsUI.act();
         game.buttonsUI.draw();
     }
