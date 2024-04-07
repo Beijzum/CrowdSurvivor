@@ -29,7 +29,7 @@ public class PlayerManager {
             gameScreen.player.takeDamage(enemy.getHitbox(), enemy.getAttack());
         }
         for (Projectile projectile : gameScreen.enemyProjectilesOnScreen) {
-            final int projectileDamage = 20;
+            final int projectileDamage = 10;
             gameScreen.player.takeDamage(projectile.getHitbox(), projectileDamage);
         }
     }
