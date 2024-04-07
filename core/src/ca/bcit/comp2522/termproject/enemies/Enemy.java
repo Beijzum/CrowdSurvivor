@@ -21,35 +21,29 @@ import java.util.Random;
 
 public class Enemy extends Entity {
     final protected static float DEFAULT_DEFENSE = 0.0f;
-    final protected static float DAMAGE_TINT_TIME = 0.6f;
-    final protected static int BASE_CURRENCY_DROP_AMOUNT = 2;
+    final private static float DAMAGE_TINT_TIME = 0.6f;
+    final private static int BASE_CURRENCY_DROP_AMOUNT = 2;
     final private static int CURRENCY_CALCULATION_DIVISOR = 100;
     final private Color damageTint = new Color(1, 0, 0, 1);
     final private LinkedList<DamageNumber> activeDamageNumbers = new LinkedList<>();
-    protected float tintTimer = 0;
-    private float acceleration;
-    protected boolean isTakingDamage;
+    private float tintTimer = 0;
+    private boolean isTakingDamage;
     final private Vector2 directionVector = new Vector2();
     final private LinkedList<Projectile> hitByProjectileList = new LinkedList<>();
     final protected Random randomNumberGenerator = new Random();
 
     public Enemy() {
-        // do later
+
     }
 
-    public Enemy(int health, int speed, int acceleration, int attack, String imageFilePath) {
+    public Enemy(int health, int speed, int attack, String imageFilePath) {
         this.maxHealth = health;
         this.health = this.maxHealth;
         this.speed = speed;
-        this.acceleration = acceleration;
         this.attack = attack;
         this.defense = DEFAULT_DEFENSE;
         this.sprite = new Sprite(new Texture(Gdx.files.internal(imageFilePath)));
         this.sprite.setSize(100, 100);
-    }
-
-    public float getAcceleration() {
-        return this.acceleration;
     }
 
     public float getCenterX() {
@@ -58,10 +52,6 @@ public class Enemy extends Entity {
 
     public float getCenterY() {
         return this.sprite.getY() + this.sprite.getHeight() / 2;
-    }
-
-    public void setAcceleration(float acceleration) {
-        this.acceleration = acceleration;
     }
 
     public Vector2 getDirectionVector() {
@@ -85,6 +75,10 @@ public class Enemy extends Entity {
         float deltaY = this.speed * Gdx.graphics.getDeltaTime() * (float) Math.sin(angle);
         this.sprite.setX(this.sprite.getX() + deltaX);
         this.sprite.setY(this.sprite.getY() + deltaY);
+    }
+
+    public void calculateDirectionVector(float x, float y) {
+        this.directionVector.set(x, y);
     }
 
     public void setCenterPosition(float x, float y) {

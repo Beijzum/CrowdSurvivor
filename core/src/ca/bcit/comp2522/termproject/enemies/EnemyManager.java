@@ -11,7 +11,7 @@ final public class EnemyManager {
     final private static int BASE_BOSS_HEALTH = 500;
     final private static int BASE_PROJECTILE_ENEMY_HEALTH = 50;
     final private static int BASE_BASIC_ENEMY_SPAWN_TIME = 3;
-    final private static int BASE_CHARGER_ENEMY_SPAWN_TIME = 20;
+    final private static int BASE_CHARGER_ENEMY_SPAWN_TIME = 2;
     final private static int BASE_RANGED_ENEMY_SPAWN_TIME = 10;
     final private static int BASE_CHARGER_HEALTH = 125;
     final private static int BASE_ENEMY_SPEED = 100;
@@ -85,6 +85,14 @@ final public class EnemyManager {
             this.currentBasicEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
         }
+        if (this.chargerEnemyTimer > this.currentChargerEnemySpawnTime) {
+            float[] spawnPoint = generateSpawnPoint();
+
+            gameScreen.onFieldEnemies.add(createCharger(spawnPoint[0], spawnPoint[1]));
+            this.chargerEnemyTimer = 0;
+            this.currentChargerEnemySpawnTime = this.randomNumberGenerator
+                    .nextInt(BASE_CHARGER_ENEMY_SPAWN_TIME) + BASE_CHARGER_ENEMY_SPAWN_TIME;
+        }
     }
 
     private int calculateDamage() {
@@ -146,12 +154,11 @@ final public class EnemyManager {
     private Enemy createCharger(float xCoord, float yCoord) {
         // temp scaling
         int health = Math.round(BASE_CHARGER_HEALTH + gameScreen.timeElapsed / 5);
-        int speed = Math.round(BASE_ENEMY_SPEED + gameScreen.timeElapsed / 5);
-        int acceleration = 20;
+        int acceleration = 75;
         int attack = 20;
-        Enemy newEnemy = new Enemy(health, speed, acceleration, attack, "enemy.png"); // change this later
-        newEnemy.setCenterPosition(xCoord, yCoord);
-        return newEnemy;
+        Charger newCharger = new Charger(health, acceleration, attack, "charger.jpg");
+        newCharger.setCenterPosition(xCoord, yCoord);
+        return newCharger;
     }
 
     private RangedEnemy createRangedEnemy(float xCoord, float yCoord) {
@@ -162,13 +169,13 @@ final public class EnemyManager {
         int health = Math.round(BASE_BASIC_ENEMY_HEALTH + gameScreen.timeElapsed / 5); // temp scaling
         int speed = Math.round(BASE_ENEMY_SPEED + gameScreen.timeElapsed / 5);
         int attack = 10;
-        Enemy newEnemy = new Enemy(health, speed, 0, attack, "enemy.png");
+        Enemy newEnemy = new Enemy(health, speed, attack, "enemy.png");
         newEnemy.setCenterPosition(xCoord, yCoord);
         return newEnemy;
     }
 
     private void moveToPlayer(Enemy enemy) {
-        enemy.getDirectionVector().set(gameScreen.player.getCenterX() - enemy.getCenterX(),
+        enemy.calculateDirectionVector(gameScreen.player.getCenterX() - enemy.getCenterX(),
                 gameScreen.player.getCenterY() - enemy.getCenterY());
         enemy.move();
     }
