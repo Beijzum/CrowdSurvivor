@@ -1,6 +1,9 @@
 package ca.bcit.comp2522.termproject;
 
-import java.io.Serializable;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import java.io.*;
 
 final public class PlayerProfile implements Serializable {
     private int maxHealthBooster;
@@ -104,25 +107,25 @@ final public class PlayerProfile implements Serializable {
     }
 
     private PlayerProfile() {
-        // do later when serialization is done
-        if (!loadProfile()) {
-            setThisToDefault();
-        }
+        setThisToDefault();
     }
 
     public static PlayerProfile createPlayerProfile() {
-        if (instance == null) {
-            instance = new PlayerProfile();
+        if (instance != null) {
+            return instance;
         }
-        return instance;
-    }
-
-    public void saveProfile() {
-        // implement later, saves upgrades into file
+        PlayerProfile loadedProfile = loadProfile();
+        if (loadedProfile == null) {
+            instance = new PlayerProfile();
+            return instance;
+        }
+        instance = loadedProfile;
+        return loadedProfile;
     }
 
     public void applyPlayerUpgrades(Player player) {
         player.setMaxHealth(player.getMaxHealth() + this.maxHealthBooster);
+        player.setHealth(player.getMaxHealth());
         player.setAttack(player.getAttack() + this.attackBooster);
         player.setDefense(player.getDefense() + this.defenseBooster);
         player.setSpeed(player.getSpeed() + this.speedBooster);
@@ -145,11 +148,23 @@ final public class PlayerProfile implements Serializable {
         this.critRateBooster = 0;
         this.critMultiplierBooster = 0;
         this.healthRegenMultiplierBooster = 0;
+        this.currency = 500000;
     }
 
-    private boolean loadProfile() {
-        // implement later, gets permanent upgrades from file and loads values into instance variables, call in constructor
-        // if file couldn't be loaded, then returns false
-        return false;
+    public void saveProfileState() {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(
+                Gdx.files.local("save/profile.ser").write(false))) {
+            outputStream.writeObject(this);
+        } catch (IOException err) {
+            System.out.println("Error, something went wrong when auto-saving...");
+        }
+    }
+
+    private static PlayerProfile loadProfile() {
+        try (ObjectInputStream inputStream = new ObjectInputStream(Gdx.files.local("save/profile.ser").read())) {
+            return (PlayerProfile) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException | GdxRuntimeException err) {
+            return null;
+        }
     }
 }
