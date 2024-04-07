@@ -57,7 +57,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
 
     @Override
     public void hide() {
-        System.out.println(game.inGameScreen.player.toString());
+
     }
 
     @Override
