@@ -1,9 +1,9 @@
 package ca.bcit.comp2522.termproject.screens;
 
-import ca.bcit.comp2522.termproject.ActorManager;
-import ca.bcit.comp2522.termproject.Background;
+import interfaces.ActorManager;
+import interfaces.Background;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
-import ca.bcit.comp2522.termproject.MessageLayout;
+import interfaces.MessageLayout;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -11,15 +11,12 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
-import org.w3c.dom.Text;
 
 public class ShopScreen implements Screen, Background, ActorManager, MessageLayout {
     final private static int BASE_ITEM_PRICE = 500;

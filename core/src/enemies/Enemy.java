@@ -1,5 +1,9 @@
-package ca.bcit.comp2522.termproject;
+package enemies;
 
+import ca.bcit.comp2522.termproject.CrowdSurvivor;
+import ca.bcit.comp2522.termproject.DamageNumber;
+import ca.bcit.comp2522.termproject.Entity;
+import ca.bcit.comp2522.termproject.Projectile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;

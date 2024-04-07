@@ -1,4 +1,4 @@
-package ca.bcit.comp2522.termproject;
+package enemies;
 
 public class RangedEnemy extends Enemy {
     public RangedEnemy() {

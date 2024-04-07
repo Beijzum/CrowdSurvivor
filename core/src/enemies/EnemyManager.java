@@ -1,12 +1,9 @@
-package ca.bcit.comp2522.termproject;
+package enemies;
 
+import ca.bcit.comp2522.termproject.Projectile;
 import ca.bcit.comp2522.termproject.screens.InGameScreen;
 import com.badlogic.gdx.Gdx;
-import jdk.javadoc.internal.doclets.toolkit.taglets.snippet.Style;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Random;
 
 final public class EnemyManager {

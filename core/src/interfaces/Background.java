@@ -1,5 +1,6 @@
-package ca.bcit.comp2522.termproject;
+package interfaces;
 
+import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 

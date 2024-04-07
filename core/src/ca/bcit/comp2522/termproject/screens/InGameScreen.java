@@ -7,18 +7,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import jdk.tools.jlink.internal.ExecutableImage;
-import jdk.tools.jlink.internal.PostProcessor;
+import enemies.Enemy;
+import enemies.EnemyManager;
+import interfaces.ActorManager;
+import interfaces.Background;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor {
     final private static int MAX_GAME_LENGTH = 300;

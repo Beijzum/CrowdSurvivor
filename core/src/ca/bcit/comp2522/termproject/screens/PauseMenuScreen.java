@@ -1,16 +1,11 @@
 package ca.bcit.comp2522.termproject.screens;
 
-import ca.bcit.comp2522.termproject.ActorManager;
+import interfaces.ActorManager;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
-import java.awt.*;
 
 public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     final int numberOfButtons = 2;
