@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,21 +26,21 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
     final private CrowdSurvivor game;
     final private Music music;
     final private TextButton[] menuItems;
-    final private TextButton.TextButtonStyle shopButtonStyle;
     final private Color backgroundFilter = new Color(50 / 255f, 50 / 255f, 100 / 255f, 1);
     final private Sprite background = new Sprite(new Texture("backgrounds/shopMenuBackground.jpg"));
     final private GlyphLayout shopMessage;
-    private GlyphLayout currencyMessage;
+    final private GlyphLayout currencyMessage;
+    final private Sound purchaseSFX;
+    final private Sound failPurchaseSFX;
     public ShopScreen(CrowdSurvivor crowdSurvivor) {
         this.game = crowdSurvivor;
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/shopMenuMusic.mp3"));
-        this.shopButtonStyle = new TextButton.TextButtonStyle();
-        this.shopButtonStyle.downFontColor = Color.GREEN;
-        this.shopButtonStyle.checkedFontColor = Color.RED;
         this.shopMessage = createLayout("SHOP", 2f);
         this.currencyMessage = new GlyphLayout();
         this.menuItems = createButtons();
+        this.purchaseSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/purchaseSFX.mp3"));
+        this.failPurchaseSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/failPurchase.mp3"));
         positionMenuItems();
     }
 
@@ -101,10 +102,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 }
 
                 if (game.playerProfile.getCurrency() < buyAttackPrice) {
-                    // playSFX(noMoneySFX);
+                    failPurchaseSFX.play(0.5f);
                     return true;
                 }
-                // playSFX(purchaseSFX);
+                purchaseSFX.play();
                 game.playerProfile.setAttackBooster(game.playerProfile.getAttackBooster() + 5);
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyAttackPrice);
                 return true;
@@ -121,10 +122,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 }
 
                 if (game.playerProfile.getCurrency() < buyHealthPrice) {
-                    // playSFX(noMoneySFX);
+                    failPurchaseSFX.play(0.5f);
                     return true;
                 }
-                // playSFX(purchaseSFX);
+                purchaseSFX.play();
                 game.playerProfile.setMaxHealthBooster(game.playerProfile.getMaxHealthBooster() + 5);
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyHealthPrice);
                 return true;
@@ -141,10 +142,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 }
 
                 if (game.playerProfile.getCurrency() < buySpeedPrice) {
-                    // playSFX(noMoneySFX);
+                    failPurchaseSFX.play(0.5f);
                     return true;
                 }
-                // playSFX(purchaseSFX);
+                purchaseSFX.play();
                 game.playerProfile.setSpeedBooster(game.playerProfile.getSpeedBooster() + 5);
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buySpeedPrice);
                 return true;
@@ -161,10 +162,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 }
 
                 if (game.playerProfile.getCurrency() < buyDefensePrice) {
-                    // playSFX(noMoneySFX);
+                    failPurchaseSFX.play(0.5f);
                     return true;
                 }
-                // playSFX(purchaseSFX);
+                purchaseSFX.play();
                 game.playerProfile.setDefenseBooster(game.playerProfile.getDefenseBooster() + 0.02f);
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyDefensePrice);
                 return true;
@@ -181,10 +182,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 }
 
                 if (game.playerProfile.getCurrency() < buyEXPPrice) {
-                    // playSFX(noMoneySFX);
+                    failPurchaseSFX.play(0.5f);
                     return true;
                 }
-                // playSFX(purchaseSFX);
+                purchaseSFX.play();
                 game.playerProfile.setEXPMultiplierBooster(game.playerProfile.getEXPMultiplierBooster() + 0.05f);
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyEXPPrice);
                 return true;
@@ -202,10 +203,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 }
 
                 if (game.playerProfile.getCurrency() < buyCurrencyPrice) {
-                    // playSFX(noMoneySFX);
+                    failPurchaseSFX.play(0.5f);
                     return true;
                 }
-                // playSFX(purchaseSFX);
+                purchaseSFX.play();
                 game.playerProfile
                         .setCurrencyMultiplierBooster(game.playerProfile.getCurrencyMultiplierBooster() + 0.05f);
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyCurrencyPrice);
@@ -224,10 +225,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 }
 
                 if (game.playerProfile.getCurrency() < buyAtttackSpeedPrice) {
-                    // playSFX(noMoneySFX);
+                    failPurchaseSFX.play(0.5f);
                     return true;
                 }
-                // playSFX(purchaseSFX);
+                purchaseSFX.play();
                 game.playerProfile.setAttackSpeedBooster(game.playerProfile.getAttackSpeedBooster() - 0.05f);
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyAtttackSpeedPrice);
                 return true;
@@ -245,10 +246,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 }
 
                 if (game.playerProfile.getCurrency() < buyCritRatePrice) {
-                    // playSFX(noMoneySFX);
+                    failPurchaseSFX.play(0.5f);
                     return true;
                 }
-                // playSFX(purchaseSFX);
+                purchaseSFX.play();
                 game.playerProfile.setCritRateBooster(game.playerProfile.getCritRateBooster() + 0.02f);
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyCritRatePrice);
                 return true;
@@ -266,10 +267,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 }
 
                 if (game.playerProfile.getCurrency() < buyCritDamagePrice) {
-                    // playSFX(noMoneySFX);
+                    failPurchaseSFX.play(0.5f);
                     return true;
                 }
-                // playSFX(purchaseSFX);
+                purchaseSFX.play();
                 game.playerProfile.setCritMultiplierBooster(game.playerProfile.getCritMultiplierBooster() + 0.05f);
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyCritDamagePrice);
                 return true;
@@ -287,10 +288,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 }
 
                 if (game.playerProfile.getCurrency() < buyHealthRegenPrice) {
-                    // playSFX(noMoneySFX);
+                    failPurchaseSFX.play(0.5f);
                     return true;
                 }
-                // playSFX(purchaseSFX);
+                purchaseSFX.play();
                 game.playerProfile
                         .setHealthRegenMultiplierBooster(game.playerProfile.getHealthRegenMultiplierBooster() + 0.02f);
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyHealthPrice);
@@ -330,10 +331,6 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
         if (game.playerProfile.getCurrency() < price) {
             button.setColor(175 / 255f, 25 / 255f, 25 / 255f, 1);
         }
-    }
-
-    private void playSFX() {
-        // implement later
     }
 
     private void positionBackButton(TextButton button) {
