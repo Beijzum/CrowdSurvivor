@@ -5,9 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
-import enemies.Enemy;
+import ca.bcit.comp2522.termproject.enemies.Enemy;
 
-public class PlayerManager implements InputProcessor {
+public class PlayerManager {
     final private InGameScreen gameScreen;
     private static PlayerManager instance = null;
     final private Vector3 mouseVector = new Vector3(0, 0, 0);
@@ -21,12 +21,6 @@ public class PlayerManager implements InputProcessor {
             instance = new PlayerManager(gameScreen);
         }
         return instance;
-    }
-
-    public void handleUltimateCD() {
-        if (!gameScreen.player.ultimateIsReady()) {
-            gameScreen.player.waitForCD();
-        }
     }
 
     public void handlePlayerHealth() {
@@ -82,54 +76,5 @@ public class PlayerManager implements InputProcessor {
         gameScreen.player
                 .fireProjectile(this.gameScreen.playerProjectilesOnScreen, mousePosition.x, mousePosition.y);
 
-    }
-
-    @Override
-    public boolean keyDown(int keyCode) {
-        if (keyCode == Input.Keys.F) {
-            gameScreen.player.useUltimate();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keyCode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char c) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int i, int i1, int i2, int i3) {
-        return false;
-    }
-
-    @Override
-    public boolean touchCancelled(int i, int i1, int i2, int i3) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int i, int i1, int i2) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int i, int i1) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float v, float v1) {
-        return false;
     }
 }

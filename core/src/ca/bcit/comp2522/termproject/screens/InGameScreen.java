@@ -10,10 +10,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import enemies.Enemy;
-import enemies.EnemyManager;
-import interfaces.ActorManager;
-import interfaces.Background;
+import ca.bcit.comp2522.termproject.enemies.Enemy;
+import ca.bcit.comp2522.termproject.enemies.EnemyManager;
+import ca.bcit.comp2522.termproject.interfaces.ActorManager;
+import ca.bcit.comp2522.termproject.interfaces.Background;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -33,7 +33,6 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     final private EXPBar expBar;
     final private EnemyManager enemyManager;
     final private PlayerManager playerManager;
-    final private InputMultiplexer inputManager;
     final private Color darkTint = new Color(75 / 255f, 75 / 255f, 75 / 255f, 1);
     private int enterUpgradeScreenAmount;
     final public ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
@@ -55,7 +54,6 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.resetGameState();
-        this.inputManager = new InputMultiplexer(this, playerManager);
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
@@ -63,7 +61,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public void show() {
         music.setLooping(true);
         music.play();
-        Gdx.input.setInputProcessor(inputManager);
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -85,7 +83,6 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         // handle game logic
         enemyManager.incrementTimers();
         playerManager.handleContinuousPlayerKeyboardInput();
-        playerManager.handleUltimateCD();
         playerManager.handleAttack();
         playerManager.handlePlayerHealth();
         enemyManager.handleEnemies();

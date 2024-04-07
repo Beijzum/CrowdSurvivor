@@ -15,7 +15,6 @@ public class Player extends Entity {
     final private static float DEFAULT_ATTACK_SPEED = 1.5f;
     final private static float DEFAULT_CRIT_RATE = 0.1f;
     final private static float DEFAULT_CRIT_MULTIPLIER = 1.5f;
-    final private static int DEFAULT_ULTIMATE_CD = 5;
     final private static float DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01f;
     final private static int DEFAULT_ATTACK = 20;
     final private static float BASE_IFRAME_LENGTH = 2.5f;
@@ -34,9 +33,7 @@ public class Player extends Entity {
     private float attackSpeed;
     private float critRate;
     private float critMultiplier;
-    private float ultimateCDTimer;
     private float attackTimer;
-    private int ultimateCD;
     private float iFramesLength;
     private float iFramesTimer;
     private float healthRegenTimer;
@@ -81,10 +78,6 @@ public class Player extends Entity {
         this.projectileTemplate = projectile;
     }
 
-    public void setUltimateCD(int ultimateCD) {
-        this.ultimateCD = ultimateCD;
-    }
-
     public float getAttackSpeed() {
         return attackSpeed;
     }
@@ -99,10 +92,6 @@ public class Player extends Entity {
 
     public float getHealthRegenMultiplier() {
         return healthRegenMultiplier;
-    }
-
-    public int getUltimateCD() {
-        return ultimateCD;
     }
 
     public float getIFramesLength() {
@@ -182,7 +171,6 @@ public class Player extends Entity {
         this.attackSpeed = DEFAULT_ATTACK_SPEED;
         this.critRate = DEFAULT_CRIT_RATE;
         this.critMultiplier = DEFAULT_CRIT_MULTIPLIER;
-        this.ultimateCD = DEFAULT_ULTIMATE_CD;
         this.healthRegenMultiplier = DEFAULT_HEALTH_REGEN_MULTIPLIER;
         this.iFramesLength = BASE_IFRAME_LENGTH;
         this.EXPMultiplier = BASE_EXP_MULTIPLIER;
@@ -196,11 +184,10 @@ public class Player extends Entity {
         this.iFramesTimer = 0;
         this.attackTimer = 0;
         this.healthRegenTimer = 0;
-        this.ultimateCDTimer = 0;
     }
 
     public void resetPosition() {
-        this.sprite.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        this.sprite.setCenter(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
     }
 
     public void fireProjectile(LinkedList<Projectile> playerProjectiles, float mouseX, float mouseY) {
@@ -236,18 +223,6 @@ public class Player extends Entity {
         }
     }
 
-    public void waitForCD() {
-        ultimateCDTimer += Gdx.graphics.getDeltaTime();
-    }
-
-    public boolean ultimateIsReady() {
-        return ultimateCDTimer >= ultimateCD;
-    }
-
-    private void resetUltimateTimer() {
-        this.ultimateCDTimer = 0;
-    }
-
     public void takeDamage(Rectangle enemyHitbox, int enemyAttack) {
         if (this.sprite.getBoundingRectangle().overlaps(enemyHitbox) && !this.iFrameIsOn) {
             System.out.println(this.health);
@@ -266,14 +241,6 @@ public class Player extends Entity {
         this.iFramesTimer += Gdx.graphics.getDeltaTime();
     }
 
-    public void useUltimate() {
-        if (ultimateCDTimer >= ultimateCD) {
-            // some ultimate effect here
-            System.out.println("BIG ULTIMATE HERE");
-            resetUltimateTimer();
-        }
-    }
-
     @Override
     public String toString() {
         return "Player{" +
@@ -287,9 +254,7 @@ public class Player extends Entity {
                 ", attackSpeed=" + attackSpeed +
                 ", critRate=" + critRate +
                 ", critMultiplier=" + critMultiplier +
-                ", ultimateCDTimer=" + ultimateCDTimer +
                 ", attackTimer=" + attackTimer +
-                ", ultimateCD=" + ultimateCD +
                 ", iFramesLength=" + iFramesLength +
                 ", iFramesTimer=" + iFramesTimer +
                 ", healthRegenTimer=" + healthRegenTimer +
