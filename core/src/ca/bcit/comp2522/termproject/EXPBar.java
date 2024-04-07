@@ -61,7 +61,7 @@ public class EXPBar {
     public void draw(ShapeRenderer shapeRenderer, Batch batch) {
         // draw background
         shapeRenderer.setColor(this.backgroundColor);
-        shapeRenderer.rect(this.x, this.y, this.width, this.height);
+        shapeRenderer.rect(this.x, this.y, (float) (this.width / 1.075), this.height);
 
         // draw foreground (experience)
         float foregroundWidth = (float) this.currentEXP / this.levelThreshold * this.width;
@@ -71,8 +71,9 @@ public class EXPBar {
         batch.begin();
         float textX = (float) (this.x + this.getWidth() / 1.05);
         float textY = this.y + this.getHeight() / 2 + 5;
-        font.setColor(Color.WHITE); // Set font color
+        font.getData().setScale(0.75F);
         font.draw(batch, "Level: " + this.playerLevel, textX, textY);
+        font.getData().setScale(1);
         batch.end();
     }
 }
