@@ -28,6 +28,10 @@ public class PlayerManager {
         for (Enemy enemy : gameScreen.onFieldEnemies) {
             gameScreen.player.takeDamage(enemy.getHitbox(), enemy.getAttack());
         }
+        for (Projectile projectile : gameScreen.enemyProjectilesOnScreen) {
+            final int projectileDamage = 20;
+            gameScreen.player.takeDamage(projectile.getHitbox(), projectileDamage);
+        }
     }
 
     public void incrementPlayerIframe() {
