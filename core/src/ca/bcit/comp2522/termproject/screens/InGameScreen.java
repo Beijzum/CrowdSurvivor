@@ -96,6 +96,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         renderBackground(game, background);
         player.draw(game.batch);
         this.drawEnemies();
+        this.drawAllEnemyProjectiles();
         this.drawAllPlayerProjectiles();
         game.buttonsUI.draw();
 
