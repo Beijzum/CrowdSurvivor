@@ -84,6 +84,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
         // handle game logic
         enemyManager.incrementTimers();
+        playerManager.incrementPlayerIframe();
         playerManager.handleContinuousPlayerKeyboardInput();
         playerManager.handleAttack();
         playerManager.handlePlayerHealth();

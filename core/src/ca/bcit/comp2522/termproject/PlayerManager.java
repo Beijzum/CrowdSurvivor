@@ -30,6 +30,10 @@ public class PlayerManager {
         }
     }
 
+    public void incrementPlayerIframe() {
+        gameScreen.player.incrementIFrames();
+    }
+
     public void handleContinuousPlayerKeyboardInput() {
         if (!Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
             return;

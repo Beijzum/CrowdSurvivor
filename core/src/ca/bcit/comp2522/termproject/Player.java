@@ -17,7 +17,7 @@ public class Player extends Entity {
     final private static float DEFAULT_CRIT_MULTIPLIER = 1.5f;
     final private static float DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01f;
     final private static int DEFAULT_ATTACK = 20;
-    final private static float BASE_IFRAME_LENGTH = 2.5f;
+    final private static float BASE_IFRAME_LENGTH = 1.5f;
     final private static float HEALTH_REGEN_TICK_TIME = 1.5f;
     final private static int BASE_LEVEL_UP_THRESHOLD = 50;
     final private static int BASE_EXP_MULTIPLIER = 1;
@@ -225,8 +225,7 @@ public class Player extends Entity {
 
     public void takeDamage(Rectangle enemyHitbox, int enemyAttack) {
         if (this.sprite.getBoundingRectangle().overlaps(enemyHitbox) && !this.iFrameIsOn) {
-            System.out.println(this.health);
-            this.health -= (int) Math.round(enemyAttack * (1 - this.defense));
+            this.health -= Math.round(enemyAttack * (1 - this.defense));
             this.iFrameIsOn = true;
             return;
         }
@@ -236,9 +235,13 @@ public class Player extends Entity {
         if (this.iFramesTimer >= this.iFramesLength) {
             this.iFrameIsOn = false;
             this.iFramesTimer = 0;
-            return;
         }
-        this.iFramesTimer += Gdx.graphics.getDeltaTime();
+    }
+
+    public void incrementIFrames() {
+        if (this.iFrameIsOn) {
+            iFramesTimer += Gdx.graphics.getDeltaTime();
+        }
     }
 
     @Override
