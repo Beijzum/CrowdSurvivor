@@ -192,7 +192,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        hpBar.draw(shapeRenderer);
+        hpBar.draw(shapeRenderer, game.batch);
         shapeRenderer.end();
     }
 
