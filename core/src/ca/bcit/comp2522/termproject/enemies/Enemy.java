@@ -23,7 +23,7 @@ public class Enemy extends Entity {
     final protected static float DEFAULT_DEFENSE = 0.0f;
     final private static float DAMAGE_TINT_TIME = 0.6f;
     final private static int BASE_CURRENCY_DROP_AMOUNT = 2;
-    final private static int CURRENCY_CALCULATION_DIVISOR = 100;
+    final private static int CURRENCY_CALCULATION_DIVISOR = 50;
     final private Color damageTint = new Color(1, 0, 0, 1);
     final private LinkedList<DamageNumber> activeDamageNumbers = new LinkedList<>();
     private float tintTimer = 0;
