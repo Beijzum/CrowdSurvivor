@@ -117,7 +117,8 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
 
     @Override
     public void hide() {
-
+        game.playerProfile.setCurrency(game.playerProfile.getCurrency()
+                + game.inGameScreen.player.getCollectedCurrency());
     }
 
     @Override

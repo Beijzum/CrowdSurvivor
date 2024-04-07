@@ -70,7 +70,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
         int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
         int firstButtonPositionY = Gdx.graphics.getHeight() / 2;
 
-        // start game button
+        // resume game button
         TextButton resumeGameButton = new TextButton("Resume", game.skin);
         resumeGameButton.setSize(buttonWidth, buttonHeight);
         resumeGameButton.setPosition(buttonPositionX, firstButtonPositionY);
@@ -97,6 +97,8 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.playerProfile.setCurrency(game.playerProfile.getCurrency()
+                        + game.inGameScreen.player.getCollectedCurrency());
                 game.inGameScreen.resetGameState();
                 clearStage(game.buttonsUI);
                 game.inGameScreen.dispose();
