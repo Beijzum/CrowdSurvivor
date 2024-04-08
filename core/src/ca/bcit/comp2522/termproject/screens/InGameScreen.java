@@ -6,6 +6,7 @@ import ca.bcit.comp2522.termproject.HPBar;
 import ca.bcit.comp2522.termproject.Player;
 import ca.bcit.comp2522.termproject.PlayerManager;
 import ca.bcit.comp2522.termproject.Projectile;
+import ca.bcit.comp2522.termproject.enemies.Boss;
 import ca.bcit.comp2522.termproject.enemies.Enemy;
 import ca.bcit.comp2522.termproject.enemies.EnemyManager;
 import ca.bcit.comp2522.termproject.interfaces.ActorManager;
@@ -46,9 +47,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private final ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
     private final LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
     private final LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
+    private final LinkedList<Projectile> bossProjectilesOnScreen = new LinkedList<>();
     private final GlyphLayout timeElapsedMessage = new GlyphLayout(CrowdSurvivor.getFont(),
             String.format("%d:%02d", Math.round(this.timeElapsed) / 60, Math.round(this.timeElapsed) % 60));
     private int enterUpgradeScreenAmount;
+    private final LinkedList<Boss> onFieldBosses = new LinkedList<>();
 
 
     public InGameScreen(final CrowdSurvivor crowdSurvivor) {
@@ -65,6 +68,14 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.resetGameState();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    public static int getMaxGameLength() {
+        return MAX_GAME_LENGTH;
+    }
+
+    public LinkedList<Boss> getOnFieldBosses() {
+        return this.onFieldBosses;
     }
 
     public float getTimeElapsed() {
@@ -91,6 +102,10 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         return this.enemyProjectilesOnScreen;
     }
 
+    public LinkedList<Projectile> getBossProjectilesOnScreen() {
+        return this.bossProjectilesOnScreen;
+    }
+
     @Override
     public void show() {
         music.setLooping(true);
@@ -100,14 +115,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     @Override
     public void render(float v) {
-        if (timeElapsed >= MAX_GAME_LENGTH) { // later add the stipulation that the boss needs to be killed too
-            dispose();
-            game.setScreen(game.getWinScreen());
-            return;
-        }
-        ScreenUtils.clear(0, 0, 0.2f, 1);
-        game.getButtonsUI().act();
 
+        ScreenUtils.clear(0, 0, 0.2f, 1);
         game.getBatch().setProjectionMatrix(camera.combined);
 
         // handle camera
@@ -122,24 +131,30 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         playerManager.handlePlayerHealth();
         enemyManager.handleEnemies();
         enemyManager.handleEnemySpawn();
+        enemyManager.handleBosses();
         enemyManager.handleEnemyProjectiles();
-
 
         // draw assets
         renderBackground(game, background);
         player.draw(game.getBatch());
         this.drawEnemies();
         this.drawAllEnemyProjectiles();
+        this.drawAllBossProjectiles();
         this.drawAllPlayerProjectiles();
         this.updateTimerMessage();
         drawMessageFromCenter(timeElapsedMessage, game.getBatch(),
                 camera.position.x, camera.position.y + Gdx.graphics.getHeight() / 3f, 1);
 
-
         // draws HUD
         drawHPBar();
         drawEXPBar();
         drawCurrencyCounter();
+
+        if (timeElapsed >= MAX_GAME_LENGTH && onFieldBosses.isEmpty()) {
+            dispose();
+            game.setScreen(game.getWinScreen());
+            return;
+        }
 
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {
@@ -199,6 +214,17 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         game.getBatch().end();
     }
 
+    private void drawAllBossProjectiles() {
+        if (this.bossProjectilesOnScreen.isEmpty()) {
+            return;
+        }
+        game.getBatch().begin();
+        for (Projectile bossProjectile : bossProjectilesOnScreen) {
+            bossProjectile.draw(game.getBatch());
+        }
+        game.getBatch().end();
+    }
+
     private void drawAllEnemyProjectiles() {
         if (this.enemyProjectilesOnScreen.isEmpty()) {
             return;
@@ -219,6 +245,15 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             enemy.drawHPBar(shapeRenderer);
+            shapeRenderer.end();
+        }
+
+        for (Boss boss : this.onFieldBosses) {
+            boss.draw(game.getBatch());
+            boss.drawDamageNumbers(game.getBatch());
+
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            boss.drawHPBar(shapeRenderer);
             shapeRenderer.end();
         }
     }
@@ -263,8 +298,10 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         player.resetStats();
         this.timeElapsed = 0;
         this.onFieldEnemies.clear();
+        this.onFieldBosses.clear();
         this.playerProjectilesOnScreen.clear();
         this.enemyProjectilesOnScreen.clear();
+        this.bossProjectilesOnScreen.clear();
     }
 
 
@@ -279,7 +316,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         player.draw(game.getBatch());
         this.drawEnemies();
         this.drawAllEnemyProjectiles();
+        this.drawAllBossProjectiles();
         this.drawAllPlayerProjectiles();
+        drawHPBar();
+        drawEXPBar();
+        drawCurrencyCounter();
         drawMessageFromCenter(timeElapsedMessage, game.getBatch(),
                 camera.position.x, camera.position.y + Gdx.graphics.getHeight() / 3f, 1);
         game.getBatch().setColor(CrowdSurvivor.getStandardColour());
