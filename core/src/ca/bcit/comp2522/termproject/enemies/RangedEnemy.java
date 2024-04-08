@@ -14,7 +14,7 @@ public class RangedEnemy extends Enemy {
     final private static float SPEWER_ATTACK_SPEED = 0.5f;
     final private static float SNIPER_ATTACK_SPEED = 2f;
     final private static float BASIC_ATTACK_SPEED = 1f;
-    final private static int PROJECTILE_LIFETIME = 10;
+    final private static int PROJECTILE_LIFETIME = 15;
     final private static int PROJECTILE_SIZE = 50;
     final private static int SPEWER_BASE_HEALTH = 50;
     final private static int BASIC_BASE_HEALTH = 125;
