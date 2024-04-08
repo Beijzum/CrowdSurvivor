@@ -56,7 +56,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private final PlayerManager playerManager;
     private final Color darkTint = new Color(75 / 255f, 75 / 255f, 75 / 255f, 1);
     private final Player player;
-    private final ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
+    private final LinkedList<Enemy> onFieldEnemies = new LinkedList<>();
     private final LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
     private final LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
     private final LinkedList<Projectile> bossProjectilesOnScreen = new LinkedList<>();
@@ -132,7 +132,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
      *
      * @return the list of on-field enemies.
      */
-    public ArrayList<Enemy> getOnFieldEnemies() {
+    public LinkedList<Enemy> getOnFieldEnemies() {
         return this.onFieldEnemies;
     }
 
@@ -413,6 +413,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.onFieldBosses.clear();
         this.playerProjectilesOnScreen.clear();
         this.enemyProjectilesOnScreen.clear();
+        this.bossProjectilesOnScreen.clear();
         this.enemyManager.resetEnemyTimers();
         this.timeElapsed = 0;
         this.enterUpgradeScreenAmount = 0;
