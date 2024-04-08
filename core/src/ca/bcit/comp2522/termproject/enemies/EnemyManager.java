@@ -55,37 +55,37 @@ final public class EnemyManager {
 
     public void handleEnemyProjectiles() {
         // remove projectile
-        if (gameScreen.enemyProjectilesOnScreen.peek() != null
-                && gameScreen.enemyProjectilesOnScreen.peek().isOverLifeTime()) {
-            gameScreen.enemyProjectilesOnScreen.removeFirst();
+        if (gameScreen.getEnemyProjectilesOnScreen().peek() != null
+                && gameScreen.getEnemyProjectilesOnScreen().peek().isOverLifeTime()) {
+            gameScreen.getEnemyProjectilesOnScreen().removeFirst();
         }
 
         // move projectile
-        for (Projectile enemyProjectile : gameScreen.enemyProjectilesOnScreen) {
+        for (Projectile enemyProjectile : gameScreen.getEnemyProjectilesOnScreen()) {
             enemyProjectile.incrementLifetimeTimer();
             enemyProjectile.moveProjectile();
             enemyProjectile.spinProjectile();
         }
 
         //
-        for (Enemy enemy : gameScreen.onFieldEnemies) {
+        for (Enemy enemy : gameScreen.getOnFieldEnemies()) {
             if (!(enemy instanceof RangedEnemy)) {
                 continue;
             }
             RangedEnemy rangedEnemy = (RangedEnemy) enemy;
-            rangedEnemy.fireProjectile(gameScreen.enemyProjectilesOnScreen,
-                    gameScreen.player.getCenterX(), gameScreen.player.getCenterY());
+            rangedEnemy.fireProjectile(gameScreen.getEnemyProjectilesOnScreen(),
+                    gameScreen.getPlayer().getCenterX(), gameScreen.getPlayer().getCenterY());
         }
     }
 
     public void handleEnemies() {
-        for (Enemy enemy : gameScreen.onFieldEnemies) {
-            for (Projectile playerProjectile : gameScreen.playerProjectilesOnScreen) {
+        for (Enemy enemy : gameScreen.getOnFieldEnemies()) {
+            for (Projectile playerProjectile : gameScreen.getPlayerProjectilesOnScreen()) {
                 if (!enemy.getHitbox().overlaps(playerProjectile.getHitbox())) {
                     continue;
                 }
                 int damage = calculateDamage();
-                enemy.takeDamage(playerProjectile, damage, damage != gameScreen.player.getAttack());
+                enemy.takeDamage(playerProjectile, damage, damage != gameScreen.getPlayer().getAttack());
             }
             enemy.incrementDamageTintTimer();
             enemy.updateDamageNumbers(Gdx.graphics.getDeltaTime());
@@ -101,7 +101,7 @@ final public class EnemyManager {
             // randomize spawn point outside of screen, camera position x, y returns center of screen
             float[] spawnPoint = generateSpawnPoint();
 
-            gameScreen.onFieldEnemies.add(createBasicEnemy(spawnPoint[0], spawnPoint[1]));
+            gameScreen.getOnFieldEnemies().add(createBasicEnemy(spawnPoint[0], spawnPoint[1]));
             this.basicEnemyTimer = 0;
             this.currentBasicEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
@@ -110,7 +110,7 @@ final public class EnemyManager {
         if (this.chargerEnemyTimer > this.currentChargerEnemySpawnTime) {
             float[] spawnPoint = generateSpawnPoint();
 
-            gameScreen.onFieldEnemies.add(createCharger(spawnPoint[0], spawnPoint[1]));
+            gameScreen.getOnFieldEnemies().add(createCharger(spawnPoint[0], spawnPoint[1]));
             this.chargerEnemyTimer = 0;
             this.currentChargerEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_CHARGER_ENEMY_SPAWN_TIME) + BASE_CHARGER_ENEMY_SPAWN_TIME;
@@ -119,7 +119,7 @@ final public class EnemyManager {
         if (this.rangedEnemyTimer > this.currentRangedEnemySpawnTime) {
             float[] spawnPoint = generateSpawnPoint();
 
-            gameScreen.onFieldEnemies.add(createRangedEnemy(spawnPoint[0], spawnPoint[1]));
+            gameScreen.getOnFieldEnemies().add(createRangedEnemy(spawnPoint[0], spawnPoint[1]));
             this.rangedEnemyTimer = 0;
             this.currentRangedEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_RANGED_ENEMY_SPAWN_TIME) + BASE_RANGED_ENEMY_SPAWN_TIME;
@@ -128,24 +128,24 @@ final public class EnemyManager {
 
     private int calculateDamage() {
         int damage;
-        if (randomNumberGenerator.nextFloat(1) <= gameScreen.player.getCritRate()) {
-            damage = Math.round(gameScreen.player.getAttack() * gameScreen.player.getCritMultiplier());
+        if (randomNumberGenerator.nextFloat(1) <= gameScreen.getPlayer().getCritRate()) {
+            damage = Math.round(gameScreen.getPlayer().getAttack() * gameScreen.getPlayer().getCritMultiplier());
         } else {
-            damage = gameScreen.player.getAttack();
+            damage = gameScreen.getPlayer().getAttack();
         }
         return damage;
     }
 
     private void killEnemy() {
         Enemy deadEnemy = null;
-        for (Enemy enemy : gameScreen.onFieldEnemies) {
+        for (Enemy enemy : gameScreen.getOnFieldEnemies()) {
             if (enemy.isDead()) {
                 deadEnemy = enemy;
             }
         }
         if (deadEnemy != null) {
             deadEnemy.clearHitByProjectileList();
-            gameScreen.onFieldEnemies.remove(deadEnemy);
+            gameScreen.getOnFieldEnemies().remove(deadEnemy);
             gameScreen.handlePlayerKill(deadEnemy);
         }
     }
@@ -157,25 +157,25 @@ final public class EnemyManager {
                 0 - Gdx.graphics.getHeight() / (float) 5.0, Gdx.graphics.getHeight() * 6 / (float) 5.0);
 
         // adjust if spawn point in camera view
-        if (this.gameScreen.camera.frustum.pointInFrustum(randomX, randomY, 0)) {
+        if (this.gameScreen.getCamera().frustum.pointInFrustum(randomX, randomY, 0)) {
             if (randomNumberGenerator.nextBoolean()) {
                 // modify x if true
-                if (randomX < this.gameScreen.camera.position.x) {
+                if (randomX < this.gameScreen.getCamera().position.x) {
                     randomX -= Gdx.graphics.getWidth() / (float) 1.5;
                 } else {
                     randomX += Gdx.graphics.getWidth() / (float) 1.5;
                 }
             } else {
                 // modify y if true
-                if (randomY < this.gameScreen.camera.position.y) {
+                if (randomY < this.gameScreen.getCamera().position.y) {
                     randomY -= Gdx.graphics.getWidth() / (float) 1.5;
                 } else {
                     randomY += Gdx.graphics.getWidth() / (float) 1.5;
                 }
             }
-            return new float[] {randomX, randomY};
+            return new float[]{randomX, randomY};
         }
-        return new float[] {randomX, randomY};
+        return new float[]{randomX, randomY};
     }
 
     private Boss createBoss(float xCoord, float yCoord) {
@@ -184,8 +184,8 @@ final public class EnemyManager {
 
     private Enemy createCharger(float xCoord, float yCoord) {
         // temp scaling
-        int health = Math.round(BASE_CHARGER_HEALTH + gameScreen.timeElapsed / 5);
-        int acceleration = 100;
+        int health = Math.round(BASE_CHARGER_HEALTH + gameScreen.getTimeElapsed() / 5);
+        int acceleration = 75;
         int attack = 20;
         Charger newCharger = new Charger(health, acceleration, attack, "charger.jpg");
         newCharger.setCenterPosition(xCoord, yCoord);
@@ -197,13 +197,13 @@ final public class EnemyManager {
         RangedEnemy newEnemy;
         switch (choice) {
             case 0:
-                newEnemy = RangedEnemy.createSniper(gameScreen.timeElapsed);
+                newEnemy = RangedEnemy.createSniper(gameScreen.getTimeElapsed());
                 break;
             case 1:
-                newEnemy = RangedEnemy.createSpewer(gameScreen.timeElapsed);
+                newEnemy = RangedEnemy.createSpewer(gameScreen.getTimeElapsed());
                 break;
             default:
-                newEnemy = RangedEnemy.createBasic(gameScreen.timeElapsed);
+                newEnemy = RangedEnemy.createBasic(gameScreen.getTimeElapsed());
                 break;
         }
         newEnemy.setCenterPosition(xCoord, yCoord);
@@ -211,8 +211,8 @@ final public class EnemyManager {
     }
 
     private Enemy createBasicEnemy(float xCoord, float yCoord) {
-        int health = Math.round(BASE_BASIC_ENEMY_HEALTH + gameScreen.timeElapsed / 5); // temp scaling
-        int speed = Math.round(BASE_ENEMY_SPEED + gameScreen.timeElapsed / 5);
+        int health = Math.round(BASE_BASIC_ENEMY_HEALTH + gameScreen.getTimeElapsed() / 5); // temp scaling
+        int speed = Math.round(BASE_ENEMY_SPEED + gameScreen.getTimeElapsed() / 5);
         int attack = 10;
         Enemy newEnemy = new Enemy(health, speed, attack, "enemy.png");
         newEnemy.setCenterPosition(xCoord, yCoord);
@@ -220,8 +220,8 @@ final public class EnemyManager {
     }
 
     private void moveToPlayer(Enemy enemy) {
-        enemy.calculateDirectionVector(gameScreen.player.getCenterX() - enemy.getCenterX(),
-                gameScreen.player.getCenterY() - enemy.getCenterY());
+        enemy.calculateDirectionVector(gameScreen.getPlayer().getCenterX() - enemy.getCenterX(),
+                gameScreen.getPlayer().getCenterY() - enemy.getCenterY());
         enemy.move();
     }
 

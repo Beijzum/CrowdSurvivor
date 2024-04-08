@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 
-import static ca.bcit.comp2522.termproject.CrowdSurvivor.font;
-
 /**
  * Represents the experience points (EXP) bar for the player HUD.
  *
@@ -130,9 +128,9 @@ public class EXPBar {
         float textX = (this.x + this.getWidth() / textXWidth);
         float textY = this.y + this.getHeight() / 2;
         final float textEXPScale = 0.75F;
-        font.getData().setScale(textEXPScale);
-        font.draw(batch, "Level: " + this.playerLevel, textX, textY);
-        font.getData().setScale(1);
+        CrowdSurvivor.getFont().getData().setScale(textEXPScale);
+        CrowdSurvivor.getFont().draw(batch, "Level: " + this.playerLevel, textX, textY);
+        CrowdSurvivor.getFont().getData().setScale(1);
         batch.end();
     }
 

@@ -1,7 +1,19 @@
 package ca.bcit.comp2522.termproject.screens;
 
-import ca.bcit.comp2522.termproject.*;
-import com.badlogic.gdx.*;
+import ca.bcit.comp2522.termproject.CrowdSurvivor;
+import ca.bcit.comp2522.termproject.EXPBar;
+import ca.bcit.comp2522.termproject.HPBar;
+import ca.bcit.comp2522.termproject.Player;
+import ca.bcit.comp2522.termproject.PlayerManager;
+import ca.bcit.comp2522.termproject.Projectile;
+import ca.bcit.comp2522.termproject.enemies.Enemy;
+import ca.bcit.comp2522.termproject.enemies.EnemyManager;
+import ca.bcit.comp2522.termproject.interfaces.ActorManager;
+import ca.bcit.comp2522.termproject.interfaces.Background;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,36 +22,29 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import ca.bcit.comp2522.termproject.enemies.Enemy;
-import ca.bcit.comp2522.termproject.enemies.EnemyManager;
-import ca.bcit.comp2522.termproject.interfaces.ActorManager;
-import ca.bcit.comp2522.termproject.interfaces.Background;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import static ca.bcit.comp2522.termproject.CrowdSurvivor.font;
-
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor {
-    final private static int MAX_GAME_LENGTH = 300;
-    public float timeElapsed = 0;
-    ShapeRenderer shapeRenderer = new ShapeRenderer();
-
-    public OrthographicCamera camera;
-    final private CrowdSurvivor game;
-    final private Music music;
-    final private Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
-    final private Stage gameUI = new Stage();
-    final public Player player;
-    final private HPBar hpBar;
-    final private EXPBar expBar;
-    final private EnemyManager enemyManager;
-    final private PlayerManager playerManager;
-    final private Color darkTint = new Color(75 / 255f, 75 / 255f, 75 / 255f, 1);
+    private static final int MAX_GAME_LENGTH = 300;
+    private float timeElapsed = 0;
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final OrthographicCamera camera;
+    private final CrowdSurvivor game;
+    private final Music music;
+    private final Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
+    private final Stage gameUI = new Stage();
+    private final HPBar hpBar;
+    private final EXPBar expBar;
+    private final EnemyManager enemyManager;
+    private final PlayerManager playerManager;
+    private final Color darkTint = new Color(75 / 255f, 75 / 255f, 75 / 255f, 1);
+    private final Player player;
+    private final ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
+    private final LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
+    private final LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
     private int enterUpgradeScreenAmount;
-    final public ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
-    final public LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
-    final public LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
 
 
     public InGameScreen(final CrowdSurvivor crowdSurvivor) {
@@ -58,6 +63,30 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    public float getTimeElapsed() {
+        return this.timeElapsed;
+    }
+
+    public OrthographicCamera getCamera() {
+        return this.camera;
+    }
+
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public ArrayList<Enemy> getOnFieldEnemies() {
+        return this.onFieldEnemies;
+    }
+
+    public LinkedList<Projectile> getPlayerProjectilesOnScreen() {
+        return this.playerProjectilesOnScreen;
+    }
+
+    public LinkedList<Projectile> getEnemyProjectilesOnScreen() {
+        return this.enemyProjectilesOnScreen;
+    }
+
     @Override
     public void show() {
         music.setLooping(true);
@@ -69,11 +98,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public void render(float v) {
         if (timeElapsed >= MAX_GAME_LENGTH) { // later add the stipulation that the boss needs to be killed too
             dispose();
-            game.setScreen(game.winScreen);
+            game.setScreen(game.getWinScreen());
             return;
         }
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        game.buttonsUI.act();
+        game.getButtonsUI().act();
 
         game.getBatch().setProjectionMatrix(camera.combined);
 
@@ -97,7 +126,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.drawEnemies();
         this.drawAllEnemyProjectiles();
         this.drawAllPlayerProjectiles();
-        game.buttonsUI.draw();
+        game.getButtonsUI().draw();
 
         // draws HUD
         drawHPBar();
@@ -107,13 +136,13 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {
             dispose();
-            game.setScreen(game.gameOverScreen);
+            game.setScreen(game.getGameOverScreen());
             return;
         }
 
         // go to level up screen if leveled up
         if (enterUpgradeScreenAmount > 0) {
-            game.setScreen(game.upgradeSelectionScreen);
+            game.setScreen(game.getUpgradeSelectionScreen());
             this.enterUpgradeScreenAmount--;
         }
 
@@ -142,7 +171,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     @Override
     public void dispose() {
-        clearStage(game.buttonsUI);
+        clearStage(game.getButtonsUI());
         music.dispose();
     }
 
@@ -208,11 +237,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     private void drawCurrencyCounter() {
         game.getBatch().begin();
-        font.setColor(Color.YELLOW);
-        font.draw(game.getBatch(), "Currency: " + player.getCollectedCurrency(),
+        CrowdSurvivor.getFont().setColor(Color.YELLOW);
+        CrowdSurvivor.getFont().draw(game.getBatch(), "Currency: " + player.getCollectedCurrency(),
                 player.getX() - Gdx.graphics.getWidth() / 2.2f,
                 player.getY() + (float) Gdx.graphics.getHeight() / 2 - 30);
-        font.setColor(Color.WHITE);
+        CrowdSurvivor.getFont().setColor(Color.WHITE);
         game.getBatch().end();
     }
 
@@ -234,17 +263,17 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public void renderFrameAsBackground() {
         game.getBatch().setColor(this.darkTint);
         renderBackground(game, background);
-        game.inGameScreen.player.draw(game.getBatch());
-        game.inGameScreen.drawEnemies();
-        game.inGameScreen.drawAllPlayerProjectiles();
+        game.getInGameScreen().player.draw(game.getBatch());
+        game.getInGameScreen().drawEnemies();
+        game.getInGameScreen().drawAllPlayerProjectiles();
         this.gameUI.draw();
-        game.getBatch().setColor(CrowdSurvivor.STANDARD_COLOR);
+        game.getBatch().setColor(CrowdSurvivor.getStandardColour());
     }
 
     @Override
     public boolean keyDown(int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
-            this.game.setScreen(game.pauseMenuScreen);
+            this.game.setScreen(game.getPauseMenuScreen());
             return true;
         }
         return false;

@@ -44,23 +44,23 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(game.buttonsUI);
+        Gdx.input.setInputProcessor(game.getButtonsUI());
         music.setLooping(true);
         music.play();
-        addActors(game.buttonsUI, menuItems);
+        addActors(game.getButtonsUI(), menuItems);
     }
 
     @Override
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
-        setTextAndScale(this.currencyMessage, String.format("CURRENCY: $%d", game.playerProfile.getCurrency()), 2f);
+        setTextAndScale(this.currencyMessage, String.format("CURRENCY: $%d", game.getPlayerProfile().getCurrency()), 2f);
         renderBackgroundWithFilter(game, background, backgroundFilter);
         drawMessage(shopMessage, game.getBatch(), 20, Gdx.graphics.getHeight() / 1.01f, 2f);
         drawMessage(currencyMessage, game.getBatch(),
                 20, Gdx.graphics.getHeight() / 1.01f - this.shopMessage.height - 20, 2f);
-        game.buttonsUI.act();
-        game.buttonsUI.draw();
+        game.getButtonsUI().act();
+        game.getButtonsUI().draw();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
 
     @Override
     public void hide() {
-        clearStage(game.buttonsUI);
+        clearStage(game.getButtonsUI());
         dispose();
     }
 
@@ -91,7 +91,7 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
 
     private TextButton[] createButtons() {
         int buyAttackPrice = BASE_ITEM_PRICE;
-        TextButton buyAttack = new TextButton(String.format("$%d - Buy Attack", buyAttackPrice), game.skin);
+        TextButton buyAttack = new TextButton(String.format("$%d - Buy Attack", buyAttackPrice), game.getSkin());
         buyAttack.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -99,19 +99,19 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
 
-                if (game.playerProfile.getCurrency() < buyAttackPrice) {
+                if (game.getPlayerProfile().getCurrency() < buyAttackPrice) {
                     failPurchaseSFX.play(0.5f);
                     return true;
                 }
                 purchaseSFX.play();
-                game.playerProfile.setAttackBooster(game.playerProfile.getAttackBooster() + 5);
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyAttackPrice);
+                game.getPlayerProfile().setAttackBooster(game.getPlayerProfile().getAttackBooster() + 5);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyAttackPrice);
                 return true;
             }
         });
 
         int buyHealthPrice = BASE_ITEM_PRICE;
-        TextButton buyHealth = new TextButton(String.format("$%d - Buy Health", buyHealthPrice), game.skin);
+        TextButton buyHealth = new TextButton(String.format("$%d - Buy Health", buyHealthPrice), game.getSkin());
         buyHealth.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -119,19 +119,19 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
 
-                if (game.playerProfile.getCurrency() < buyHealthPrice) {
+                if (game.getPlayerProfile().getCurrency() < buyHealthPrice) {
                     failPurchaseSFX.play(0.5f);
                     return true;
                 }
                 purchaseSFX.play();
-                game.playerProfile.setMaxHealthBooster(game.playerProfile.getMaxHealthBooster() + 5);
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyHealthPrice);
+                game.getPlayerProfile().setMaxHealthBooster(game.getPlayerProfile().getMaxHealthBooster() + 5);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyHealthPrice);
                 return true;
             }
         });
 
         int buySpeedPrice = BASE_ITEM_PRICE;
-        TextButton buySpeed = new TextButton(String.format("$%d - Buy Speed", buySpeedPrice), game.skin);
+        TextButton buySpeed = new TextButton(String.format("$%d - Buy Speed", buySpeedPrice), game.getSkin());
         buySpeed.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -139,19 +139,19 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
 
-                if (game.playerProfile.getCurrency() < buySpeedPrice) {
+                if (game.getPlayerProfile().getCurrency() < buySpeedPrice) {
                     failPurchaseSFX.play(0.5f);
                     return true;
                 }
                 purchaseSFX.play();
-                game.playerProfile.setSpeedBooster(game.playerProfile.getSpeedBooster() + 5);
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buySpeedPrice);
+                game.getPlayerProfile().setSpeedBooster(game.getPlayerProfile().getSpeedBooster() + 5);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buySpeedPrice);
                 return true;
             }
         });
 
         int buyDefensePrice = Math.round(BASE_ITEM_PRICE * 1.5f);
-        TextButton buyDefense = new TextButton(String.format("$%d - Buy Defense", buyDefensePrice), game.skin);
+        TextButton buyDefense = new TextButton(String.format("$%d - Buy Defense", buyDefensePrice), game.getSkin());
         buyDefense.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -159,19 +159,19 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
 
-                if (game.playerProfile.getCurrency() < buyDefensePrice) {
+                if (game.getPlayerProfile().getCurrency() < buyDefensePrice) {
                     failPurchaseSFX.play(0.5f);
                     return true;
                 }
                 purchaseSFX.play();
-                game.playerProfile.setDefenseBooster(game.playerProfile.getDefenseBooster() + 0.02f);
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyDefensePrice);
+                game.getPlayerProfile().setDefenseBooster(game.getPlayerProfile().getDefenseBooster() + 0.02f);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyDefensePrice);
                 return true;
             }
         });
 
         int buyEXPPrice = BASE_ITEM_PRICE;
-        TextButton buyEXP = new TextButton(String.format("$%d - Buy Base EXP Gain", buyEXPPrice), game.skin);
+        TextButton buyEXP = new TextButton(String.format("$%d - Buy Base EXP Gain", buyEXPPrice), game.getSkin());
         buyEXP.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -179,20 +179,20 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
 
-                if (game.playerProfile.getCurrency() < buyEXPPrice) {
+                if (game.getPlayerProfile().getCurrency() < buyEXPPrice) {
                     failPurchaseSFX.play(0.5f);
                     return true;
                 }
                 purchaseSFX.play();
-                game.playerProfile.setEXPMultiplierBooster(game.playerProfile.getEXPMultiplierBooster() + 0.05f);
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyEXPPrice);
+                game.getPlayerProfile().setEXPMultiplierBooster(game.getPlayerProfile().getEXPMultiplierBooster() + 0.05f);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyEXPPrice);
                 return true;
             }
         });
 
         int buyCurrencyPrice = BASE_ITEM_PRICE * 2;
         TextButton buyCurrency = new TextButton(
-                String.format("$%d - Buy Base Currency Gain", buyCurrencyPrice), game.skin);
+                String.format("$%d - Buy Base Currency Gain", buyCurrencyPrice), game.getSkin());
         buyCurrency.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -200,21 +200,21 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
 
-                if (game.playerProfile.getCurrency() < buyCurrencyPrice) {
+                if (game.getPlayerProfile().getCurrency() < buyCurrencyPrice) {
                     failPurchaseSFX.play(0.5f);
                     return true;
                 }
                 purchaseSFX.play();
-                game.playerProfile
-                        .setCurrencyMultiplierBooster(game.playerProfile.getCurrencyMultiplierBooster() + 0.05f);
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyCurrencyPrice);
+                game.getPlayerProfile()
+                        .setCurrencyMultiplierBooster(game.getPlayerProfile().getCurrencyMultiplierBooster() + 0.05f);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyCurrencyPrice);
                 return true;
             }
         });
 
         int buyAtttackSpeedPrice = Math.round(BASE_ITEM_PRICE * 1.75f);
         TextButton buyAttackSpeed = new TextButton(
-                String.format("$%d - Buy Attack Speed", buyAtttackSpeedPrice), game.skin);
+                String.format("$%d - Buy Attack Speed", buyAtttackSpeedPrice), game.getSkin());
         buyAttackSpeed.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -222,20 +222,20 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
 
-                if (game.playerProfile.getCurrency() < buyAtttackSpeedPrice) {
+                if (game.getPlayerProfile().getCurrency() < buyAtttackSpeedPrice) {
                     failPurchaseSFX.play(0.5f);
                     return true;
                 }
                 purchaseSFX.play();
-                game.playerProfile.setAttackSpeedBooster(game.playerProfile.getAttackSpeedBooster() - 0.05f);
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyAtttackSpeedPrice);
+                game.getPlayerProfile().setAttackSpeedBooster(game.getPlayerProfile().getAttackSpeedBooster() - 0.05f);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyAtttackSpeedPrice);
                 return true;
             }
         });
 
         int buyCritRatePrice = BASE_ITEM_PRICE * 2;
         TextButton buyCritRate = new TextButton(
-                String.format("$%d - Buy Critical Hit Rate", buyCritRatePrice), game.skin);
+                String.format("$%d - Buy Critical Hit Rate", buyCritRatePrice), game.getSkin());
         buyCritRate.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -243,20 +243,20 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
 
-                if (game.playerProfile.getCurrency() < buyCritRatePrice) {
+                if (game.getPlayerProfile().getCurrency() < buyCritRatePrice) {
                     failPurchaseSFX.play(0.5f);
                     return true;
                 }
                 purchaseSFX.play();
-                game.playerProfile.setCritRateBooster(game.playerProfile.getCritRateBooster() + 0.02f);
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyCritRatePrice);
+                game.getPlayerProfile().setCritRateBooster(game.getPlayerProfile().getCritRateBooster() + 0.02f);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyCritRatePrice);
                 return true;
             }
         });
 
         int buyCritDamagePrice = BASE_ITEM_PRICE * 2;
         TextButton buyCritDamage = new TextButton(
-                String.format("$%d - Buy Critical Hit Damage", buyCritDamagePrice), game.skin);
+                String.format("$%d - Buy Critical Hit Damage", buyCritDamagePrice), game.getSkin());
         buyCritDamage.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -264,20 +264,20 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
 
-                if (game.playerProfile.getCurrency() < buyCritDamagePrice) {
+                if (game.getPlayerProfile().getCurrency() < buyCritDamagePrice) {
                     failPurchaseSFX.play(0.5f);
                     return true;
                 }
                 purchaseSFX.play();
-                game.playerProfile.setCritMultiplierBooster(game.playerProfile.getCritMultiplierBooster() + 0.05f);
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyCritDamagePrice);
+                game.getPlayerProfile().setCritMultiplierBooster(game.getPlayerProfile().getCritMultiplierBooster() + 0.05f);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyCritDamagePrice);
                 return true;
             }
         });
 
         int buyHealthRegenPrice = BASE_ITEM_PRICE;
         TextButton buyHealthRegen = new TextButton(
-                String.format("$%d - Buy Health Regeneration", buyHealthRegenPrice), game.skin);
+                String.format("$%d - Buy Health Regeneration", buyHealthRegenPrice), game.getSkin());
         buyHealthRegen.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -285,19 +285,19 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
 
-                if (game.playerProfile.getCurrency() < buyHealthRegenPrice) {
+                if (game.getPlayerProfile().getCurrency() < buyHealthRegenPrice) {
                     failPurchaseSFX.play(0.5f);
                     return true;
                 }
                 purchaseSFX.play();
-                game.playerProfile
-                        .setHealthRegenMultiplierBooster(game.playerProfile.getHealthRegenMultiplierBooster() + 0.02f);
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency() - buyHealthPrice);
+                game.getPlayerProfile()
+                        .setHealthRegenMultiplierBooster(game.getPlayerProfile().getHealthRegenMultiplierBooster() + 0.02f);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyHealthPrice);
                 return true;
             }
         });
 
-        TextButton backButton = new TextButton("Back To Menu", game.skin);
+        TextButton backButton = new TextButton("Back To Menu", game.getSkin());
         backButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -305,7 +305,7 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     return false;
                 }
                 dispose();
-                game.setScreen(game.mainMenuScreen);
+                game.setScreen(game.getMainMenuScreen());
                 return true;
             }
         });
@@ -326,7 +326,7 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
     }
 
     private void adjustButtonColor(int price, TextButton button) {
-        if (game.playerProfile.getCurrency() < price) {
+        if (game.getPlayerProfile().getCurrency() < price) {
             button.setColor(175 / 255f, 25 / 255f, 25 / 255f, 1);
         }
     }

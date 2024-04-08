@@ -35,9 +35,9 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
 
     @Override
     public void show() {
-        game.playerProfile.saveProfileState();
-        Gdx.input.setInputProcessor(game.buttonsUI);
-        addActors(game.buttonsUI, menuItems);
+        game.getPlayerProfile().saveProfileState();
+        Gdx.input.setInputProcessor(game.getButtonsUI());
+        addActors(game.getButtonsUI(), menuItems);
         music.setLooping(true);
         music.play();
     }
@@ -51,8 +51,8 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         renderBackground(game, background);
         drawMessageFromCenter(createLayout("CROWD SURVIVOR", 3), game.getBatch(),
                 Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() * 8 / 10f, 2);
-        game.buttonsUI.act();
-        game.buttonsUI.draw();
+        game.getButtonsUI().act();
+        game.getButtonsUI().draw();
     }
 
     @Override
@@ -73,7 +73,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
     // runs when screen is left
     @Override
     public void hide() {
-        clearStage(game.buttonsUI);
+        clearStage(game.getButtonsUI());
         dispose();
     }
 
@@ -90,7 +90,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         int firstButtonPositionY = Gdx.graphics.getHeight() / 3;
 
         // start game button
-        TextButton startGameButton = new TextButton("Start Game", game.skin);
+        TextButton startGameButton = new TextButton("Start Game", game.getSkin());
         startGameButton.setSize(buttonWidth, buttonHeight);
         startGameButton.setPosition(buttonPositionX, firstButtonPositionY);
         startGameButton.addListener(new InputListener() {
@@ -99,15 +99,15 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                game.playerProfile.applyPlayerUpgrades(game.inGameScreen.player);
-                game.setScreen(game.inGameScreen);
+                game.getPlayerProfile().applyPlayerUpgrades(game.getInGameScreen().getPlayer());
+                game.setScreen(game.getInGameScreen());
                 return true;
             }
         });
         this.menuItems[0] = startGameButton;
 
         // shop button
-        TextButton shopButton = new TextButton("Shop", game.skin);
+        TextButton shopButton = new TextButton("Shop", game.getSkin());
         shopButton.setSize(buttonWidth, buttonHeight);
         shopButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight);
         shopButton.addListener(new InputListener() {
@@ -118,14 +118,14 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                game.setScreen(game.shopScreen);
+                game.setScreen(game.getShopScreen());
                 return true;
             }
         });
         this.menuItems[1] = shopButton;
 
         // quit game button
-        TextButton quitButton = new TextButton("Quit", game.skin);
+        TextButton quitButton = new TextButton("Quit", game.getSkin());
         quitButton.setSize(buttonWidth, buttonHeight);
         quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
         quitButton.addListener(new InputListener() {
@@ -134,7 +134,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.buttonsUI);
+                clearStage(game.getButtonsUI());
                 Gdx.app.exit();
                 return true;
             }

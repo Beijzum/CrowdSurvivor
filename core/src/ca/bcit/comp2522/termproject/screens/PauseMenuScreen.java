@@ -15,21 +15,21 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
 
     public PauseMenuScreen(CrowdSurvivor game) {
         this.game = game;
-        this.inputManager = new InputMultiplexer(this, game.buttonsUI);
+        this.inputManager = new InputMultiplexer(this, game.getButtonsUI());
         createButtons();
     }
 
     @Override
     public void show() {
-        addActors(game.buttonsUI, menuItems);
+        addActors(game.getButtonsUI(), menuItems);
         Gdx.input.setInputProcessor(this.inputManager);
     }
 
     @Override
     public void render(float v) {
-        game.inGameScreen.renderFrameAsBackground();
-        game.buttonsUI.act();
-        game.buttonsUI.draw();
+        game.getInGameScreen().renderFrameAsBackground();
+        game.getButtonsUI().act();
+        game.getButtonsUI().draw();
     }
 
     @Override
@@ -66,7 +66,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
         int firstButtonPositionY = Gdx.graphics.getHeight() / 2;
 
         // resume game button
-        TextButton resumeGameButton = new TextButton("Resume", game.skin);
+        TextButton resumeGameButton = new TextButton("Resume", game.getSkin());
         resumeGameButton.setSize(buttonWidth, buttonHeight);
         resumeGameButton.setPosition(buttonPositionX, firstButtonPositionY);
         resumeGameButton.addListener(new InputListener() {
@@ -75,15 +75,15 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.buttonsUI);
-                game.setScreen(game.inGameScreen);
+                clearStage(game.getButtonsUI());
+                game.setScreen(game.getInGameScreen());
                 return true;
             }
         });
         this.menuItems[0] = resumeGameButton;
 
         // quit game button
-        TextButton quitButton = new TextButton("Quit", game.skin);
+        TextButton quitButton = new TextButton("Quit", game.getSkin());
         quitButton.setSize(buttonWidth, buttonHeight);
         quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
         quitButton.addListener(new InputListener() {
@@ -92,12 +92,12 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency()
-                        + game.inGameScreen.player.getCollectedCurrency());
-                game.inGameScreen.resetGameState();
-                clearStage(game.buttonsUI);
-                game.inGameScreen.dispose();
-                game.setScreen(game.mainMenuScreen);
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency()
+                        + game.getInGameScreen().getPlayer().getCollectedCurrency());
+                game.getInGameScreen().resetGameState();
+                clearStage(game.getButtonsUI());
+                game.getInGameScreen().dispose();
+                game.setScreen(game.getMainMenuScreen());
                 return true;
             }
         });
@@ -107,8 +107,8 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     @Override
     public boolean keyDown(int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
-            clearStage(game.buttonsUI);
-            game.setScreen(game.inGameScreen);
+            clearStage(game.getButtonsUI());
+            game.setScreen(game.getInGameScreen());
             return true;
         }
         return false;
