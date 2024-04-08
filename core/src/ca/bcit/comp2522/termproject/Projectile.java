@@ -198,8 +198,13 @@ public class Projectile {
         this.setProjectileCenter(this.getCenterX() + deltaX, this.getCenterY() + deltaY);
     }
 
+    /**
+     * Rotates the projectile sprite based on its speed.
+     * The rotation angle is determined by dividing the projectile's speed by a constant divisor.
+     */
     public void spinProjectile() {
-        this.sprite.rotate(this.speed / 100f);
+        final float constantDivisor = 100f;
+        this.sprite.rotate(this.speed / constantDivisor);
     }
 
     private float getCenterX() {
@@ -213,7 +218,7 @@ public class Projectile {
     /**
      * Returns a string representation of the Projectile object.
      *
-     * @return toString description
+     * @return toString description.
      */
     @Override
     public String toString() {

@@ -139,7 +139,7 @@ public class EXPBar {
     /**
      * Returns a string representation of the EXPBar object.
      *
-     * @return toString description
+     * @return toString description.
      */
     @Override
     public String toString() {

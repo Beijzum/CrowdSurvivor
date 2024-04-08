@@ -10,8 +10,8 @@ import java.io.Serializable;
 
 /**
  * Represents the player profile for the game.
- * The class implements Serializable to enable saving and loading the player's progress.
- * Uses the singleton method design pattern.
+ * Implements serializable to enable saving and loading the player's progress.
+ * Implements the singleton method design pattern.
  *
  * @author Jonathan Liu
  * @author A01375621
@@ -314,7 +314,7 @@ public final class PlayerProfile implements Serializable {
     /**
      * Returns a string representation of the PlayerProfile object.
      *
-     * @return toString description
+     * @return toString description.
      */
     @Override
     public String toString() {

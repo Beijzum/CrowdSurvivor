@@ -96,7 +96,7 @@ public class DamageNumber {
     /**
      * Returns a string representation of the DamageNumber object.
      *
-     * @return toString description
+     * @return toString description.
      */
     @Override
     public String toString() {

@@ -1,28 +1,48 @@
 package ca.bcit.comp2522.termproject;
 
+import ca.bcit.comp2522.termproject.enemies.Enemy;
 import ca.bcit.comp2522.termproject.screens.InGameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
-import ca.bcit.comp2522.termproject.enemies.Enemy;
 
-public class PlayerManager {
-    final private InGameScreen gameScreen;
+/**
+ * Represents the player manager class.
+ * Implements the singleton method design pattern.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
+public final class PlayerManager {
     private static PlayerManager instance = null;
-    final private Vector3 mouseVector = new Vector3(0, 0, 0);
+    private final InGameScreen gameScreen;
+    private final Vector3 mouseVector = new Vector3(0, 0, 0);
 
-    private PlayerManager(InGameScreen gameScreen) {
+    private PlayerManager(final InGameScreen gameScreen) {
         this.gameScreen = gameScreen;
     }
 
-    public static PlayerManager createPlayerManager(InGameScreen gameScreen) {
+    /**
+     * Creates a single instance of PlayerManager.
+     *
+     * @param gameScreen gameScreen Object used to represent the game screen.
+     * @return the created or loaded PlayerManager instance.
+     */
+    public static PlayerManager createPlayerManager(final InGameScreen gameScreen) {
         if (instance == null) {
             instance = new PlayerManager(gameScreen);
         }
         return instance;
     }
 
+    /**
+     * Handles the player's health regeneration and damage taken from enemies and projectiles.
+     */
     public void handlePlayerHealth() {
         gameScreen.player.regenHealth();
         for (Enemy enemy : gameScreen.onFieldEnemies) {
@@ -34,15 +54,24 @@ public class PlayerManager {
         }
     }
 
+    /**
+     * Increments the player's invincibility frames (IFrames).
+     */
     public void incrementPlayerIframe() {
         gameScreen.player.incrementIFrames();
     }
 
+    /**
+     * Handles continuous player movement based on keyboard input.
+     * Allows the player to move in four directions: up, down, left, and right.
+     */
     public void handleContinuousPlayerKeyboardInput() {
         if (!Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
             return;
         }
-        float deltaY = 0, deltaX = 0;
+
+        float deltaX = 0;
+        float deltaY = 0;
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             deltaY = gameScreen.player.getSpeed() * Gdx.graphics.getDeltaTime();
@@ -65,6 +94,10 @@ public class PlayerManager {
         gameScreen.player.setY(gameScreen.player.getY() + deltaY);
     }
 
+    /**
+     * Handles the player's attack mechanism.
+     * Manages the firing of projectiles and their movement and lifetime.
+     */
     public void handleAttack() {
         // remove expired projectiles
         if (gameScreen.playerProjectilesOnScreen.peek() != null
@@ -84,5 +117,18 @@ public class PlayerManager {
         gameScreen.player
                 .fireProjectile(this.gameScreen.playerProjectilesOnScreen, mousePosition.x, mousePosition.y);
 
+    }
+
+    /**
+     * Returns a string representation of the PlayerManager object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "PlayerManager{"
+                + "gameScreen=" + gameScreen
+                + ", mouseVector=" + mouseVector
+                + '}';
     }
 }

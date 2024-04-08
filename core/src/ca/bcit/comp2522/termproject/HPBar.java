@@ -126,7 +126,7 @@ public class HPBar {
     /**
      * Returns a string representation of the HPBar object.
      *
-     * @return toString description
+     * @return toString description.
      */
     @Override
     public String toString() {
