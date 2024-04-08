@@ -95,7 +95,6 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                 }
                 game.getButtonClickSFX().play();
                 dispose();
-                game.getInGameScreen().resetGameState();
                 clearStage(game.getButtonsUI());
                 game.setScreen(game.getInGameScreen());
                 return true;
@@ -116,7 +115,6 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                 game.getButtonClickSFX().play();
                 dispose();
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().resetGameState();
                 game.getInGameScreen().dispose();
                 game.setScreen(game.getMainMenuScreen());
                 return true;
@@ -190,6 +188,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
     public void hide() {
         this.game.getPlayerProfile().setCurrency(this.game.getPlayerProfile().getCurrency()
                 + this.game.getInGameScreen().getPlayer().getCollectedCurrency());
+        game.getInGameScreen().resetGameState();
     }
 
     /**
