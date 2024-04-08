@@ -55,28 +55,45 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         game.getButtonsUI().draw();
     }
 
+    /**
+     * Handles the resizing of the screen.
+     *
+     * @param width  the new width of the screen.
+     * @param height the new height of the screen.
+     */
     @Override
-    public void resize(int i, int i1) {
+    public void resize(final int width, final int height) {
 
     }
 
+    /**
+     * Pauses the game.
+     */
     @Override
     public void pause() {
 
     }
 
+    /**
+     * Resumes the game after it has been paused.
+     */
     @Override
     public void resume() {
 
     }
 
-    // runs when screen is left
+    /**
+     * Hides the screen when no longer active or visible.
+     */
     @Override
     public void hide() {
         clearStage(game.getButtonsUI());
         dispose();
     }
 
+    /**
+     * Disposes of resources and clears the music.
+     */
     @Override
     public void dispose() {
         music.dispose();
