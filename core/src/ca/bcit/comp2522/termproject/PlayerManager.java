@@ -116,6 +116,7 @@ public final class PlayerManager {
      */
     public void handleContinuousPlayerKeyboardInput() {
         if (!Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
+            this.gameScreen.getPlayer().setIsMoving(false);
             return;
         }
 
@@ -138,17 +139,15 @@ public final class PlayerManager {
             this.deltaY = this.deltaY * (float) Math.abs(Math.sin(Math.atan(this.deltaY / this.deltaX)));
         }
 
-        // handle map boundary;
-        handleMapBoundary();
-    }
+        // set player isMoving if wasd is pressed
+        gameScreen.getPlayer().setIsMoving(this.deltaX != 0 || this.deltaY != 0);
 
-    private void handleMapBoundary() {
         this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() + this.deltaX);
-        if (!this.gameScreen.getBackground().getBoundingRectangle().contains(this.gameScreen.getPlayer().getHitbox())) {
+        if (!gameScreen.getBackground().getBoundingRectangle().contains(gameScreen.getPlayer().getHitbox())) {
             this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() - this.deltaX);
         }
         this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() + this.deltaY);
-        if (!this.gameScreen.getBackground().getBoundingRectangle().contains(this.gameScreen.getPlayer().getHitbox())) {
+        if (!gameScreen.getBackground().getBoundingRectangle().contains(gameScreen.getPlayer().getHitbox())) {
             this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() - this.deltaY);
         }
     }
