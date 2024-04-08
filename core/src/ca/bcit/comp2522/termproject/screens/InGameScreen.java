@@ -67,7 +67,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public void render(float v) {
         if (timeElapsed >= MAX_GAME_LENGTH) { // later add the stipulation that the boss needs to be killed too
             dispose();
-            game.setScreen(game.winScreen);
+            game.setScreen(game.getWinScreen());
             return;
         }
         ScreenUtils.clear(0, 0, 0.2f, 1);
@@ -105,13 +105,13 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         // check if player is dead, move to game over screen if so
         if (player.isDead()) {
             dispose();
-            game.setScreen(game.gameOverScreen);
+            game.setScreen(game.getGameOverScreen());
             return;
         }
 
         // go to level up screen if leveled up
         if (enterUpgradeScreenAmount > 0) {
-            game.setScreen(game.upgradeSelectionScreen);
+            game.setScreen(game.getUpgradeSelectionScreen());
             this.enterUpgradeScreenAmount--;
         }
 
@@ -232,17 +232,17 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public void renderFrameAsBackground() {
         game.getBatch().setColor(this.darkTint);
         renderBackground(game, background);
-        game.inGameScreen.player.draw(game.getBatch());
-        game.inGameScreen.drawEnemies();
-        game.inGameScreen.drawAllPlayerProjectiles();
+        game.getInGameScreen().player.draw(game.getBatch());
+        game.getInGameScreen().drawEnemies();
+        game.getInGameScreen().drawAllPlayerProjectiles();
         this.gameUI.draw();
-        game.getBatch().setColor(CrowdSurvivor.STANDARD_COLOR);
+        game.getBatch().setColor(CrowdSurvivor.getStandardColour());
     }
 
     @Override
     public boolean keyDown(int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
-            this.game.setScreen(game.pauseMenuScreen);
+            this.game.setScreen(game.getPauseMenuScreen());
             return true;
         }
         return false;

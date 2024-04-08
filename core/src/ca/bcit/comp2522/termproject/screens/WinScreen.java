@@ -43,8 +43,8 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.setScreen(game.inGameScreen);
-                game.inGameScreen.resetGameState();
+                game.setScreen(game.getInGameScreen());
+                game.getInGameScreen().resetGameState();
                 dispose();
                 return true;
             }
@@ -61,7 +61,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.inGameScreen.resetGameState();
+                game.getInGameScreen().resetGameState();
                 game.setScreen(game.getMainMenuScreen());
                 dispose();
                 return true;
@@ -73,10 +73,10 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
     private GlyphLayout[] createMessageLayout() {
         GlyphLayout congratulationMessage = createLayout("CONGRATULATIONS YOU WIN!", 2.5f);
         GlyphLayout timeElapsedMessage = createLayout(String.format("TIME ELAPSED: %d:%02d",
-                Math.round(game.inGameScreen.timeElapsed) / 60,
-                Math.round(game.inGameScreen.timeElapsed) % 60), 2.5f);
+                Math.round(game.getInGameScreen().timeElapsed) / 60,
+                Math.round(game.getInGameScreen().timeElapsed) % 60), 2.5f);
         GlyphLayout scoreMessage = createLayout(String.format("SCORE: %d",
-                        game.inGameScreen.player.getCollectedCurrency() + game.inGameScreen.player.getAccumulatedEXP()),
+                        game.getInGameScreen().player.getCollectedCurrency() + game.getInGameScreen().player.getAccumulatedEXP()),
                 2.5f);
         return new GlyphLayout[]{congratulationMessage, timeElapsedMessage, scoreMessage};
     }
@@ -92,11 +92,11 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
 
     @Override
     public void render(float v) {
-        game.inGameScreen.renderFrameAsBackground();
+        game.getInGameScreen().renderFrameAsBackground();
         game.getButtonsUI().act();
         game.getButtonsUI().draw();
-        drawMultipleMessageFromCenter(messageLayouts, game.getBatch(), game.inGameScreen.camera.position.x,
-                game.inGameScreen.camera.position.y + Gdx.graphics.getHeight() / 2f, 2.5f);
+        drawMultipleMessageFromCenter(messageLayouts, game.getBatch(), game.getInGameScreen().camera.position.x,
+                game.getInGameScreen().camera.position.y + Gdx.graphics.getHeight() / 2f, 2.5f);
 
     }
 
@@ -117,8 +117,8 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
 
     @Override
     public void hide() {
-        game.playerProfile.setCurrency(game.playerProfile.getCurrency()
-                + game.inGameScreen.player.getCollectedCurrency() + Math.round(game.inGameScreen.timeElapsed * 2));
+        game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency()
+                + game.getInGameScreen().player.getCollectedCurrency() + Math.round(game.getInGameScreen().timeElapsed * 2));
     }
 
     @Override

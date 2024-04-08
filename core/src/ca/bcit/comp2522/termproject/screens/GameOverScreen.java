@@ -46,9 +46,9 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                     return false;
                 }
                 dispose();
-                game.inGameScreen.resetGameState();
+                game.getInGameScreen().resetGameState();
                 clearStage(game.getButtonsUI());
-                game.setScreen(game.inGameScreen);
+                game.setScreen(game.getInGameScreen());
                 return true;
             }
         });
@@ -66,8 +66,8 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                 }
                 dispose();
                 clearStage(game.getButtonsUI());
-                game.inGameScreen.resetGameState();
-                game.inGameScreen.dispose();
+                game.getInGameScreen().resetGameState();
+                game.getInGameScreen().dispose();
                 game.setScreen(game.getMainMenuScreen());
                 return true;
             }
@@ -79,10 +79,10 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         GlyphLayout youDiedMessage = createLayout("YOU DIED", 2f);
         GlyphLayout gameOverMessage = createLayout("GAME OVER", 2f);
         GlyphLayout timeElapsedMessage = createLayout(String.format("TIME ELAPSED: %d:%02d",
-                Math.round(game.inGameScreen.timeElapsed) / 60,
-                Math.round(game.inGameScreen.timeElapsed) % 60), 2f);
+                Math.round(game.getInGameScreen().timeElapsed) / 60,
+                Math.round(game.getInGameScreen().timeElapsed) % 60), 2f);
         GlyphLayout scoreMessage = createLayout(String.format("SCORE: %d",
-                        game.inGameScreen.player.getCollectedCurrency() + game.inGameScreen.player.getAccumulatedEXP()),
+                        game.getInGameScreen().player.getCollectedCurrency() + game.getInGameScreen().player.getAccumulatedEXP()),
                 2f);
         return new GlyphLayout[]{youDiedMessage, gameOverMessage, timeElapsedMessage, scoreMessage};
     }
@@ -101,11 +101,11 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         if (!startOfMusic.isPlaying()) {
             music.play();
         }
-        game.inGameScreen.renderFrameAsBackground();
+        game.getInGameScreen().renderFrameAsBackground();
         game.getButtonsUI().act();
         game.getButtonsUI().draw();
-        drawMultipleMessageFromCenter(this.messageLayouts, game.getBatch(), game.inGameScreen.camera.position.x,
-                game.inGameScreen.camera.position.y + Gdx.graphics.getHeight() / 2f, 2f);
+        drawMultipleMessageFromCenter(this.messageLayouts, game.getBatch(), game.getInGameScreen().camera.position.x,
+                game.getInGameScreen().camera.position.y + Gdx.graphics.getHeight() / 2f, 2f);
     }
 
     @Override
@@ -125,8 +125,8 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
 
     @Override
     public void hide() {
-        game.playerProfile.setCurrency(game.playerProfile.getCurrency()
-                + game.inGameScreen.player.getCollectedCurrency());
+        game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency()
+                + game.getInGameScreen().player.getCollectedCurrency());
     }
 
     @Override

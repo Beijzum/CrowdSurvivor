@@ -22,6 +22,6 @@ public interface Background {
                 background.getOriginY(), background.getWidth(), background.getHeight(), background.getScaleX(),
                 background.getScaleY(), background.getRotation());
         game.getBatch().end();
-        game.getBatch().setColor(CrowdSurvivor.STANDARD_COLOR);
+        game.getBatch().setColor(CrowdSurvivor.getStandardColour());
     }
 }

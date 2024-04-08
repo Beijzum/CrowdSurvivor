@@ -90,7 +90,7 @@ public class Enemy extends Entity {
         batch.begin();
         if (this.isTakingDamage) {
             Color originalColor = new Color(batch.getColor());
-            if (originalColor.equals(CrowdSurvivor.STANDARD_COLOR)) {
+            if (originalColor.equals(CrowdSurvivor.getStandardColour())) {
                 batch.setColor(this.damageTint);
             } else {
                 batch.setColor(originalColor.r + 0.3f, originalColor.g, originalColor.b, originalColor.a);

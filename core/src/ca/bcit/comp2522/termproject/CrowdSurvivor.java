@@ -29,18 +29,18 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public class CrowdSurvivor extends Game {
     static BitmapFont font;
+    static Color standardColour = new Color(1, 1, 1, 1);
     private SpriteBatch batch;
     private Stage buttonsUI;
     private Skin skin;
-    public static Color STANDARD_COLOR = new Color(1, 1, 1, 1);
     private MainMenuScreen mainMenuScreen;
-    public ShopScreen shopScreen;
-    public InGameScreen inGameScreen;
-    public PauseMenuScreen pauseMenuScreen;
-    public UpgradeSelectionScreen upgradeSelectionScreen;
-    public GameOverScreen gameOverScreen;
-    public WinScreen winScreen;
-    public PlayerProfile playerProfile;
+    private ShopScreen shopScreen;
+    private InGameScreen inGameScreen;
+    private PauseMenuScreen pauseMenuScreen;
+    private UpgradeSelectionScreen upgradeSelectionScreen;
+    private GameOverScreen gameOverScreen;
+    private WinScreen winScreen;
+    private PlayerProfile playerProfile;
 
     @Override
     public void create() {
@@ -48,16 +48,24 @@ public class CrowdSurvivor extends Game {
         this.buttonsUI = new Stage(new ScreenViewport());
         this.skin = new Skin(Gdx.files.internal("skin/vhs-ui.json"));
         font = this.skin.getFont("font");
-        mainMenuScreen = new MainMenuScreen(this);
-        shopScreen = new ShopScreen(this);
-        inGameScreen = new InGameScreen(this);
-        pauseMenuScreen = new PauseMenuScreen(this);
-        upgradeSelectionScreen = new UpgradeSelectionScreen(this);
-        gameOverScreen = new GameOverScreen(this);
-        winScreen = new WinScreen(this);
-        playerProfile = PlayerProfile.createPlayerProfile();
+        this.mainMenuScreen = new MainMenuScreen(this);
+        this.shopScreen = new ShopScreen(this);
+        this.inGameScreen = new InGameScreen(this);
+        this.pauseMenuScreen = new PauseMenuScreen(this);
+        this.upgradeSelectionScreen = new UpgradeSelectionScreen(this);
+        this.gameOverScreen = new GameOverScreen(this);
+        this.winScreen = new WinScreen(this);
+        this.playerProfile = PlayerProfile.createPlayerProfile();
 
-        this.setScreen(mainMenuScreen);
+        this.setScreen(this.mainMenuScreen);
+    }
+
+    public static BitmapFont getFont() {
+        return font;
+    }
+
+    public static Color getStandardColour() {
+        return standardColour;
     }
 
     public SpriteBatch getBatch() {
@@ -68,10 +76,6 @@ public class CrowdSurvivor extends Game {
         return this.buttonsUI;
     }
 
-    public static BitmapFont getFont() {
-        return font;
-    }
-
     public Skin getSkin() {
         return this.skin;
     }
@@ -80,8 +84,61 @@ public class CrowdSurvivor extends Game {
         return this.mainMenuScreen;
     }
 
+    public ShopScreen getShopScreen() {
+        return this.shopScreen;
+    }
+
+    public InGameScreen getInGameScreen() {
+        return this.inGameScreen;
+    }
+
+    public PauseMenuScreen getPauseMenuScreen() {
+        return this.pauseMenuScreen;
+    }
+
+    public UpgradeSelectionScreen getUpgradeSelectionScreen() {
+        return this.upgradeSelectionScreen;
+    }
+
+    public GameOverScreen getGameOverScreen() {
+        return this.gameOverScreen;
+    }
+
+    public WinScreen getWinScreen() {
+        return this.winScreen;
+    }
+
+    public PlayerProfile getPlayerProfile() {
+        return this.playerProfile;
+    }
+
     public void setButtonsUI(final Stage buttonsUI) {
         this.buttonsUI = buttonsUI;
+    }
+
+    public void setShopScreen(final ShopScreen shopScreen) {
+        this.shopScreen = shopScreen;
+    }
+
+    public void setInGameScreen(final InGameScreen inGameScreen) {
+        this.inGameScreen = inGameScreen;
+    }
+
+    public void setPauseMenuScreen(final PauseMenuScreen pauseMenuScreen) {
+        this.pauseMenuScreen = pauseMenuScreen;
+    }
+
+    public void setUpgradeSelectionScreen(final UpgradeSelectionScreen upgradeSelectionScreen) {
+        this.upgradeSelectionScreen = upgradeSelectionScreen;
+    }
+
+
+    public void setGameOverScreen(final GameOverScreen gameOverScreen) {
+        this.gameOverScreen = gameOverScreen;
+    }
+
+    public void setWinScreen(final WinScreen winScreen) {
+        this.winScreen = winScreen;
     }
 
     @Override

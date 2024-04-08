@@ -27,7 +27,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
 
     @Override
     public void render(float v) {
-        game.inGameScreen.renderFrameAsBackground();
+        game.getInGameScreen().renderFrameAsBackground();
         game.getButtonsUI().act();
         game.getButtonsUI().draw();
     }
@@ -76,7 +76,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.setScreen(game.inGameScreen);
+                game.setScreen(game.getInGameScreen());
                 return true;
             }
         });
@@ -92,11 +92,11 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                game.playerProfile.setCurrency(game.playerProfile.getCurrency()
-                        + game.inGameScreen.player.getCollectedCurrency());
-                game.inGameScreen.resetGameState();
+                game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency()
+                        + game.getInGameScreen().player.getCollectedCurrency());
+                game.getInGameScreen().resetGameState();
                 clearStage(game.getButtonsUI());
-                game.inGameScreen.dispose();
+                game.getInGameScreen().dispose();
                 game.setScreen(game.getMainMenuScreen());
                 return true;
             }
@@ -108,7 +108,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     public boolean keyDown(int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
             clearStage(game.getButtonsUI());
-            game.setScreen(game.inGameScreen);
+            game.setScreen(game.getInGameScreen());
             return true;
         }
         return false;
