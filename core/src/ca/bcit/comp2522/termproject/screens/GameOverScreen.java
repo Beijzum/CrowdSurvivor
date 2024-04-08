@@ -53,7 +53,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         this.buttonWidth = Gdx.graphics.getWidth() / buttonWidthDivisor;
         final float buttonHeightDivisor = 10f;
         this.buttonHeight = Gdx.graphics.getHeight() / buttonHeightDivisor;
-        this.buttonPositionX = Gdx.graphics.getWidth() / 2f - buttonWidth / 2;
+        this.buttonPositionX = Gdx.graphics.getWidth() / 2f - this.buttonWidth / 2;
         this.firstButtonPositionY = Gdx.graphics.getHeight() / 2f;
         this.tryAgainButton = new TextButton("Try Again", this.game.getSkin());
         this.quitButton = new TextButton("Return To Menu", this.game.getSkin());
