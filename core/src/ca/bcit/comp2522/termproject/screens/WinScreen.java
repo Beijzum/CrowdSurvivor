@@ -44,7 +44,6 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                 }
                 clearStage(game.getButtonsUI());
                 game.setScreen(game.getInGameScreen());
-                game.getInGameScreen().resetGameState();
                 dispose();
                 return true;
             }
@@ -61,7 +60,6 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().resetGameState();
                 game.setScreen(game.getMainMenuScreen());
                 dispose();
                 return true;
@@ -117,6 +115,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
 
     @Override
     public void hide() {
+        game.getInGameScreen().resetGameState();
         game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency()
                 + game.getInGameScreen().getPlayer().getCollectedCurrency()
                 + Math.round(game.getInGameScreen().getTimeElapsed() * 2));

@@ -115,7 +115,6 @@ final public class EnemyManager {
     public void handleBosses() {
         for (Boss boss : gameScreen.getOnFieldBosses()) {
             for (Projectile playerProjectile : gameScreen.getPlayerProjectilesOnScreen()) {
-                System.out.println(boss.getHitbox());
                 if (!boss.getHitbox().overlaps(playerProjectile.getHitbox())) {
                     continue;
                 }
@@ -189,9 +188,6 @@ final public class EnemyManager {
     }
 
     private void killBoss() {
-        if (gameScreen.getOnFieldBosses().isEmpty()) {
-            return;
-        }
         Boss deadBoss = null;
         for (Boss boss : gameScreen.getOnFieldBosses()) {
             if (boss.isDead()) {
