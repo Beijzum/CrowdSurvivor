@@ -13,7 +13,8 @@ Notes go here
 
 ## TODO BEFORE TUESDAY
 
-figure out how to animate gif of playerSprite.gif
+add boundaries to map
+optimize game
 add SFX for boss dying
 unit tests
 update uml
