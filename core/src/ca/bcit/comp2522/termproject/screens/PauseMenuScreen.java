@@ -15,21 +15,21 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
 
     public PauseMenuScreen(CrowdSurvivor game) {
         this.game = game;
-        this.inputManager = new InputMultiplexer(this, game.buttonsUI);
+        this.inputManager = new InputMultiplexer(this, game.getButtonsUI());
         createButtons();
     }
 
     @Override
     public void show() {
-        addActors(game.buttonsUI, menuItems);
+        addActors(game.getButtonsUI(), menuItems);
         Gdx.input.setInputProcessor(this.inputManager);
     }
 
     @Override
     public void render(float v) {
         game.inGameScreen.renderFrameAsBackground();
-        game.buttonsUI.act();
-        game.buttonsUI.draw();
+        game.getButtonsUI().act();
+        game.getButtonsUI().draw();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.buttonsUI);
+                clearStage(game.getButtonsUI());
                 game.setScreen(game.inGameScreen);
                 return true;
             }
@@ -95,7 +95,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 game.playerProfile.setCurrency(game.playerProfile.getCurrency()
                         + game.inGameScreen.player.getCollectedCurrency());
                 game.inGameScreen.resetGameState();
-                clearStage(game.buttonsUI);
+                clearStage(game.getButtonsUI());
                 game.inGameScreen.dispose();
                 game.setScreen(game.mainMenuScreen);
                 return true;
@@ -107,7 +107,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     @Override
     public boolean keyDown(int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
-            clearStage(game.buttonsUI);
+            clearStage(game.getButtonsUI());
             game.setScreen(game.inGameScreen);
             return true;
         }

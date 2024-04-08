@@ -18,8 +18,6 @@ import ca.bcit.comp2522.termproject.interfaces.Background;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import static ca.bcit.comp2522.termproject.CrowdSurvivor.font;
-
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor {
     final private static int MAX_GAME_LENGTH = 300;
     public float timeElapsed = 0;
@@ -73,7 +71,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
             return;
         }
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        game.buttonsUI.act();
+        game.getButtonsUI().act();
 
         game.getBatch().setProjectionMatrix(camera.combined);
 
@@ -97,7 +95,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.drawEnemies();
         this.drawAllEnemyProjectiles();
         this.drawAllPlayerProjectiles();
-        game.buttonsUI.draw();
+        game.getButtonsUI().draw();
 
         // draws HUD
         drawHPBar();
@@ -142,7 +140,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     @Override
     public void dispose() {
-        clearStage(game.buttonsUI);
+        clearStage(game.getButtonsUI());
         music.dispose();
     }
 
@@ -208,11 +206,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     private void drawCurrencyCounter() {
         game.getBatch().begin();
-        font.setColor(Color.YELLOW);
-        font.draw(game.getBatch(), "Currency: " + player.getCollectedCurrency(),
+        CrowdSurvivor.getFont().setColor(Color.YELLOW);
+        CrowdSurvivor.getFont().draw(game.getBatch(), "Currency: " + player.getCollectedCurrency(),
                 player.getX() - Gdx.graphics.getWidth() / 2.2f,
                 player.getY() + (float) Gdx.graphics.getHeight() / 2 - 30);
-        font.setColor(Color.WHITE);
+        CrowdSurvivor.getFont().setColor(Color.WHITE);
         game.getBatch().end();
     }
 

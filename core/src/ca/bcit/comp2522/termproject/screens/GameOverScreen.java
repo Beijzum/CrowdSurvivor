@@ -47,7 +47,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                 }
                 dispose();
                 game.inGameScreen.resetGameState();
-                clearStage(game.buttonsUI);
+                clearStage(game.getButtonsUI());
                 game.setScreen(game.inGameScreen);
                 return true;
             }
@@ -65,7 +65,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                     return false;
                 }
                 dispose();
-                clearStage(game.buttonsUI);
+                clearStage(game.getButtonsUI());
                 game.inGameScreen.resetGameState();
                 game.inGameScreen.dispose();
                 game.setScreen(game.mainMenuScreen);
@@ -90,8 +90,8 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
     @Override
     public void show() {
         this.messageLayouts = createMessageLayout();
-        addActors(game.buttonsUI, menuItems);
-        Gdx.input.setInputProcessor(game.buttonsUI);
+        addActors(game.getButtonsUI(), menuItems);
+        Gdx.input.setInputProcessor(game.getButtonsUI());
         music.setLooping(true);
         startOfMusic.play();
     }
@@ -102,8 +102,8 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
             music.play();
         }
         game.inGameScreen.renderFrameAsBackground();
-        game.buttonsUI.act();
-        game.buttonsUI.draw();
+        game.getButtonsUI().act();
+        game.getButtonsUI().draw();
         drawMultipleMessageFromCenter(this.messageLayouts, game.getBatch(), game.inGameScreen.camera.position.x,
                 game.inGameScreen.camera.position.y + Gdx.graphics.getHeight() / 2f, 2f);
     }

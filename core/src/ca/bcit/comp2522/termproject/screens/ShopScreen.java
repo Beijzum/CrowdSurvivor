@@ -44,10 +44,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(game.buttonsUI);
+        Gdx.input.setInputProcessor(game.getButtonsUI());
         music.setLooping(true);
         music.play();
-        addActors(game.buttonsUI, menuItems);
+        addActors(game.getButtonsUI(), menuItems);
     }
 
     @Override
@@ -59,8 +59,8 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
         drawMessage(shopMessage, game.getBatch(), 20, Gdx.graphics.getHeight() / 1.01f, 2f);
         drawMessage(currencyMessage, game.getBatch(),
                 20, Gdx.graphics.getHeight() / 1.01f - this.shopMessage.height - 20, 2f);
-        game.buttonsUI.act();
-        game.buttonsUI.draw();
+        game.getButtonsUI().act();
+        game.getButtonsUI().draw();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
 
     @Override
     public void hide() {
-        clearStage(game.buttonsUI);
+        clearStage(game.getButtonsUI());
         dispose();
     }
 

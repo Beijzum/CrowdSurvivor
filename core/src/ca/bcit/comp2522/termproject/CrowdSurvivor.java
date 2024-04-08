@@ -28,9 +28,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * @version 2024
  */
 public class CrowdSurvivor extends Game {
-    public static BitmapFont font;
+    static BitmapFont font;
     private SpriteBatch batch;
-    public Stage buttonsUI;
+    private Stage buttonsUI;
     public Skin skin;
     public static Color STANDARD_COLOR = new Color(1, 1, 1, 1);
     public MainMenuScreen mainMenuScreen;
@@ -44,8 +44,8 @@ public class CrowdSurvivor extends Game {
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        buttonsUI = new Stage(new ScreenViewport());
+        this.batch = new SpriteBatch();
+        this.buttonsUI = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("skin/vhs-ui.json"));
         font = skin.getFont("font");
         mainMenuScreen = new MainMenuScreen(this);
@@ -64,8 +64,16 @@ public class CrowdSurvivor extends Game {
         return this.batch;
     }
 
-    public BitmapFont getFont() {
+    public Stage getButtonsUI() {
+        return this.buttonsUI;
+    }
+
+    public static BitmapFont getFont() {
         return font;
+    }
+
+    public void setButtonsUI(final Stage buttonsUI) {
+        this.buttonsUI = buttonsUI;
     }
 
     @Override

@@ -36,8 +36,8 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
     @Override
     public void show() {
         game.playerProfile.saveProfileState();
-        Gdx.input.setInputProcessor(game.buttonsUI);
-        addActors(game.buttonsUI, menuItems);
+        Gdx.input.setInputProcessor(game.getButtonsUI());
+        addActors(game.getButtonsUI(), menuItems);
         music.setLooping(true);
         music.play();
     }
@@ -51,8 +51,8 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         renderBackground(game, background);
         drawMessageFromCenter(createLayout("CROWD SURVIVOR", 3), game.getBatch(),
                 Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() * 8 / 10f, 2);
-        game.buttonsUI.act();
-        game.buttonsUI.draw();
+        game.getButtonsUI().act();
+        game.getButtonsUI().draw();
     }
 
     @Override
@@ -73,7 +73,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
     // runs when screen is left
     @Override
     public void hide() {
-        clearStage(game.buttonsUI);
+        clearStage(game.getButtonsUI());
         dispose();
     }
 
@@ -134,7 +134,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.buttonsUI);
+                clearStage(game.getButtonsUI());
                 Gdx.app.exit();
                 return true;
             }

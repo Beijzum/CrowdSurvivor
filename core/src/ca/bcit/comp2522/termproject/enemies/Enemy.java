@@ -124,7 +124,7 @@ public class Enemy extends Entity {
     public void drawDamageNumbers(Batch batch) {
         batch.begin();
         for (DamageNumber damageNumber : activeDamageNumbers) {
-            damageNumber.draw((SpriteBatch) batch, CrowdSurvivor.font);
+            damageNumber.draw((SpriteBatch) batch, CrowdSurvivor.getFont());
         }
         batch.end();
     }

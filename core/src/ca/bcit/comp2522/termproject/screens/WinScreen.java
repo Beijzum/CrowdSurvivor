@@ -42,7 +42,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.buttonsUI);
+                clearStage(game.getButtonsUI());
                 game.setScreen(game.inGameScreen);
                 game.inGameScreen.resetGameState();
                 dispose();
@@ -60,7 +60,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                clearStage(game.buttonsUI);
+                clearStage(game.getButtonsUI());
                 game.inGameScreen.resetGameState();
                 game.setScreen(game.mainMenuScreen);
                 dispose();
@@ -86,15 +86,15 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
         messageLayouts = createMessageLayout();
         music.setLooping(true);
         music.play();
-        addActors(game.buttonsUI, menuItems);
-        Gdx.input.setInputProcessor(game.buttonsUI);
+        addActors(game.getButtonsUI(), menuItems);
+        Gdx.input.setInputProcessor(game.getButtonsUI());
     }
 
     @Override
     public void render(float v) {
         game.inGameScreen.renderFrameAsBackground();
-        game.buttonsUI.act();
-        game.buttonsUI.draw();
+        game.getButtonsUI().act();
+        game.getButtonsUI().draw();
         drawMultipleMessageFromCenter(messageLayouts, game.getBatch(), game.inGameScreen.camera.position.x,
                 game.inGameScreen.camera.position.y + Gdx.graphics.getHeight() / 2f, 2.5f);
 
