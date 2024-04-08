@@ -2,6 +2,7 @@ package ca.bcit.comp2522.termproject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -35,6 +36,12 @@ public final class Player extends Entity {
     private static final int BASE_LEVEL_UP_THRESHOLD = 50;
     private static final int BASE_EXP_MULTIPLIER = 1;
     private static final int BASE_CURRENCY_MULTIPLIER = 1;
+    private static final Texture[] PLAYER_FRAMES = new Texture[] {
+            new Texture(Gdx.files.internal("player/playerSpriteFrame0.png")),
+            new Texture(Gdx.files.internal("player/playerSpriteFrame1.png")),
+            new Texture(Gdx.files.internal("player/playerSpriteFrame2.png")),
+            new Texture(Gdx.files.internal("player/playerSpriteFrame3.png"))
+    };
     private int levelUpThreshold;
     private int accumulatedEXP;
     private int level;
@@ -52,6 +59,7 @@ public final class Player extends Entity {
     private boolean iFrameIsOn = false;
     private float healthRegenMultiplier;
     private Projectile projectileTemplate;
+    private boolean isMoving = false;
 
     private Player() {
         resetStats();
@@ -60,7 +68,7 @@ public final class Player extends Entity {
         final int lifetimeValue = 3;
         final int sizeValue = 150;
         this.projectileTemplate = new Projectile(projectileSprite, speedValue, lifetimeValue, sizeValue);
-        this.sprite = new Sprite(new Texture(Gdx.files.internal("tempPlayerSprite.png")));
+        this.sprite = new AnimatedSprite(PLAYER_FRAMES, 20);
         final int spriteSize = 100;
         this.sprite.setSize(spriteSize, spriteSize);
     }
@@ -329,6 +337,10 @@ public final class Player extends Entity {
         this.currencyMultiplier = currencyMultiplier;
     }
 
+    public void setIsMoving(boolean state) {
+        this.isMoving = state;
+    }
+
 
     /**
      * Resets the player's statistics to their default values.
@@ -355,6 +367,7 @@ public final class Player extends Entity {
         this.iFramesTimer = 0;
         this.attackTimer = 0;
         this.healthRegenTimer = 0;
+        this.isMoving = false;
     }
 
     /**
@@ -514,5 +527,21 @@ public final class Player extends Entity {
                 + ", healthRegenMultiplier=" + this.healthRegenMultiplier
                 + ", projectileTemplate=" + this.projectileTemplate
                 + '}';
+    }
+
+    @Override
+    public void draw(final Batch batch) {
+        if (this.isMoving) {
+            this.sprite.setPausedAnimation(false);
+        } else {
+            this.sprite.setPausedAnimation(true);
+            this.sprite.resetFrames();
+        }
+        this.sprite.update();
+        batch.begin();
+        batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
+                this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
+                this.sprite.getScaleY(), this.sprite.getRotation());
+        batch.end();
     }
 }
