@@ -60,8 +60,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private final LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
     private final LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
     private final LinkedList<Projectile> bossProjectilesOnScreen = new LinkedList<>();
-    private final GlyphLayout timeElapsedMessage = new GlyphLayout(CrowdSurvivor.getFont(),
-            String.format("%d:%02d", Math.round(this.timeElapsed) / 60, Math.round(this.timeElapsed) % 60));
+    private final GlyphLayout timeElapsedMessage = new GlyphLayout();
     private int enterUpgradeScreenAmount;
     private final LinkedList<Boss> onFieldBosses = new LinkedList<>();
 
@@ -92,12 +91,13 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    /**
+     * Retrieves the maximum game length.
+     *
+     * @return the maximum game length.
+     */
     public static int getMaxGameLength() {
         return MAX_GAME_LENGTH;
-    }
-
-    public LinkedList<Boss> getOnFieldBosses() {
-        return this.onFieldBosses;
     }
 
     /**
@@ -137,6 +137,15 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     }
 
     /**
+     * Retrieves the list of bosses currently on the field.
+     *
+     * @return the list of on-field bosses.
+     */
+    public LinkedList<Boss> getOnFieldBosses() {
+        return this.onFieldBosses;
+    }
+
+    /**
      * Retrieves the list of player projectiles on screen.
      *
      * @return the list of player projectiles.
@@ -154,12 +163,17 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         return this.enemyProjectilesOnScreen;
     }
 
+    /**
+     * Retrieves the list of boss projectiles on screen.
+     *
+     * @return the list of boss projectiles.
+     */
     public LinkedList<Projectile> getBossProjectilesOnScreen() {
         return this.bossProjectilesOnScreen;
     }
 
     /**
-     * Initializes the screen and starts playing the background music.
+     * Initializes the screen and starts playing the background music when active.
      */
     @Override
     public void show() {
@@ -175,45 +189,27 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
      * @param deltaTime the delta time since the last frame.
      */
     @Override
-    public void render(float deltaTime) {
-
-        ScreenUtils.clear(0, 0, 0.2f, 1);
-        game.getBatch().setProjectionMatrix(camera.combined);
+    public void render(final float deltaTime) {
+        final float screenUtilsValueB = 0.2f;
+        ScreenUtils.clear(0, 0, screenUtilsValueB, 1);
+        this.game.getBatch().setProjectionMatrix(this.camera.combined);
 
         // handle camera
         this.camera.position.set(this.player.getCenterX(), this.player.getCenterY(), 0);
         this.camera.update();
 
         // handle game logic
-        enemyManager.incrementTimers();
-        playerManager.incrementPlayerIframe();
-        playerManager.handleContinuousPlayerKeyboardInput();
-        playerManager.handleAttack();
-        playerManager.handlePlayerHealth();
-        enemyManager.handleEnemies();
-        enemyManager.handleEnemySpawn();
-        enemyManager.handleBosses();
-        enemyManager.handleEnemyProjectiles();
+        handleGameLogic();
 
         // draw assets
-        renderBackground(game, background);
-        player.draw(game.getBatch());
-        this.drawEnemies();
-        this.drawAllEnemyProjectiles();
-        this.drawAllBossProjectiles();
-        this.drawAllPlayerProjectiles();
-        this.updateTimerMessage();
-        drawMessageFromCenter(timeElapsedMessage, game.getBatch(),
-                camera.position.x, camera.position.y + Gdx.graphics.getHeight() / 3f, 1);
+        drawAssets();
 
         // draws HUD
-        drawHPBar();
-        drawEXPBar();
-        drawCurrencyCounter();
+        drawHUD();
 
-        if (timeElapsed >= MAX_GAME_LENGTH && onFieldBosses.isEmpty()) {
+        if (this.timeElapsed >= MAX_GAME_LENGTH && this.onFieldBosses.isEmpty()) {
             dispose();
-            game.setScreen(game.getWinScreen());
+            this.game.setScreen(this.game.getWinScreen());
             return;
         }
 
@@ -261,7 +257,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     }
 
     /**
-     * Hides the current screen.
+     * Hides the screen when no longer active or visible.
      */
     @Override
     public void hide() {
@@ -285,6 +281,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.playerManager.handlePlayerHealth();
         this.enemyManager.handleEnemies();
         this.enemyManager.handleEnemySpawn();
+        this.enemyManager.handleBosses();
         this.enemyManager.handleEnemyProjectiles();
     }
 
@@ -293,13 +290,25 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.player.draw(this.game.getBatch());
         this.drawEnemies();
         this.drawAllEnemyProjectiles();
+        this.drawAllBossProjectiles();
         this.drawAllPlayerProjectiles();
-        this.game.getButtonsUI().draw();
+        this.updateTimerMessage();
+        final float messageDivisor = 3f;
+        drawMessageFromCenter(this.timeElapsedMessage, this.game.getBatch(),
+                this.camera.position.x, this.camera.position.y + Gdx.graphics.getHeight() / messageDivisor, 1);
+    }
+
+    private void drawHUD() {
+        drawHPBar();
+        drawEXPBar();
+        drawCurrencyCounter();
     }
 
     private void updateTimerMessage() {
+        final int timeConversion = 60;
         this.timeElapsedMessage.setText(CrowdSurvivor.getFont(),
-                String.format("%d:%02d", Math.round(this.timeElapsed) / 60, Math.round(this.timeElapsed) % 60));
+                String.format("%d:%02d", Math.round(this.timeElapsed) / timeConversion,
+                        Math.round(this.timeElapsed) % timeConversion));
     }
 
     private void drawAllPlayerProjectiles() {
@@ -365,7 +374,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.hpBar.setCurrentHP(this.player.getCurrentHP());
         this.shapeRenderer.setProjectionMatrix(this.camera.combined);
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        this.hpBar.draw(this.shapeRenderer, game.getBatch());
+        this.hpBar.draw(this.shapeRenderer, this.game.getBatch());
         this.shapeRenderer.end();
     }
 
@@ -422,20 +431,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
      */
     public void renderFrameAsBackground() {
         game.getBatch().setColor(this.darkTint);
-        renderBackground(game, background);
-        player.draw(game.getBatch());
-        this.drawEnemies();
-        this.drawAllEnemyProjectiles();
-        this.drawAllBossProjectiles();
-        this.drawAllPlayerProjectiles();
-        drawHPBar();
-        drawEXPBar();
-        drawCurrencyCounter();
-        drawMessageFromCenter(timeElapsedMessage, game.getBatch(),
-                camera.position.x, camera.position.y + Gdx.graphics.getHeight() / 3f, 1);
+        drawAssets();
+        drawHUD();
         game.getBatch().setColor(CrowdSurvivor.getStandardColour());
-
-
     }
 
     /**
