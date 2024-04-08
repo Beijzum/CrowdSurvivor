@@ -17,7 +17,7 @@ public class Boss extends Enemy {
         super(health, speed, attack, filepath);
         this.sprite.setSize(size, size);
         this.attackSpeed = 10f;
-        this.projectileTemplate = new Projectile(PROJECTILE_SPRITE, 175, 10, 200);
+        this.projectileTemplate = new Projectile(PROJECTILE_SPRITE, 200, 15, 200);
     }
 
     public boolean fireProjectile(LinkedList<Projectile> enemyProjectiles, float playerCoordX, float playerCoordY) {
