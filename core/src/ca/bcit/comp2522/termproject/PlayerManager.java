@@ -29,6 +29,8 @@ public final class PlayerManager {
     private final Sound playerProjectileSFX;
     private final Sound playerDamageSFX;
     private final Sound playerLevelUpSFX;
+    private float deltaX = 0f;
+    private float deltaY = 0f;
 
     private PlayerManager(final InGameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -37,6 +39,11 @@ public final class PlayerManager {
         this.playerLevelUpSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/playerLevelUpSFX.mp3"));
     }
 
+    /**
+     * Retrieves the player level up SFX.
+     *
+     * @return the player level up SFX.
+     */
     public Sound getPlayerLevelUpSFX() {
         return this.playerLevelUpSFX;
     }
@@ -86,7 +93,8 @@ public final class PlayerManager {
             }
         }
         if (damaged) {
-            playerDamageSFX.play(0.2f);
+            final float damageSFX = 0.2f;
+            playerDamageSFX.play(damageSFX);
         }
     }
 
@@ -104,40 +112,44 @@ public final class PlayerManager {
      * The movement is updated based on the delta time to for consistent movement across different frame rates.
      * The method calculates the movement vector based on the keys pressed and updates the player's position.
      * If multiple directional keys are pressed simultaneously, the movement vector is normalized for consistent speed.
+     * Handles the map boundary by resetting player's x, y values when their hitbox is out of bounds.
      */
     public void handleContinuousPlayerKeyboardInput() {
         if (!Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
             return;
         }
 
-        float deltaX = 0;
-        float deltaY = 0;
-
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            deltaY = this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
+            this.deltaY = this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            deltaY = -this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
+            this.deltaY = -this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            deltaX = -this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
+            this.deltaX = -this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            deltaX = this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
-        }
-        // normalize vector
-        if (deltaX != 0 && deltaY != 0) {
-            deltaX = deltaX * (float) Math.abs(Math.cos(Math.atan(deltaY / deltaX)));
-            deltaY = deltaY * (float) Math.abs(Math.sin(Math.atan(deltaY / deltaX)));
+            this.deltaX = this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
         }
 
-        this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() + deltaX);
-        if (!gameScreen.getBackground().getBoundingRectangle().contains(gameScreen.getPlayer().getHitbox())) {
-            this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() - deltaX);
+        // normalize vector
+        if (this.deltaX != 0 && this.deltaY != 0) {
+            this.deltaX = this.deltaX * (float) Math.abs(Math.cos(Math.atan(this.deltaY / this.deltaX)));
+            this.deltaY = this.deltaY * (float) Math.abs(Math.sin(Math.atan(this.deltaY / this.deltaX)));
         }
-        this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() + deltaY);
-        if (!gameScreen.getBackground().getBoundingRectangle().contains(gameScreen.getPlayer().getHitbox())) {
-            this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() - deltaY);
+
+        // handle map boundary;
+        handleMapBoundary();
+    }
+
+    private void handleMapBoundary() {
+        this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() + this.deltaX);
+        if (!this.gameScreen.getBackground().getBoundingRectangle().contains(this.gameScreen.getPlayer().getHitbox())) {
+            this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() - this.deltaX);
+        }
+        this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() + this.deltaY);
+        if (!this.gameScreen.getBackground().getBoundingRectangle().contains(this.gameScreen.getPlayer().getHitbox())) {
+            this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() - this.deltaY);
         }
     }
 
@@ -160,16 +172,18 @@ public final class PlayerManager {
         for (Projectile projectile : this.gameScreen.getPlayerProjectilesOnScreen()) {
             projectile.incrementLifetimeTimer();
             projectile.moveProjectile();
-            projectile.spinProjectile(20);
+            final int projectileSpinSpeed = 20;
+            projectile.spinProjectile(projectileSpinSpeed);
         }
 
         // fire projectile
         this.mouseVector.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         Vector3 mousePosition = this.gameScreen.getCamera().unproject(this.mouseVector);
+        final float projectileSFXValue = 0.5f;
         boolean fired = this.gameScreen.getPlayer()
                 .fireProjectile(this.gameScreen.getPlayerProjectilesOnScreen(), mousePosition.x, mousePosition.y);
         if (fired) {
-            this.playerProjectileSFX.play(0.5f);
+            this.playerProjectileSFX.play(projectileSFXValue);
         }
     }
 
