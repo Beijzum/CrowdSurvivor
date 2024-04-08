@@ -134,7 +134,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     @Override
     public boolean keyDown(final int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
-            this.game.setScreen(this.game.getPauseMenuScreen());
+            this.game.setScreen(this.game.getInGameScreen());
             return true;
         }
         return false;
