@@ -1,9 +1,6 @@
 package ca.bcit.comp2522.termproject.enemies;
 
-import ca.bcit.comp2522.termproject.CrowdSurvivor;
-import ca.bcit.comp2522.termproject.DamageNumber;
-import ca.bcit.comp2522.termproject.Entity;
-import ca.bcit.comp2522.termproject.Projectile;
+import ca.bcit.comp2522.termproject.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -38,7 +35,7 @@ public class Enemy extends Entity {
         this.speed = speed;
         this.attack = attack;
         this.defense = DEFAULT_DEFENSE;
-        this.sprite = new Sprite(new Texture(Gdx.files.internal(imageFilePath)));
+        this.sprite = new AnimatedSprite(new Texture(Gdx.files.internal(imageFilePath)));
         this.sprite.setSize(100, 100);
     }
 
