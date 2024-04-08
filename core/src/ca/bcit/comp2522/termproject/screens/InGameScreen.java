@@ -227,7 +227,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         // go to level up screen if leveled up
         if (this.enterUpgradeScreenAmount > 0) {
             this.game.setScreen(this.game.getUpgradeSelectionScreen());
+            this.playerManager.getPlayerLevelUpSFX().play();
             this.enterUpgradeScreenAmount--;
+            return;
         }
 
         this.timeElapsed += Gdx.graphics.getDeltaTime();
