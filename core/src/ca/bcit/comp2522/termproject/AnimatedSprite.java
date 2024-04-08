@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class AnimatedSprite extends Sprite {
     private final Texture[] frames;
     private int currentFrame;
-    private float framesPerSecond;
+    private final float framesPerSecond;
     private float timer;
     private boolean pausedAnimation;
 
