@@ -45,7 +45,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private final OrthographicCamera camera;
     private final CrowdSurvivor game;
     private final Music music;
-    private final Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
+    private final Sprite background = new Sprite(new Texture("backgrounds/gameBackground.png"));
     private final Stage gameUI = new Stage();
     private final HPBar hpBar;
     private final EXPBar expBar;
@@ -78,7 +78,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.enemyManager = EnemyManager.createManager(this);
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
-        this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        final int backgroundMultiplier = 3;
+        this.background.setSize(Gdx.graphics.getWidth() * backgroundMultiplier,
+                Gdx.graphics.getHeight() * backgroundMultiplier);
         this.resetGameState();
         this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
