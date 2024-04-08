@@ -11,32 +11,17 @@ Inspired by the game "Vampire Survivors".
 
 Notes go here
 
-## TODO
-
+## TODO BEFORE TUESDAY
+implement boss
+change charger to something else
+implement SFX in game
+add time elapsed in game
+fix button pointer cutting into button text
+fix looping background
+change background to something better
 Draw art assets
-
-## HAVE TO FIX
-
 fix camera stuttering
-
-## REMINDERS
-
-game UI in stageUI in CrowdSurvivor file
-
-## PRIORITY TODO
-
-implement enemy variation
-implement bosses
-
-## TODO
-
-Different enemies
-implement SFX
-improve menu UI
-Add counter for shop upgrades. How many bought and the total effect %.
-
-## OPTIMIZATIONS
-
-UNIT TESTS MAYBE
-
-## REMOVED IF NO TIME
+Add counter for shop upgrades. How many bought and the total effect %
+unit tests
+update uml
+update readme
