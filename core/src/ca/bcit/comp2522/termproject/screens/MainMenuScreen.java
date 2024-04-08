@@ -23,6 +23,9 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
     private final Music music;
     private final Sprite background = new Sprite(new Texture("backgrounds/mainMenuBackground.jpg"));
     private final TextButton[] menuItems = new TextButton[NUMBER_OF_BUTTONS]; // start game, shop, quit buttons
+    private final TextButton startGameButton;
+    private final TextButton shopButton;
+    private final TextButton quitButton;
     private final float buttonWidth;
     private final float buttonHeight;
     private final float buttonPositionX;
@@ -41,29 +44,35 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         this.buttonPositionX = Gdx.graphics.getWidth() / 2f - this.buttonWidth / 2;
         final float buttonYDivisor = 3f;
         this.firstButtonPositionY = Gdx.graphics.getHeight() / buttonYDivisor;
+        this.startGameButton = new TextButton("Start Game", this.game.getSkin());
+        this.shopButton = new TextButton("Shop", this.game.getSkin());
+        this.quitButton = new TextButton("Quit", this.game.getSkin());
         createButtons();
     }
 
     @Override
     public void show() {
-        game.getPlayerProfile().saveProfileState();
-        Gdx.input.setInputProcessor(game.getButtonsUI());
-        addActors(game.getButtonsUI(), menuItems);
-        music.setLooping(true);
-        music.play();
+        this.game.getPlayerProfile().saveProfileState();
+        Gdx.input.setInputProcessor(this.game.getButtonsUI());
+        addActors(this.game.getButtonsUI(), this.menuItems);
+        this.music.setLooping(true);
+        this.music.play();
     }
 
     @Override
-    public void render(final float v) {
-        ScreenUtils.clear(0, 0, 0.2f, 1);
+    public void render(final float deltaTime) {
+        final float screenUtilsValueB = 0.2f;
+        ScreenUtils.clear(0, 0, screenUtilsValueB, 1);
 
-        camera.update();
-        game.getBatch().setProjectionMatrix(camera.combined);
-        renderBackground(game, background);
-        drawMessageFromCenter(createLayout("CROWD SURVIVOR", 3), game.getBatch(),
-                Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() * 8 / 10f, 2);
-        game.getButtonsUI().act();
-        game.getButtonsUI().draw();
+        this.camera.update();
+        this.game.getBatch().setProjectionMatrix(this.camera.combined);
+        renderBackground(this.game, this.background);
+        final int drawMessageScale = 3;
+        final float drawMessageHeightDivisor = 8f / 10f;
+        drawMessageFromCenter(createLayout("CROWD SURVIVOR", drawMessageScale), this.game.getBatch(),
+                Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() * drawMessageHeightDivisor, 2);
+        this.game.getButtonsUI().act();
+        this.game.getButtonsUI().draw();
     }
 
     /**
@@ -98,7 +107,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
      */
     @Override
     public void hide() {
-        clearStage(game.getButtonsUI());
+        clearStage(this.game.getButtonsUI());
         dispose();
     }
 
@@ -107,15 +116,27 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
      */
     @Override
     public void dispose() {
-        music.dispose();
+        this.music.dispose();
     }
 
     private void createButtons() {
         // start game button
-        TextButton startGameButton = new TextButton("Start Game", game.getSkin());
-        startGameButton.setSize(buttonWidth, buttonHeight);
-        startGameButton.setPosition(buttonPositionX, firstButtonPositionY);
-        startGameButton.addListener(new InputListener() {
+        handleStartGameButton();
+        this.menuItems[0] = this.startGameButton;
+
+        // shop button
+        handleShopButton();
+        this.menuItems[1] = this.shopButton;
+
+        // quit game button
+        handleQuitButton();
+        this.menuItems[2] = this.quitButton;
+    }
+
+    private void handleStartGameButton() {
+        this.startGameButton.setSize(this.buttonWidth, this.buttonHeight);
+        this.startGameButton.setPosition(this.buttonPositionX, this.firstButtonPositionY);
+        this.startGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
                                      final int button) {
@@ -128,15 +149,12 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 return true;
             }
         });
-        this.menuItems[0] = startGameButton;
+    }
 
-        // shop button
-        TextButton shopButton = new TextButton("Shop", game.getSkin());
-        shopButton.setSize(buttonWidth, buttonHeight);
-        shopButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight);
-        shopButton.addListener(new InputListener() {
-
-
+    private void handleShopButton() {
+        this.shopButton.setSize(this.buttonWidth, this.buttonHeight);
+        this.shopButton.setPosition(this.buttonPositionX, this.firstButtonPositionY - this.buttonHeight);
+        this.shopButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
                                      final int button) {
@@ -148,13 +166,12 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 return true;
             }
         });
-        this.menuItems[1] = shopButton;
+    }
 
-        // quit game button
-        TextButton quitButton = new TextButton("Quit", game.getSkin());
-        quitButton.setSize(buttonWidth, buttonHeight);
-        quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
-        quitButton.addListener(new InputListener() {
+    private void handleQuitButton() {
+        this.quitButton.setSize(this.buttonWidth, this.buttonHeight);
+        this.quitButton.setPosition(this.buttonPositionX, this.firstButtonPositionY - this.buttonHeight * 2);
+        this.quitButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
                                      final int button) {
@@ -167,6 +184,5 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 return true;
             }
         });
-        this.menuItems[2] = quitButton;
     }
 }
