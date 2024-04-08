@@ -117,10 +117,10 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
 
     @Override
     public void hide() {
-        game.getInGameScreen().resetGameState();
         game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency()
                 + game.getInGameScreen().getPlayer().getCollectedCurrency()
                 + Math.round(game.getInGameScreen().getTimeElapsed() * 2));
+        game.getInGameScreen().resetGameState();
     }
 
     @Override
