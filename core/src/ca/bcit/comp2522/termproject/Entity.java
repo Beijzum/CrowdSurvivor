@@ -39,7 +39,7 @@ public abstract class Entity {
     /**
      * Represents the sprite associated with the entity.
      */
-    protected Sprite sprite;
+    protected AnimatedSprite sprite;
 
     /**
      * Retrieves the attack power of the entity.
