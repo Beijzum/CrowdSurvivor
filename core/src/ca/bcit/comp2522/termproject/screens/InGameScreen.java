@@ -100,6 +100,10 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         return MAX_GAME_LENGTH;
     }
 
+    public Sprite getBackground() {
+        return this.background;
+    }
+
     /**
      * Retrieves the time elapsed in the current game.
      *
