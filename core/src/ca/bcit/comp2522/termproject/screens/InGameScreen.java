@@ -24,11 +24,9 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -102,6 +100,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         return MAX_GAME_LENGTH;
     }
 
+    /**
+     * Retrieves the background image for the game.
+     *
+     * @return the background image for the game.
+     */
     public Sprite getBackground() {
         return this.background;
     }
@@ -384,7 +387,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         }
     }
 
-    private boolean inCameraView(Rectangle hitbox) {
+    private boolean inCameraView(final Rectangle hitbox) {
         return this.camera.frustum.boundsInFrustum(hitbox.getX(), hitbox.getY(), 0, hitbox.getWidth(),
                 hitbox.getHeight(), 0);
     }
