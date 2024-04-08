@@ -59,21 +59,36 @@ final public class EnemyManager {
                 && gameScreen.getEnemyProjectilesOnScreen().peek().isOverLifeTime()) {
             gameScreen.getEnemyProjectilesOnScreen().removeFirst();
         }
+        if (gameScreen.getBossProjectilesOnScreen().peek() != null
+        && gameScreen.getBossProjectilesOnScreen().peek().isOverLifeTime()) {
+            gameScreen.getBossProjectilesOnScreen().removeFirst();
+        }
 
         // move projectile
         for (Projectile enemyProjectile : gameScreen.getEnemyProjectilesOnScreen()) {
             enemyProjectile.incrementLifetimeTimer();
             enemyProjectile.moveProjectile();
-            enemyProjectile.spinProjectile();
+            enemyProjectile.spinProjectile(enemyProjectile.getSpeed() / 75f);
+        }
+        for (Projectile bossProjectile : gameScreen.getBossProjectilesOnScreen()) {
+            bossProjectile.incrementLifetimeTimer();
+            bossProjectile.moveProjectile();
+            bossProjectile.spinProjectile(30);
         }
 
-        //
+        // fire enemy projectile
         for (Enemy enemy : gameScreen.getOnFieldEnemies()) {
             if (!(enemy instanceof RangedEnemy)) {
                 continue;
             }
             RangedEnemy rangedEnemy = (RangedEnemy) enemy;
             rangedEnemy.fireProjectile(gameScreen.getEnemyProjectilesOnScreen(),
+                    gameScreen.getPlayer().getCenterX(), gameScreen.getPlayer().getCenterY());
+        }
+
+        // fire boss projectile
+        for (Boss boss : gameScreen.getOnFieldBosses()) {
+            boss.fireProjectile(gameScreen.getBossProjectilesOnScreen(),
                     gameScreen.getPlayer().getCenterX(), gameScreen.getPlayer().getCenterY());
         }
     }
@@ -96,8 +111,24 @@ final public class EnemyManager {
         killEnemy();
     }
 
+    public void handleBosses() {
+        for (Boss boss : gameScreen.getOnFieldBosses()) {
+            for (Projectile playerProjectile : gameScreen.getPlayerProjectilesOnScreen()) {
+                System.out.println(boss.getHitbox());
+                if (!boss.getHitbox().overlaps(playerProjectile.getHitbox())) {
+                    continue;
+                }
+                int damage = calculateDamage();
+                boss.takeDamage(playerProjectile, damage, damage != gameScreen.getPlayer().getAttack());
+            }
+            boss.incrementDamageTintTimer();
+            boss.updateDamageNumbers(Gdx.graphics.getDeltaTime());
+            moveToPlayer(boss);
+        }
+    }
+
     public void handleEnemySpawn() {
-        if (this.basicEnemyTimer > this.currentBasicEnemySpawnTime) {
+        if (this.basicEnemyTimer >= this.currentBasicEnemySpawnTime) {
             // randomize spawn point outside of screen, camera position x, y returns center of screen
             float[] spawnPoint = generateSpawnPoint();
 
@@ -107,7 +138,7 @@ final public class EnemyManager {
                     .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
         }
 
-        if (this.chargerEnemyTimer > this.currentChargerEnemySpawnTime) {
+        if (this.chargerEnemyTimer >= this.currentChargerEnemySpawnTime) {
             float[] spawnPoint = generateSpawnPoint();
 
             gameScreen.getOnFieldEnemies().add(createCharger(spawnPoint[0], spawnPoint[1]));
@@ -116,13 +147,19 @@ final public class EnemyManager {
                     .nextInt(BASE_CHARGER_ENEMY_SPAWN_TIME) + BASE_CHARGER_ENEMY_SPAWN_TIME;
         }
 
-        if (this.rangedEnemyTimer > this.currentRangedEnemySpawnTime) {
+        if (this.rangedEnemyTimer >= this.currentRangedEnemySpawnTime) {
             float[] spawnPoint = generateSpawnPoint();
 
             gameScreen.getOnFieldEnemies().add(createRangedEnemy(spawnPoint[0], spawnPoint[1]));
             this.rangedEnemyTimer = 0;
             this.currentRangedEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_RANGED_ENEMY_SPAWN_TIME) + BASE_RANGED_ENEMY_SPAWN_TIME;
+        }
+
+        if (this.bossTimer >= BOSS_SPAWN_TIMER && gameScreen.getTimeElapsed() <= InGameScreen.getMaxGameLength()) {
+            float[] spawnPoint = generateSpawnPoint();
+            gameScreen.getOnFieldBosses().add(createBoss(spawnPoint[0], spawnPoint[1]));
+            this.bossTimer = 0;
         }
     }
 
@@ -179,7 +216,13 @@ final public class EnemyManager {
     }
 
     private Boss createBoss(float xCoord, float yCoord) {
-        return new Boss();
+        int health = BASE_BOSS_HEALTH * Math.round(gameScreen.getTimeElapsed()) / BOSS_SPAWN_TIMER;
+        int speed = BASE_ENEMY_SPEED + Math.round(gameScreen.getTimeElapsed() / 5);
+        int size = randomNumberGenerator.nextInt(100, 301);
+        int attack = randomNumberGenerator.nextInt(20, 41);
+        Boss newBoss = new Boss(health, speed, attack, size, "boss.png");
+        newBoss.setCenterPosition(xCoord, yCoord);
+        return newBoss;
     }
 
     private Enemy createCharger(float xCoord, float yCoord) {
@@ -223,9 +266,5 @@ final public class EnemyManager {
         enemy.calculateDirectionVector(gameScreen.getPlayer().getCenterX() - enemy.getCenterX(),
                 gameScreen.getPlayer().getCenterY() - enemy.getCenterY());
         enemy.move();
-    }
-
-    private void moveAwayFromPlayer() {
-
     }
 }
