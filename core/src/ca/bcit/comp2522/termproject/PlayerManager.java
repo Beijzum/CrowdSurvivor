@@ -160,6 +160,7 @@ public final class PlayerManager {
         for (Projectile projectile : this.gameScreen.getPlayerProjectilesOnScreen()) {
             projectile.incrementLifetimeTimer();
             projectile.moveProjectile();
+            projectile.spinProjectile(20);
         }
 
         // fire projectile
