@@ -107,8 +107,9 @@ final public class EnemyManager {
             moveToPlayer(enemy);
         }
 
-        // kill one enemy per frame
+        // kill one enemy and one boss per frame
         killEnemy();
+        killBoss();
     }
 
     public void handleBosses() {
@@ -184,6 +185,23 @@ final public class EnemyManager {
             deadEnemy.clearHitByProjectileList();
             gameScreen.getOnFieldEnemies().remove(deadEnemy);
             gameScreen.handlePlayerKill(deadEnemy);
+        }
+    }
+
+    private void killBoss() {
+        if (gameScreen.getOnFieldBosses().isEmpty()) {
+            return;
+        }
+        Boss deadBoss = null;
+        for (Boss boss : gameScreen.getOnFieldBosses()) {
+            if (boss.isDead()) {
+                deadBoss = boss;
+            }
+        }
+        if (deadBoss != null) {
+            deadBoss.clearHitByProjectileList();
+            gameScreen.getOnFieldBosses().remove(deadBoss);
+            gameScreen.handlePlayerKill(deadBoss);
         }
     }
 
