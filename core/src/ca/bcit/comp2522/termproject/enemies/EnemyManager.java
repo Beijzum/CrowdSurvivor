@@ -16,7 +16,7 @@ final public class EnemyManager {
     final private static int BASE_CHARGER_HEALTH = 125;
     final private static int BASE_ENEMY_SPEED = 100;
     final private static int BASE_WAVE_SIZE = 10;
-    final private static int BOSS_SPAWN_TIMER = 120;
+    final private static int BOSS_SPAWN_TIMER = 30;
     final private InGameScreen gameScreen;
     private static EnemyManager instance = null;
     private int currentBasicEnemySpawnTime;
