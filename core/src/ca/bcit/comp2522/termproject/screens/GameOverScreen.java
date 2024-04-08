@@ -36,7 +36,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         int firstButtonPositionY = Gdx.graphics.getHeight() / 2;
 
         // start game button
-        TextButton tryAgainButton = new TextButton("Try Again", game.skin);
+        TextButton tryAgainButton = new TextButton("Try Again", game.getSkin());
         tryAgainButton.setSize(buttonWidth, buttonHeight);
         tryAgainButton.setPosition(buttonPositionX, firstButtonPositionY);
         tryAgainButton.addListener(new InputListener() {
@@ -55,7 +55,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         this.menuItems[0] = tryAgainButton;
 
         // quit game button
-        TextButton quitButton = new TextButton("Return To Menu", game.skin);
+        TextButton quitButton = new TextButton("Return To Menu", game.getSkin());
         quitButton.setSize(buttonWidth, buttonHeight);
         quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
         quitButton.addListener(new InputListener() {
@@ -68,7 +68,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                 clearStage(game.getButtonsUI());
                 game.inGameScreen.resetGameState();
                 game.inGameScreen.dispose();
-                game.setScreen(game.mainMenuScreen);
+                game.setScreen(game.getMainMenuScreen());
                 return true;
             }
         });

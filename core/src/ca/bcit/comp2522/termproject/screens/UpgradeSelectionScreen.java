@@ -84,7 +84,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
     }
 
     private TextButton[] createButtons() {
-        TextButton attackUpgrade = new TextButton("+10 Attack", game.skin);
+        TextButton attackUpgrade = new TextButton("+10 Attack", game.getSkin());
         attackUpgrade.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -98,7 +98,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton speedUpgrade = new TextButton("+10 Speed", game.skin);
+        TextButton speedUpgrade = new TextButton("+10 Speed", game.getSkin());
         speedUpgrade.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -112,7 +112,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton healthUpgrade = new TextButton("+10 Health", game.skin);
+        TextButton healthUpgrade = new TextButton("+10 Health", game.getSkin());
 
         healthUpgrade.addListener(new InputListener() {
             @Override
@@ -127,7 +127,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton EXPUpgrade = new TextButton("+10% More Experience", game.skin);
+        TextButton EXPUpgrade = new TextButton("+10% More Experience", game.getSkin());
         EXPUpgrade.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -141,7 +141,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton currencyUpgrade = new TextButton("+10% More Currency", game.skin);
+        TextButton currencyUpgrade = new TextButton("+10% More Currency", game.getSkin());
         currencyUpgrade.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -156,7 +156,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton attackSpeedUpgrade = new TextButton("+10% More Attack Speed", game.skin);
+        TextButton attackSpeedUpgrade = new TextButton("+10% More Attack Speed", game.getSkin());
         attackSpeedUpgrade.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -170,7 +170,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton iFrameUpgrade = new TextButton("+10% Longer Invicibility After Taking Damage", game.skin);
+        TextButton iFrameUpgrade = new TextButton("+10% Longer Invicibility After Taking Damage", game.getSkin());
         iFrameUpgrade.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -184,7 +184,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton critDamageUpgrade = new TextButton("+10% Critical Hit Damage", game.skin);
+        TextButton critDamageUpgrade = new TextButton("+10% Critical Hit Damage", game.getSkin());
         critDamageUpgrade.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -198,7 +198,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton critRateUpgrade = new TextButton("+5% Critical Hit Rate", game.skin);
+        TextButton critRateUpgrade = new TextButton("+5% Critical Hit Rate", game.getSkin());
         critRateUpgrade.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -212,7 +212,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton defenseUpgrade = new TextButton("+5 Defense", game.skin);
+        TextButton defenseUpgrade = new TextButton("+5 Defense", game.getSkin());
         defenseUpgrade.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -226,7 +226,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton healthRegenUpgrade = new TextButton("+5% Health Regeneration", game.skin);
+        TextButton healthRegenUpgrade = new TextButton("+5% Health Regeneration", game.getSkin());
         healthRegenUpgrade.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

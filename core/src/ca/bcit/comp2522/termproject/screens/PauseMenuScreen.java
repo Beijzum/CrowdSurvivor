@@ -66,7 +66,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
         int firstButtonPositionY = Gdx.graphics.getHeight() / 2;
 
         // resume game button
-        TextButton resumeGameButton = new TextButton("Resume", game.skin);
+        TextButton resumeGameButton = new TextButton("Resume", game.getSkin());
         resumeGameButton.setSize(buttonWidth, buttonHeight);
         resumeGameButton.setPosition(buttonPositionX, firstButtonPositionY);
         resumeGameButton.addListener(new InputListener() {
@@ -83,7 +83,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
         this.menuItems[0] = resumeGameButton;
 
         // quit game button
-        TextButton quitButton = new TextButton("Quit", game.skin);
+        TextButton quitButton = new TextButton("Quit", game.getSkin());
         quitButton.setSize(buttonWidth, buttonHeight);
         quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
         quitButton.addListener(new InputListener() {
@@ -97,7 +97,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 game.inGameScreen.resetGameState();
                 clearStage(game.getButtonsUI());
                 game.inGameScreen.dispose();
-                game.setScreen(game.mainMenuScreen);
+                game.setScreen(game.getMainMenuScreen());
                 return true;
             }
         });

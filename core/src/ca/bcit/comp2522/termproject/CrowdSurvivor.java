@@ -31,9 +31,9 @@ public class CrowdSurvivor extends Game {
     static BitmapFont font;
     private SpriteBatch batch;
     private Stage buttonsUI;
-    public Skin skin;
+    private Skin skin;
     public static Color STANDARD_COLOR = new Color(1, 1, 1, 1);
-    public MainMenuScreen mainMenuScreen;
+    private MainMenuScreen mainMenuScreen;
     public ShopScreen shopScreen;
     public InGameScreen inGameScreen;
     public PauseMenuScreen pauseMenuScreen;
@@ -46,8 +46,8 @@ public class CrowdSurvivor extends Game {
     public void create() {
         this.batch = new SpriteBatch();
         this.buttonsUI = new Stage(new ScreenViewport());
-        skin = new Skin(Gdx.files.internal("skin/vhs-ui.json"));
-        font = skin.getFont("font");
+        this.skin = new Skin(Gdx.files.internal("skin/vhs-ui.json"));
+        font = this.skin.getFont("font");
         mainMenuScreen = new MainMenuScreen(this);
         shopScreen = new ShopScreen(this);
         inGameScreen = new InGameScreen(this);
@@ -70,6 +70,14 @@ public class CrowdSurvivor extends Game {
 
     public static BitmapFont getFont() {
         return font;
+    }
+
+    public Skin getSkin() {
+        return this.skin;
+    }
+
+    public MainMenuScreen getMainMenuScreen() {
+        return this.mainMenuScreen;
     }
 
     public void setButtonsUI(final Stage buttonsUI) {

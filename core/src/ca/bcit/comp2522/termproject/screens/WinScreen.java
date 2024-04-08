@@ -33,7 +33,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
         int firstButtonPositionY = Gdx.graphics.getHeight() / 2;
 
         // play again button
-        TextButton playAgain = new TextButton("Play Again", game.skin);
+        TextButton playAgain = new TextButton("Play Again", game.getSkin());
         playAgain.setSize(buttonWidth, buttonHeight);
         playAgain.setPosition(buttonPositionX, firstButtonPositionY);
         playAgain.addListener(new InputListener() {
@@ -51,7 +51,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
         });
 
         // return to menu button
-        TextButton returnToMenu = new TextButton("Return To Menu", game.skin);
+        TextButton returnToMenu = new TextButton("Return To Menu", game.getSkin());
         returnToMenu.setSize(buttonWidth, buttonHeight);
         returnToMenu.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
         returnToMenu.addListener(new InputListener() {
@@ -62,7 +62,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                 }
                 clearStage(game.getButtonsUI());
                 game.inGameScreen.resetGameState();
-                game.setScreen(game.mainMenuScreen);
+                game.setScreen(game.getMainMenuScreen());
                 dispose();
                 return true;
             }

@@ -90,7 +90,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         int firstButtonPositionY = Gdx.graphics.getHeight() / 3;
 
         // start game button
-        TextButton startGameButton = new TextButton("Start Game", game.skin);
+        TextButton startGameButton = new TextButton("Start Game", game.getSkin());
         startGameButton.setSize(buttonWidth, buttonHeight);
         startGameButton.setPosition(buttonPositionX, firstButtonPositionY);
         startGameButton.addListener(new InputListener() {
@@ -107,7 +107,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         this.menuItems[0] = startGameButton;
 
         // shop button
-        TextButton shopButton = new TextButton("Shop", game.skin);
+        TextButton shopButton = new TextButton("Shop", game.getSkin());
         shopButton.setSize(buttonWidth, buttonHeight);
         shopButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight);
         shopButton.addListener(new InputListener() {
@@ -125,7 +125,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         this.menuItems[1] = shopButton;
 
         // quit game button
-        TextButton quitButton = new TextButton("Quit", game.skin);
+        TextButton quitButton = new TextButton("Quit", game.getSkin());
         quitButton.setSize(buttonWidth, buttonHeight);
         quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
         quitButton.addListener(new InputListener() {
