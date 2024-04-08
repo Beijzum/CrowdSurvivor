@@ -305,7 +305,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private void drawHPBar() {
         final float hpBarDivisor = 2.2f;
         this.hpBar.setPosition((this.player.getX() - Gdx.graphics.getWidth() / hpBarDivisor),
-                this.player.getY() + (float) Gdx.graphics.getHeight() / 2);
+                this.player.getY() + Gdx.graphics.getHeight() / 2f);
         this.hpBar.setMaxHP(this.player.getMaxHP());
         this.hpBar.setCurrentHP(this.player.getCurrentHP());
         this.shapeRenderer.setProjectionMatrix(this.camera.combined);
@@ -318,7 +318,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         final float expBarDivisor = 2.2f;
         final int expBarHeightAdjuster = 25;
         this.expBar.setPosition((player.getX() - Gdx.graphics.getWidth() / expBarDivisor),
-                this.player.getY() + (float) Gdx.graphics.getHeight() / 2 + expBarHeightAdjuster);
+                this.player.getY() + Gdx.graphics.getHeight() / 2f + expBarHeightAdjuster);
         this.expBar.setMaxEXP(this.player.getLevelUpThreshold());
         this.expBar.setCurrentEXP(this.player.getCurrentEXP());
         this.expBar.setCurrentLevel(this.player.getLevel());
@@ -335,7 +335,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         final int currencyHeightAdjuster = 30;
         CrowdSurvivor.getFont().draw(this.game.getBatch(), "Currency: " + this.player.getCollectedCurrency(),
                 this.player.getX() - Gdx.graphics.getWidth() / currencyBarDivisor,
-                this.player.getY() + (float) Gdx.graphics.getHeight() / 2 - currencyHeightAdjuster);
+                this.player.getY() + Gdx.graphics.getHeight() / 2f - currencyHeightAdjuster);
         CrowdSurvivor.getFont().setColor(Color.WHITE);
         this.game.getBatch().end();
     }
@@ -489,5 +489,33 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     @Override
     public boolean scrolled(final float scrollHorizontal, final float scrollVertical) {
         return false;
+    }
+
+    /**
+     * Returns a string representation of the InGameScreen object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "InGameScreen{"
+                + "timeElapsed=" + timeElapsed
+                + ", shapeRenderer=" + shapeRenderer
+                + ", camera=" + camera
+                + ", game=" + game
+                + ", music=" + music
+                + ", background=" + background
+                + ", gameUI=" + gameUI
+                + ", hpBar=" + hpBar
+                + ", expBar=" + expBar
+                + ", enemyManager=" + enemyManager
+                + ", playerManager=" + playerManager
+                + ", darkTint=" + darkTint
+                + ", player=" + player
+                + ", onFieldEnemies=" + onFieldEnemies
+                + ", playerProjectilesOnScreen=" + playerProjectilesOnScreen
+                + ", enemyProjectilesOnScreen=" + enemyProjectilesOnScreen
+                + ", enterUpgradeScreenAmount=" + enterUpgradeScreenAmount
+                + '}';
     }
 }
