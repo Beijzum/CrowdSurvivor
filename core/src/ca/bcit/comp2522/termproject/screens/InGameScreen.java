@@ -58,7 +58,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private final LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
     private int enterUpgradeScreenAmount;
 
-
+    /**
+     * Constructs the in-game screen for the Crowd Survivor game.
+     *
+     * @param crowdSurvivor CrowdSurvivor object that represents the main game instance.
+     */
     public InGameScreen(final CrowdSurvivor crowdSurvivor) {
         this.camera = new OrthographicCamera();
         this.game = crowdSurvivor;
@@ -69,7 +73,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
                 this.player.getMaxHP());
         final float expBarWidth = 1.05f;
         this.expBar = new EXPBar((float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight(),
-                (Gdx.graphics.getWidth() / expBarWidth), barHeight, this.player.getLevel(), this.player.getLevelUpThreshold());
+                (Gdx.graphics.getWidth() / expBarWidth), barHeight, this.player.getLevel(),
+                this.player.getLevelUpThreshold());
         this.enemyManager = EnemyManager.createManager(this);
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
@@ -78,30 +83,63 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    /**
+     * Retrieves the time elapsed in the current game.
+     *
+     * @return the time elapsed.
+     */
     public float getTimeElapsed() {
         return this.timeElapsed;
     }
 
+    /**
+     * Retrieves the OrthographicCamera used for rendering.
+     *
+     * @return the OrthographicCamera instance.
+     */
     public OrthographicCamera getCamera() {
         return this.camera;
     }
 
+    /**
+     * Retrieves the player instance.
+     *
+     * @return the player instance.
+     */
     public Player getPlayer() {
         return this.player;
     }
 
+    /**
+     * Retrieves the list of enemies currently on the field.
+     *
+     * @return the list of on-field enemies.
+     */
     public ArrayList<Enemy> getOnFieldEnemies() {
         return this.onFieldEnemies;
     }
 
+    /**
+     * Retrieves the list of player projectiles on screen.
+     *
+     * @return the list of player projectiles.
+     */
     public LinkedList<Projectile> getPlayerProjectilesOnScreen() {
         return this.playerProjectilesOnScreen;
     }
 
+    /**
+     * Retrieves the list of enemy projectiles on screen.
+     *
+     * @return the list of enemy projectiles.
+     */
     public LinkedList<Projectile> getEnemyProjectilesOnScreen() {
         return this.enemyProjectilesOnScreen;
     }
 
+    /**
+     * Initializes the screen and starts playing the background music.
+     */
     @Override
     public void show() {
         this.music.setLooping(true);
@@ -109,8 +147,14 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         Gdx.input.setInputProcessor(this);
     }
 
+    /**
+     * Renders the assets for the in-game screen.
+     * Handles game logic, drawing, and state transitions.
+     *
+     * @param deltaTime the delta time since the last frame.
+     */
     @Override
-    public void render(final float v) {
+    public void render(final float deltaTime) {
         if (this.timeElapsed >= MAX_GAME_LENGTH) { // later add the stipulation that the boss needs to be killed too
             dispose();
             this.game.setScreen(this.game.getWinScreen());
@@ -151,26 +195,44 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.timeElapsed += Gdx.graphics.getDeltaTime();
     }
 
+    /**
+     * Handles the resizing of the screen.
+     *
+     * @param width  the new width of the screen.
+     * @param height the new height of the screen.
+     */
     @Override
-    public void resize(int i, int i1) {
+    public void resize(final int width, final int height) {
 
     }
 
+    /**
+     * Pauses the game.
+     */
     @Override
     public void pause() {
 
     }
 
+    /**
+     * Resumes the game after it has been paused.
+     */
     @Override
     public void resume() {
 
     }
 
+    /**
+     * Hides the current screen.
+     */
     @Override
     public void hide() {
 
     }
 
+    /**
+     * Disposes of resources and clears the stage.
+     */
     @Override
     public void dispose() {
         clearStage(this.game.getButtonsUI());
@@ -267,13 +329,18 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private void drawCurrencyCounter() {
         this.game.getBatch().begin();
         CrowdSurvivor.getFont().setColor(Color.YELLOW);
+        final float currencyBarDivisor = 2.2f;
+        final int currencyHeightAdjuster = 30;
         CrowdSurvivor.getFont().draw(this.game.getBatch(), "Currency: " + this.player.getCollectedCurrency(),
-                this.player.getX() - Gdx.graphics.getWidth() / 2.2f,
-                this.player.getY() + (float) Gdx.graphics.getHeight() / 2 - 30);
+                this.player.getX() - Gdx.graphics.getWidth() / currencyBarDivisor,
+                this.player.getY() + (float) Gdx.graphics.getHeight() / 2 - currencyHeightAdjuster);
         CrowdSurvivor.getFont().setColor(Color.WHITE);
         this.game.getBatch().end();
     }
 
+    /**
+     * Resets the game state, including player position, stats, and other relevant entities.
+     */
     public void resetGameState() {
         this.player.resetPosition();
         this.player.resetStats();
@@ -283,12 +350,19 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.enemyProjectilesOnScreen.clear();
     }
 
-
-    public void handlePlayerKill(Enemy enemy) {
+    /**
+     * Handles actions to be taken when a player kills an enemy, such as collecting currency and experience points.
+     *
+     * @param enemy Enemy object representing an enemy instance.
+     */
+    public void handlePlayerKill(final Enemy enemy) {
         this.player.addCollectedCurrency(enemy.getDropCurrency());
         this.enterUpgradeScreenAmount = this.player.addEXP(enemy.getDropEXP());
     }
 
+    /**
+     * Renders the current frame as a background and tints it.
+     */
     public void renderFrameAsBackground() {
         this.game.getBatch().setColor(this.darkTint);
         renderBackground(this.game, this.background);
@@ -299,6 +373,12 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.game.getBatch().setColor(CrowdSurvivor.getStandardColour());
     }
 
+    /**
+     * Handles the key press events.
+     *
+     * @param keyCode the key code of the pressed key.
+     * @return true if the event was handled, otherwise false.
+     */
     @Override
     public boolean keyDown(final int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
@@ -308,43 +388,104 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         return false;
     }
 
+    /**
+     * Handles the key release events.
+     *
+     * @param keyCode the key code of the released key.
+     * @return false if the event was handled.
+     */
     @Override
     public boolean keyUp(final int keyCode) {
         return false;
     }
 
+    /**
+     * Handles the typed key events.
+     *
+     * @param character the character of the typed key.
+     * @return false if the event was handled.
+     */
     @Override
     public boolean keyTyped(final char character) {
         return false;
     }
 
+    /**
+     * Handles the touch-down events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @param button  the button.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchDown(final int i, final int i1, int i2, int i3) {
+    public boolean touchDown(final int touchX, final int touchY, final int pointer, final int button) {
         return false;
     }
 
+    /**
+     * Handles the touch-up events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @param button  the button.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchUp(int i, int i1, int i2, int i3) {
+    public boolean touchUp(final int touchX, final int touchY, final int pointer, final int button) {
         return false;
     }
 
+    /**
+     * Handles the touch-cancelled events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @param button  the button.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchCancelled(int i, int i1, int i2, int i3) {
+    public boolean touchCancelled(final int touchX, final int touchY, final int pointer, final int button) {
         return false;
     }
 
+    /**
+     * Handles the touch-dragged events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchDragged(int i, int i1, int i2) {
+    public boolean touchDragged(final int touchX, final int touchY, final int pointer) {
         return false;
     }
 
+    /**
+     * Handles the mouse-moved events.
+     *
+     * @param mouseX the x-coordinate of the mouse.
+     * @param mouseY the y-coordinate of the mouse.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean mouseMoved(int i, int i1) {
+    public boolean mouseMoved(final int mouseX, final int mouseY) {
         return false;
     }
 
+    /**
+     * Handles the scrolled events.
+     *
+     * @param scrollHorizontal the horizontal scrolling amount.
+     * @param scrollVertical   the vertical scrolling amount.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean scrolled(float v, float v1) {
+    public boolean scrolled(final float scrollHorizontal, final float scrollVertical) {
         return false;
     }
 }
