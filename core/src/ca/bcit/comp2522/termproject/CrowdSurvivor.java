@@ -42,6 +42,10 @@ public class CrowdSurvivor extends Game {
     private WinScreen winScreen;
     private PlayerProfile playerProfile;
 
+    /**
+     * Constructs essential Crowd Survivor game components.
+     * This includes the sprite batch, UI stage, skin, font, and game screens.
+     */
     @Override
     public void create() {
         this.batch = new SpriteBatch();
@@ -60,95 +64,222 @@ public class CrowdSurvivor extends Game {
         this.setScreen(this.mainMenuScreen);
     }
 
+    /**
+     * Retrieves the font used for rendering text in the game.
+     *
+     * @return the font.
+     */
     public static BitmapFont getFont() {
         return font;
     }
 
+    /**
+     * Retrieves the standard color used for various UI and game elements.
+     *
+     * @return the standard color used for various UI and game elements.
+     */
     public static Color getStandardColour() {
         return STANDARD_COLOUR;
     }
 
+    /**
+     * Retrieves the sprite batch used for rendering 2D graphics.
+     *
+     * @return the sprite batch used for rendering 2D graphics.
+     */
     public SpriteBatch getBatch() {
         return this.batch;
     }
 
+    /**
+     * Retrieves the UI stage containing buttons and other UI elements.
+     *
+     * @return the UI stage containing buttons and other UI elements.
+     */
     public Stage getButtonsUI() {
         return this.buttonsUI;
     }
 
+    /**
+     * Retrieves the skin used for styling UI elements.
+     *
+     * @return the skin used for styling UI elements.
+     */
     public Skin getSkin() {
         return this.skin;
     }
 
+    /**
+     * Retrieves the main menu screen.
+     *
+     * @return the main menu screen.
+     */
     public MainMenuScreen getMainMenuScreen() {
         return this.mainMenuScreen;
     }
 
+    /**
+     * Retrieves the shop screen.
+     *
+     * @return the shop screen.
+     */
     public ShopScreen getShopScreen() {
         return this.shopScreen;
     }
 
+    /**
+     * Retrieves the in-game screen.
+     *
+     * @return the in-game screen.
+     */
     public InGameScreen getInGameScreen() {
         return this.inGameScreen;
     }
 
+    /**
+     * Retrieves the pause menu screen.
+     *
+     * @return the pause menu screen.
+     */
     public PauseMenuScreen getPauseMenuScreen() {
         return this.pauseMenuScreen;
     }
 
+    /**
+     * Retrieves the upgrade selection screen.
+     *
+     * @return the upgrade selection screen.
+     */
     public UpgradeSelectionScreen getUpgradeSelectionScreen() {
         return this.upgradeSelectionScreen;
     }
 
+    /**
+     * Retrieves the game over screen.
+     *
+     * @return the game over screen.
+     */
     public GameOverScreen getGameOverScreen() {
         return this.gameOverScreen;
     }
 
+    /**
+     * Retrieves the win screen.
+     *
+     * @return the win screen.
+     */
     public WinScreen getWinScreen() {
         return this.winScreen;
     }
 
+    /**
+     * Retrieves the player profile containing player-specific data.
+     *
+     * @return the player profile containing player-specific data.
+     */
     public PlayerProfile getPlayerProfile() {
         return this.playerProfile;
     }
 
+    /**
+     * Sets the UI stage containing buttons and other UI elements.
+     *
+     * @param buttonsUI Stage object representing the UI elements.
+     */
     public void setButtonsUI(final Stage buttonsUI) {
         this.buttonsUI = buttonsUI;
     }
 
+    /**
+     * Sets the shop screen.
+     *
+     * @param shopScreen ShopScreen object representing the shop screen.
+     */
     public void setShopScreen(final ShopScreen shopScreen) {
         this.shopScreen = shopScreen;
     }
 
+    /**
+     * Sets the in-game screen.
+     *
+     * @param inGameScreen InGameScreen object representing the in-game screen.
+     */
     public void setInGameScreen(final InGameScreen inGameScreen) {
         this.inGameScreen = inGameScreen;
     }
 
+    /**
+     * Sets the pause menu screen.
+     *
+     * @param pauseMenuScreen PauseMenuScreen object representing the pause menu screen.
+     */
     public void setPauseMenuScreen(final PauseMenuScreen pauseMenuScreen) {
         this.pauseMenuScreen = pauseMenuScreen;
     }
 
+    /**
+     * Sets the upgrade selection screen.
+     *
+     * @param upgradeSelectionScreen UpgradeSelectionScreen object representing the upgrade selection screen.
+     */
     public void setUpgradeSelectionScreen(final UpgradeSelectionScreen upgradeSelectionScreen) {
         this.upgradeSelectionScreen = upgradeSelectionScreen;
     }
 
+    /**
+     * Sets the game over screen.
+     *
+     * @param gameOverScreen GameOverScreen object representing the game over screen.
+     */
     public void setGameOverScreen(final GameOverScreen gameOverScreen) {
         this.gameOverScreen = gameOverScreen;
     }
 
+    /**
+     * Sets the win screen.
+     *
+     * @param winScreen WinScreen object representing the win screen.
+     */
     public void setWinScreen(final WinScreen winScreen) {
         this.winScreen = winScreen;
     }
 
+    /**
+     * Renders the current screen and updates the game state.
+     */
     @Override
     public void render() {
         super.render();
     }
 
+    /**
+     * Disposes the resources used by the game when it is closed.
+     */
     @Override
     public void dispose() {
         batch.dispose();
         font.dispose();
     }
 
+    /**
+     * Returns a string representation of the CrowdSurvivor object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "CrowdSurvivor{"
+                + "batch=" + batch
+                + ", buttonsUI=" + buttonsUI
+                + ", skin=" + skin
+                + ", mainMenuScreen=" + mainMenuScreen
+                + ", shopScreen=" + shopScreen
+                + ", inGameScreen=" + inGameScreen
+                + ", pauseMenuScreen=" + pauseMenuScreen
+                + ", upgradeSelectionScreen=" + upgradeSelectionScreen
+                + ", gameOverScreen=" + gameOverScreen
+                + ", winScreen=" + winScreen
+                + ", playerProfile=" + playerProfile
+                + '}';
+    }
 }
