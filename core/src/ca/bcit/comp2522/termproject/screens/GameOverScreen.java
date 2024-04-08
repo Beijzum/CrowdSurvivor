@@ -188,7 +188,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
     public void hide() {
         this.game.getPlayerProfile().setCurrency(this.game.getPlayerProfile().getCurrency()
                 + this.game.getInGameScreen().getPlayer().getCollectedCurrency());
-        game.getInGameScreen().resetGameState();
+        this.game.getInGameScreen().resetGameState();
     }
 
     /**

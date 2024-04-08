@@ -2,38 +2,56 @@ package ca.bcit.comp2522.termproject.screens;
 
 import ca.bcit.comp2522.termproject.interfaces.ActorManager;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
-    final int numberOfButtons = 2;
-    final private CrowdSurvivor game;
-    final private TextButton[] menuItems = new TextButton[numberOfButtons]; // resume, quit
-    final private InputMultiplexer inputManager;
+    private final int numberOfButtons = 2;
+    private final CrowdSurvivor game;
+    private final TextButton[] menuItems = new TextButton[numberOfButtons]; // resume, quit
+    private final InputMultiplexer inputManager;
+    private final TextButton resumeGameButton;
+    private final TextButton quitButton;
+    private final float buttonWidth;
+    private final float buttonHeight;
+    private final float buttonPositionX;
+    private final float firstButtonPositionY;
 
-    public PauseMenuScreen(CrowdSurvivor game) {
+    public PauseMenuScreen(final CrowdSurvivor game) {
         this.game = game;
-        this.inputManager = new InputMultiplexer(this, game.getButtonsUI());
+        this.inputManager = new InputMultiplexer(this, this.game.getButtonsUI());
+        final float buttonWidthDivisor = 3f;
+        this.buttonWidth = Gdx.graphics.getWidth() / buttonWidthDivisor;
+        final float buttonHeightDivisor = 10f;
+        this.buttonHeight = Gdx.graphics.getHeight() / buttonHeightDivisor;
+        this.buttonPositionX = Gdx.graphics.getWidth() / 2f - this.buttonWidth / 2;
+        this.firstButtonPositionY = Gdx.graphics.getHeight() / 2f;
+        this.resumeGameButton = new TextButton("Resume", this.game.getSkin());
+        this.quitButton = new TextButton("Quit", this.game.getSkin());
         createButtons();
     }
 
     @Override
     public void show() {
-        addActors(game.getButtonsUI(), menuItems);
+        addActors(this.game.getButtonsUI(), this.menuItems);
         Gdx.input.setInputProcessor(this.inputManager);
     }
 
     @Override
-    public void render(float v) {
-        game.getInGameScreen().renderFrameAsBackground();
-        game.getButtonsUI().act();
-        game.getButtonsUI().draw();
+    public void render(final float deltaTime) {
+        this.game.getInGameScreen().renderFrameAsBackground();
+        this.game.getButtonsUI().act();
+        this.game.getButtonsUI().draw();
     }
 
     @Override
-    public void resize(int i, int i1) {
+    public void resize(final int i, final int i1) {
 
     }
 
@@ -58,20 +76,22 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     }
 
     private void createButtons() {
-
-        // calculate values for menu placement
-        int buttonWidth = Gdx.graphics.getWidth() / 3;
-        int buttonHeight = Gdx.graphics.getHeight() / 10;
-        int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
-        int firstButtonPositionY = Gdx.graphics.getHeight() / 2;
-
         // resume game button
-        TextButton resumeGameButton = new TextButton("Resume", game.getSkin());
-        resumeGameButton.setSize(buttonWidth, buttonHeight);
-        resumeGameButton.setPosition(buttonPositionX, firstButtonPositionY);
-        resumeGameButton.addListener(new InputListener() {
+        handleResumeGameButton();
+        this.menuItems[0] = this.resumeGameButton;
+
+        // quit game button
+        handleQuitButton();
+        this.menuItems[1] = this.quitButton;
+    }
+
+    private void handleResumeGameButton() {
+        this.resumeGameButton.setSize(this.buttonWidth, this.buttonHeight);
+        this.resumeGameButton.setPosition(this.buttonPositionX, this.firstButtonPositionY);
+        this.resumeGameButton.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -81,15 +101,15 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 return true;
             }
         });
-        this.menuItems[0] = resumeGameButton;
+    }
 
-        // quit game button
-        TextButton quitButton = new TextButton("Quit", game.getSkin());
-        quitButton.setSize(buttonWidth, buttonHeight);
-        quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
-        quitButton.addListener(new InputListener() {
+    private void handleQuitButton() {
+        this.quitButton.setSize(this.buttonWidth, this.buttonHeight);
+        this.quitButton.setPosition(this.buttonPositionX, this.firstButtonPositionY - this.buttonHeight * 2);
+        this.quitButton.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -103,56 +123,121 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 return true;
             }
         });
-        this.menuItems[1] = quitButton;
     }
 
+    /**
+     * Handles the key press events.
+     *
+     * @param keyCode the key code of the pressed key.
+     * @return true if the event was handled, otherwise false.
+     */
     @Override
-    public boolean keyDown(int keyCode) {
+    public boolean keyDown(final int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
-            clearStage(game.getButtonsUI());
-            game.setScreen(game.getInGameScreen());
+            this.game.setScreen(this.game.getPauseMenuScreen());
             return true;
         }
         return false;
     }
 
+    /**
+     * Handles the key release events.
+     *
+     * @param keyCode the key code of the released key.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean keyUp(int i) {
+    public boolean keyUp(final int keyCode) {
         return false;
     }
 
+    /**
+     * Handles the typed key events.
+     *
+     * @param character the character of the typed key.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean keyTyped(char c) {
+    public boolean keyTyped(final char character) {
         return false;
     }
 
+    /**
+     * Handles the touch-down events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @param button  the button.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
+    public boolean touchDown(final int touchX, final int touchY, final int pointer, final int button) {
         return false;
     }
 
+    /**
+     * Handles the touch-up events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @param button  the button.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchUp(int i, int i1, int i2, int i3) {
+    public boolean touchUp(final int touchX, final int touchY, final int pointer, final int button) {
         return false;
     }
 
+    /**
+     * Handles the touch-cancelled events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @param button  the button.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchCancelled(int i, int i1, int i2, int i3) {
+    public boolean touchCancelled(final int touchX, final int touchY, final int pointer, final int button) {
         return false;
     }
 
+    /**
+     * Handles the touch-dragged events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchDragged(int i, int i1, int i2) {
+    public boolean touchDragged(final int touchX, final int touchY, final int pointer) {
         return false;
     }
 
+    /**
+     * Handles the mouse-moved events.
+     *
+     * @param mouseX the x-coordinate of the mouse.
+     * @param mouseY the y-coordinate of the mouse.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean mouseMoved(int i, int i1) {
+    public boolean mouseMoved(final int mouseX, final int mouseY) {
         return false;
     }
 
+    /**
+     * Handles the scrolled events.
+     *
+     * @param scrollHorizontal the horizontal scrolling amount.
+     * @param scrollVertical   the vertical scrolling amount.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean scrolled(float v, float v1) {
+    public boolean scrolled(final float scrollHorizontal, final float scrollVertical) {
         return false;
     }
 }
