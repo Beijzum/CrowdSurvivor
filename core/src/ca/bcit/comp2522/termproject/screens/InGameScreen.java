@@ -10,6 +10,7 @@ import ca.bcit.comp2522.termproject.enemies.Enemy;
 import ca.bcit.comp2522.termproject.enemies.EnemyManager;
 import ca.bcit.comp2522.termproject.interfaces.ActorManager;
 import ca.bcit.comp2522.termproject.interfaces.Background;
+import ca.bcit.comp2522.termproject.interfaces.MessageLayout;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -26,7 +28,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class InGameScreen implements Screen, Background, ActorManager, InputProcessor {
+public class InGameScreen implements Screen, Background, ActorManager, InputProcessor, MessageLayout {
     private static final int MAX_GAME_LENGTH = 300;
     private float timeElapsed = 0;
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
@@ -44,6 +46,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private final ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
     private final LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
     private final LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
+    private final GlyphLayout timeElapsedMessage = new GlyphLayout(CrowdSurvivor.getFont(),
+            String.format("%d:%02d", Math.round(this.timeElapsed) / 60, Math.round(this.timeElapsed) % 60));
     private int enterUpgradeScreenAmount;
 
 
@@ -120,13 +124,17 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         enemyManager.handleEnemySpawn();
         enemyManager.handleEnemyProjectiles();
 
+
         // draw assets
         renderBackground(game, background);
         player.draw(game.getBatch());
         this.drawEnemies();
         this.drawAllEnemyProjectiles();
         this.drawAllPlayerProjectiles();
-        game.getButtonsUI().draw();
+        this.updateTimerMessage();
+        drawMessageFromCenter(timeElapsedMessage, game.getBatch(),
+                camera.position.x, camera.position.y + Gdx.graphics.getHeight() / 3f, 1);
+
 
         // draws HUD
         drawHPBar();
@@ -173,6 +181,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public void dispose() {
         clearStage(game.getButtonsUI());
         music.dispose();
+    }
+
+    private void updateTimerMessage() {
+        this.timeElapsedMessage.setText(CrowdSurvivor.getFont(),
+                String.format("%d:%02d", Math.round(this.timeElapsed) / 60, Math.round(this.timeElapsed) % 60));
     }
 
     private void drawAllPlayerProjectiles() {
