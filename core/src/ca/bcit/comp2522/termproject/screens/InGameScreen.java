@@ -180,6 +180,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.music.setLooping(true);
         this.music.play();
         Gdx.input.setInputProcessor(this);
+        System.out.println(onFieldBosses);
     }
 
     /**
@@ -408,12 +409,15 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
      * Resets the game state, including player position, stats, and other relevant entities.
      */
     public void resetGameState() {
-        this.player.resetPosition();
-        this.player.resetStats();
-        this.timeElapsed = 0;
         this.onFieldEnemies.clear();
+        this.onFieldBosses.clear();
         this.playerProjectilesOnScreen.clear();
         this.enemyProjectilesOnScreen.clear();
+        this.enemyManager.resetEnemyTimers();
+        this.timeElapsed = 0;
+        this.enterUpgradeScreenAmount = 0;
+        this.player.resetPosition();
+        this.player.resetStats();
     }
 
     /**
