@@ -17,10 +17,10 @@ public class Boss extends Enemy {
         super(health, speed, attack, filepath);
         this.sprite.setSize(size, size);
         this.attackSpeed = 10f;
-        this.projectileTemplate = new Projectile(PROJECTILE_SPRITE, 125, 10, 200);
+        this.projectileTemplate = new Projectile(PROJECTILE_SPRITE, 175, 10, 200);
     }
 
-    public void fireProjectile(LinkedList<Projectile> enemyProjectiles, float playerCoordX, float playerCoordY) {
+    public boolean fireProjectile(LinkedList<Projectile> enemyProjectiles, float playerCoordX, float playerCoordY) {
         if (this.attackTimer >= this.attackSpeed) {
             Projectile newProjectile = new Projectile(this.projectileTemplate);
             newProjectile.getDirectionVector().set(playerCoordX - this.getCenterX(), playerCoordY - this.getCenterY());
@@ -28,8 +28,10 @@ public class Boss extends Enemy {
             enemyProjectiles.add(newProjectile);
 
             this.attackTimer = 0;
+            return true;
         } else {
             this.attackTimer += Gdx.graphics.getDeltaTime();
+            return false;
         }
     }
 }
