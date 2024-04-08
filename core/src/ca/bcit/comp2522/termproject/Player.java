@@ -361,7 +361,9 @@ public final class Player extends Entity {
      * Resets the player's position to the center of the screen.
      */
     public void resetPosition() {
-        this.sprite.setCenter(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+        final float spriteX = 1.5f;
+        final float spriteY = 1.5f;
+        this.sprite.setCenter(Gdx.graphics.getWidth() * spriteX, Gdx.graphics.getHeight() * spriteY);
     }
 
     /**
