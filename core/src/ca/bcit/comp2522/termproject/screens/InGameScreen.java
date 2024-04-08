@@ -272,7 +272,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
      */
     @Override
     public void hide() {
-
+        this.player.setIsMoving(false);
     }
 
     /**
