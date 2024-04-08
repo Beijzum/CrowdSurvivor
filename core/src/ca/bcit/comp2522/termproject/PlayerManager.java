@@ -80,7 +80,7 @@ public final class PlayerManager {
             }
         }
         for (Projectile projectile : this.gameScreen.getBossProjectilesOnScreen()) {
-            final int projectileDamage = 30;
+            final int projectileDamage = 50;
             if (this.gameScreen.getPlayer().takeDamage(projectile.getHitbox(), projectileDamage)) {
                 damaged = true;
             }
