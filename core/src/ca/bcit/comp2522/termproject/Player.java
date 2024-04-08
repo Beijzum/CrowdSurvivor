@@ -60,6 +60,7 @@ public final class Player extends Entity {
     private float healthRegenMultiplier;
     private Projectile projectileTemplate;
     private boolean isMoving = false;
+    private boolean isFacingLeft = true;
 
     private Player() {
         resetStats();
@@ -543,5 +544,19 @@ public final class Player extends Entity {
                 this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                 this.sprite.getScaleY(), this.sprite.getRotation());
         batch.end();
+    }
+
+    public void flipRight() {
+        if (this.isFacingLeft) {
+            this.sprite.flip(true, false);
+            this.isFacingLeft = false;
+        }
+    }
+
+    public void flipLeft() {
+        if (!this.isFacingLeft) {
+            this.sprite.flip(true, false);
+            this.isFacingLeft = true;
+        }
     }
 }
