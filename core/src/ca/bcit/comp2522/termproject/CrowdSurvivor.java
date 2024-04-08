@@ -28,8 +28,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * @version 2024
  */
 public class CrowdSurvivor extends Game {
-    static BitmapFont font;
-    static Color standardColour = new Color(1, 1, 1, 1);
+    private static BitmapFont font;
+    private static final Color STANDARD_COLOUR = new Color(1, 1, 1, 1);
     private SpriteBatch batch;
     private Stage buttonsUI;
     private Skin skin;
@@ -65,7 +65,7 @@ public class CrowdSurvivor extends Game {
     }
 
     public static Color getStandardColour() {
-        return standardColour;
+        return STANDARD_COLOUR;
     }
 
     public SpriteBatch getBatch() {
@@ -131,7 +131,6 @@ public class CrowdSurvivor extends Game {
     public void setUpgradeSelectionScreen(final UpgradeSelectionScreen upgradeSelectionScreen) {
         this.upgradeSelectionScreen = upgradeSelectionScreen;
     }
-
 
     public void setGameOverScreen(final GameOverScreen gameOverScreen) {
         this.gameOverScreen = gameOverScreen;

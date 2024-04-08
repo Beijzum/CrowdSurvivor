@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 
-import static ca.bcit.comp2522.termproject.CrowdSurvivor.font;
-
 /**
  * Represents the health points (HP) bar for the player HUD.
  *
@@ -117,9 +115,9 @@ public class HPBar {
         float textX = this.x + textHPX;
         float textY = this.y + this.getHeight() / 2;
         final float textHPScale = 0.5F;
-        font.getData().setScale(textHPScale);
-        font.draw(batch, this.currentHP + "/" + this.maxHP, textX, textY);
-        font.getData().setScale(1);
+        CrowdSurvivor.getFont().getData().setScale(textHPScale);
+        CrowdSurvivor.getFont().draw(batch, this.currentHP + "/" + this.maxHP, textX, textY);
+        CrowdSurvivor.getFont().getData().setScale(1);
         batch.end();
     }
 
