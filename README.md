@@ -12,16 +12,8 @@ Inspired by the game "Vampire Survivors".
 Notes go here
 
 ## TODO BEFORE TUESDAY
-implement boss
-change charger to something else
-implement SFX in game
-add time elapsed in game
-fix button pointer cutting into button text
-fix looping background
-change background to something better
-Draw art assets
-fix camera stuttering
-Add counter for shop upgrades. How many bought and the total effect %
+figure out how to animate gif of playerSprite.gif
+fix camera stuttering / icons jitterring when moving
 unit tests
 update uml
 update readme
