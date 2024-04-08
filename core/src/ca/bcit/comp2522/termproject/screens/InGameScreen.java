@@ -365,24 +365,26 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.shapeRenderer.setProjectionMatrix(this.camera.combined);
 
         for (Enemy enemy : this.onFieldEnemies) {
-            if (inCameraView(enemy.getHitbox())) {
-                enemy.draw(this.game.getBatch());
-                enemy.drawDamageNumbers(this.game.getBatch());
-                this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-                enemy.drawHPBar(this.shapeRenderer);
-                this.shapeRenderer.end();
+            if (!inCameraView(enemy.getHitbox())) {
+                continue;
             }
+            enemy.draw(this.game.getBatch());
+            enemy.drawDamageNumbers(this.game.getBatch());
+
+            this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            enemy.drawHPBar(this.shapeRenderer);
+            this.shapeRenderer.end();
 
         }
 
         for (Boss boss : this.onFieldBosses) {
             if (inCameraView(boss.getHitbox())) {
-                boss.draw(game.getBatch());
-                boss.drawDamageNumbers(game.getBatch());
+                boss.draw(this.game.getBatch());
+                boss.drawDamageNumbers(this.game.getBatch());
 
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-                boss.drawHPBar(shapeRenderer);
-                shapeRenderer.end();
+                this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                boss.drawHPBar(this.shapeRenderer);
+                this.shapeRenderer.end();
             }
         }
     }

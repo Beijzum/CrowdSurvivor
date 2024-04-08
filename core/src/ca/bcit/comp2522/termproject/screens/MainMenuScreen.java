@@ -17,19 +17,30 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MainMenuScreen implements Screen, Background, ActorManager, MessageLayout {
-    final private static int NUMBER_OF_BUTTONS = 3;
-    OrthographicCamera camera;
-    final private CrowdSurvivor game;
-    final private Music music;
-    final private Sprite background = new Sprite(new Texture("backgrounds/mainMenuBackground.jpg"));
-    final private TextButton[] menuItems = new TextButton[NUMBER_OF_BUTTONS]; // start game, shop, quit buttons
+    private static final int NUMBER_OF_BUTTONS = 3;
+    private final OrthographicCamera camera;
+    private final CrowdSurvivor game;
+    private final Music music;
+    private final Sprite background = new Sprite(new Texture("backgrounds/mainMenuBackground.jpg"));
+    private final TextButton[] menuItems = new TextButton[NUMBER_OF_BUTTONS]; // start game, shop, quit buttons
+    private final float buttonWidth;
+    private final float buttonHeight;
+    private final float buttonPositionX;
+    private final float firstButtonPositionY;
 
     public MainMenuScreen(final CrowdSurvivor game) {
         this.camera = new OrthographicCamera();
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/mainMenuMusic.mp3"));
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.game = game;
+        final float buttonWidthDivisor = 3f;
+        this.buttonWidth = Gdx.graphics.getWidth() / buttonWidthDivisor;
+        final float buttonHeightDivisor = 10f;
+        this.buttonHeight = Gdx.graphics.getHeight() / buttonHeightDivisor;
+        this.buttonPositionX = Gdx.graphics.getWidth() / 2f - this.buttonWidth / 2;
+        final float buttonYDivisor = 3f;
+        this.firstButtonPositionY = Gdx.graphics.getHeight() / buttonYDivisor;
         createButtons();
     }
 
@@ -43,7 +54,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
     }
 
     @Override
-    public void render(float v) {
+    public void render(final float v) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         camera.update();
@@ -100,19 +111,14 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
     }
 
     private void createButtons() {
-        // calculate values for menu placement
-        int buttonWidth = Gdx.graphics.getWidth() / 3;
-        int buttonHeight = Gdx.graphics.getHeight() / 10;
-        int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
-        int firstButtonPositionY = Gdx.graphics.getHeight() / 3;
-
         // start game button
         TextButton startGameButton = new TextButton("Start Game", game.getSkin());
         startGameButton.setSize(buttonWidth, buttonHeight);
         startGameButton.setPosition(buttonPositionX, firstButtonPositionY);
         startGameButton.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -132,7 +138,8 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
 
 
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -149,7 +156,8 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
         quitButton.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
