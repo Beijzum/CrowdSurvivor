@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject;
 
+import ca.bcit.comp2522.termproject.enemies.Boss;
 import ca.bcit.comp2522.termproject.enemies.Enemy;
 import ca.bcit.comp2522.termproject.screens.InGameScreen;
 import com.badlogic.gdx.Gdx;
@@ -53,8 +54,15 @@ public final class PlayerManager {
         for (Enemy enemy : this.gameScreen.getOnFieldEnemies()) {
             this.gameScreen.getPlayer().takeDamage(enemy.getHitbox(), enemy.getAttack());
         }
+        for (Boss boss : this.gameScreen.getOnFieldBosses()) {
+            this.gameScreen.getPlayer().takeDamage(boss.getHitbox(), boss.getAttack());
+        }
         for (Projectile projectile : this.gameScreen.getEnemyProjectilesOnScreen()) {
             final int projectileDamage = 10;
+            this.gameScreen.getPlayer().takeDamage(projectile.getHitbox(), projectileDamage);
+        }
+        for (Projectile projectile : this.gameScreen.getBossProjectilesOnScreen()) {
+            final int projectileDamage = 30;
             this.gameScreen.getPlayer().takeDamage(projectile.getHitbox(), projectileDamage);
         }
     }
