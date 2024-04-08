@@ -3,6 +3,8 @@ package ca.bcit.comp2522.termproject.enemies;
 import ca.bcit.comp2522.termproject.Projectile;
 import ca.bcit.comp2522.termproject.screens.InGameScreen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.audio.Music;
 import org.w3c.dom.ranges.Range;
 
 import java.util.Random;
@@ -26,6 +28,9 @@ final public class EnemyManager {
     private float rangedEnemyTimer;
     private float chargerEnemyTimer;
     private float bossTimer;
+    private final Sound bossSpawnSFX;
+    private final Sound enemySpawnSFX;
+    private final Sound bossProjectileSFX;
     final private Random randomNumberGenerator = new Random();
 
     private EnemyManager(InGameScreen gameScreen) {
@@ -37,6 +42,9 @@ final public class EnemyManager {
         this.currentChargerEnemySpawnTime = BASE_CHARGER_ENEMY_SPAWN_TIME;
         this.currentRangedEnemySpawnTime = BASE_RANGED_ENEMY_SPAWN_TIME;
         this.bossTimer = 0;
+        this.bossSpawnSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/bossSpawnSFX.mp3"));
+        this.enemySpawnSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/enemySpawnSFX.mp3"));
+        this.bossProjectileSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/bossProjectileSFX.mp3"));
     }
 
     public static EnemyManager createManager(InGameScreen gameScreen) {
@@ -88,8 +96,11 @@ final public class EnemyManager {
 
         // fire boss projectile
         for (Boss boss : gameScreen.getOnFieldBosses()) {
-            boss.fireProjectile(gameScreen.getBossProjectilesOnScreen(),
+            boolean fired = boss.fireProjectile(gameScreen.getBossProjectilesOnScreen(),
                     gameScreen.getPlayer().getCenterX(), gameScreen.getPlayer().getCenterY());
+            if (fired) {
+                this.bossProjectileSFX.play();
+            }
         }
     }
 
@@ -133,6 +144,7 @@ final public class EnemyManager {
             float[] spawnPoint = generateSpawnPoint();
 
             gameScreen.getOnFieldEnemies().add(createBasicEnemy(spawnPoint[0], spawnPoint[1]));
+            this.enemySpawnSFX.play();
             this.basicEnemyTimer = 0;
             this.currentBasicEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
@@ -142,6 +154,7 @@ final public class EnemyManager {
             float[] spawnPoint = generateSpawnPoint();
 
             gameScreen.getOnFieldEnemies().add(createCharger(spawnPoint[0], spawnPoint[1]));
+            this.enemySpawnSFX.play();
             this.chargerEnemyTimer = 0;
             this.currentChargerEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_CHARGER_ENEMY_SPAWN_TIME) + BASE_CHARGER_ENEMY_SPAWN_TIME;
@@ -151,6 +164,7 @@ final public class EnemyManager {
             float[] spawnPoint = generateSpawnPoint();
 
             gameScreen.getOnFieldEnemies().add(createRangedEnemy(spawnPoint[0], spawnPoint[1]));
+            this.enemySpawnSFX.play();
             this.rangedEnemyTimer = 0;
             this.currentRangedEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_RANGED_ENEMY_SPAWN_TIME) + BASE_RANGED_ENEMY_SPAWN_TIME;
@@ -159,6 +173,7 @@ final public class EnemyManager {
         if (this.bossTimer >= BOSS_SPAWN_TIMER && gameScreen.getTimeElapsed() <= InGameScreen.getMaxGameLength()) {
             float[] spawnPoint = generateSpawnPoint();
             gameScreen.getOnFieldBosses().add(createBoss(spawnPoint[0], spawnPoint[1]));
+            this.bossSpawnSFX.play();
             this.bossTimer = 0;
         }
     }
