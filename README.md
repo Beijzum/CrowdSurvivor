@@ -12,8 +12,12 @@ Inspired by the game "Vampire Survivors".
 Notes go here
 
 ## TODO BEFORE TUESDAY
+
 figure out how to animate gif of playerSprite.gif
-fix camera stuttering / icons jitterring when moving
+add SFX for boss dying
 unit tests
 update uml
 update readme
+talk about libgdx and gradle versions
+talk about resolutions.
+pair programming
