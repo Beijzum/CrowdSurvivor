@@ -29,6 +29,18 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * Represents the in-game screen where the main gameplay takes place.
+ * It manages the game's state, rendering, and input processing.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor, MessageLayout {
     private static final int MAX_GAME_LENGTH = 300;
     private float timeElapsed = 0;
@@ -36,7 +48,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private final OrthographicCamera camera;
     private final CrowdSurvivor game;
     private final Music music;
-    private final Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
+    private final Sprite background = new Sprite(new Texture("backgrounds/gameBackground.png"));
     private final Stage gameUI = new Stage();
     private final HPBar hpBar;
     private final EXPBar expBar;
@@ -53,21 +65,31 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private int enterUpgradeScreenAmount;
     private final LinkedList<Boss> onFieldBosses = new LinkedList<>();
 
-
+    /**
+     * Constructs the in-game screen for the Crowd Survivor game.
+     *
+     * @param crowdSurvivor CrowdSurvivor object that represents the main game instance.
+     */
     public InGameScreen(final CrowdSurvivor crowdSurvivor) {
         this.camera = new OrthographicCamera();
         this.game = crowdSurvivor;
         this.player = Player.createPlayer();
-        this.hpBar = new HPBar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 300, 20,
-                player.getMaxHP());
+        final int barHeight = 20;
+        final int hpBarWidth = 300;
+        this.hpBar = new HPBar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), hpBarWidth, barHeight,
+                this.player.getMaxHP());
+        final float expBarWidth = 1.05f;
         this.expBar = new EXPBar((float) Gdx.graphics.getWidth(), (float) Gdx.graphics.getHeight(),
-                (float) (Gdx.graphics.getWidth() / 1.05), 20, player.getLevel(), player.getLevelUpThreshold());
+                (Gdx.graphics.getWidth() / expBarWidth), barHeight, this.player.getLevel(),
+                this.player.getLevelUpThreshold());
         this.enemyManager = EnemyManager.createManager(this);
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
-        this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        final int backgroundMultiplier = 3;
+        this.background.setSize(Gdx.graphics.getWidth() * backgroundMultiplier,
+                Gdx.graphics.getHeight() * backgroundMultiplier);
         this.resetGameState();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     public static int getMaxGameLength() {
@@ -78,26 +100,56 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         return this.onFieldBosses;
     }
 
+    /**
+     * Retrieves the time elapsed in the current game.
+     *
+     * @return the time elapsed.
+     */
     public float getTimeElapsed() {
         return this.timeElapsed;
     }
 
+    /**
+     * Retrieves the OrthographicCamera used for rendering.
+     *
+     * @return the OrthographicCamera instance.
+     */
     public OrthographicCamera getCamera() {
         return this.camera;
     }
 
+    /**
+     * Retrieves the player instance.
+     *
+     * @return the player instance.
+     */
     public Player getPlayer() {
         return this.player;
     }
 
+    /**
+     * Retrieves the list of enemies currently on the field.
+     *
+     * @return the list of on-field enemies.
+     */
     public ArrayList<Enemy> getOnFieldEnemies() {
         return this.onFieldEnemies;
     }
 
+    /**
+     * Retrieves the list of player projectiles on screen.
+     *
+     * @return the list of player projectiles.
+     */
     public LinkedList<Projectile> getPlayerProjectilesOnScreen() {
         return this.playerProjectilesOnScreen;
     }
 
+    /**
+     * Retrieves the list of enemy projectiles on screen.
+     *
+     * @return the list of enemy projectiles.
+     */
     public LinkedList<Projectile> getEnemyProjectilesOnScreen() {
         return this.enemyProjectilesOnScreen;
     }
@@ -106,22 +158,31 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         return this.bossProjectilesOnScreen;
     }
 
+    /**
+     * Initializes the screen and starts playing the background music.
+     */
     @Override
     public void show() {
-        music.setLooping(true);
-        music.play();
+        this.music.setLooping(true);
+        this.music.play();
         Gdx.input.setInputProcessor(this);
     }
 
+    /**
+     * Renders the assets for the in-game screen.
+     * Handles game logic, drawing, and state transitions.
+     *
+     * @param deltaTime the delta time since the last frame.
+     */
     @Override
-    public void render(float v) {
+    public void render(float deltaTime) {
 
         ScreenUtils.clear(0, 0, 0.2f, 1);
         game.getBatch().setProjectionMatrix(camera.combined);
 
         // handle camera
-        camera.position.set(player.getCenterX(), player.getCenterY(), 0);
-        camera.update();
+        this.camera.position.set(this.player.getCenterX(), this.player.getCenterY(), 0);
+        this.camera.update();
 
         // handle game logic
         enemyManager.incrementTimers();
@@ -157,45 +218,83 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         }
 
         // check if player is dead, move to game over screen if so
-        if (player.isDead()) {
+        if (this.player.isDead()) {
             dispose();
-            game.setScreen(game.getGameOverScreen());
+            this.game.setScreen(this.game.getGameOverScreen());
             return;
         }
 
         // go to level up screen if leveled up
-        if (enterUpgradeScreenAmount > 0) {
-            game.setScreen(game.getUpgradeSelectionScreen());
+        if (this.enterUpgradeScreenAmount > 0) {
+            this.game.setScreen(this.game.getUpgradeSelectionScreen());
             this.enterUpgradeScreenAmount--;
         }
 
-        timeElapsed += Gdx.graphics.getDeltaTime();
+        this.timeElapsed += Gdx.graphics.getDeltaTime();
     }
 
+    /**
+     * Handles the resizing of the screen.
+     *
+     * @param width  the new width of the screen.
+     * @param height the new height of the screen.
+     */
     @Override
-    public void resize(int i, int i1) {
+    public void resize(final int width, final int height) {
 
     }
 
+    /**
+     * Pauses the game.
+     */
     @Override
     public void pause() {
 
     }
 
+    /**
+     * Resumes the game after it has been paused.
+     */
     @Override
     public void resume() {
 
     }
 
+    /**
+     * Hides the current screen.
+     */
     @Override
     public void hide() {
 
     }
 
+    /**
+     * Disposes of resources and clears the stage.
+     */
     @Override
     public void dispose() {
-        clearStage(game.getButtonsUI());
-        music.dispose();
+        clearStage(this.game.getButtonsUI());
+        this.music.dispose();
+    }
+
+    private void handleGameLogic() {
+        this.enemyManager.incrementTimers();
+        this.playerManager.incrementPlayerIframe();
+        this.playerManager.handleContinuousPlayerKeyboardInput();
+        this.playerManager.handleAttack();
+        this.playerManager.handlePlayerHealth();
+        this.enemyManager.handleEnemies();
+        this.enemyManager.handleEnemySpawn();
+        this.enemyManager.handleEnemyProjectiles();
+    }
+
+    private void drawAssets() {
+        renderBackground(this.game, this.background);
+        this.player.draw(this.game.getBatch());
+        this.drawEnemies();
+        this.drawAllEnemyProjectiles();
+        this.drawAllPlayerProjectiles();
+        this.game.getButtonsUI().draw();
     }
 
     private void updateTimerMessage() {
@@ -207,11 +306,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         if (this.playerProjectilesOnScreen.isEmpty()) {
             return;
         }
-        game.getBatch().begin();
-        for (Projectile playerProjectile : playerProjectilesOnScreen) {
-            playerProjectile.draw(game.getBatch());
+        this.game.getBatch().begin();
+        for (Projectile playerProjectile : this.playerProjectilesOnScreen) {
+            playerProjectile.draw(this.game.getBatch());
         }
-        game.getBatch().end();
+        this.game.getBatch().end();
     }
 
     private void drawAllBossProjectiles() {
@@ -229,23 +328,23 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         if (this.enemyProjectilesOnScreen.isEmpty()) {
             return;
         }
-        game.getBatch().begin();
-        for (Projectile enemyProjectile : enemyProjectilesOnScreen) {
-            enemyProjectile.draw(game.getBatch());
+        this.game.getBatch().begin();
+        for (Projectile enemyProjectile : this.enemyProjectilesOnScreen) {
+            enemyProjectile.draw(this.game.getBatch());
         }
-        game.getBatch().end();
+        this.game.getBatch().end();
     }
 
     private void drawEnemies() {
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        this.shapeRenderer.setProjectionMatrix(this.camera.combined);
 
         for (Enemy enemy : this.onFieldEnemies) {
-            enemy.draw(game.getBatch());
-            enemy.drawDamageNumbers(game.getBatch());
+            enemy.draw(this.game.getBatch());
+            enemy.drawDamageNumbers(this.game.getBatch());
 
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            enemy.drawHPBar(shapeRenderer);
-            shapeRenderer.end();
+            this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            enemy.drawHPBar(this.shapeRenderer);
+            this.shapeRenderer.end();
         }
 
         for (Boss boss : this.onFieldBosses) {
@@ -259,57 +358,68 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     }
 
     private void drawHPBar() {
-        hpBar.setPosition((float) (player.getX() - Gdx.graphics.getWidth() / 2.2),
-                player.getY() + (float) Gdx.graphics.getHeight() / 2);
-        hpBar.setMaxHP(player.getMaxHP());
-        hpBar.setCurrentHP(player.getCurrentHP());
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        hpBar.draw(shapeRenderer, game.getBatch());
-        shapeRenderer.end();
+        final float hpBarDivisor = 2.2f;
+        this.hpBar.setPosition((this.player.getX() - Gdx.graphics.getWidth() / hpBarDivisor),
+                this.player.getY() + Gdx.graphics.getHeight() / 2f);
+        this.hpBar.setMaxHP(this.player.getMaxHP());
+        this.hpBar.setCurrentHP(this.player.getCurrentHP());
+        this.shapeRenderer.setProjectionMatrix(this.camera.combined);
+        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        this.hpBar.draw(this.shapeRenderer, game.getBatch());
+        this.shapeRenderer.end();
     }
 
     private void drawEXPBar() {
-        expBar.setPosition((float) (player.getX() - Gdx.graphics.getWidth() / 2.2),
-                player.getY() + (float) Gdx.graphics.getHeight() / 2 + 25);
-        expBar.setMaxEXP(player.getLevelUpThreshold());
-        expBar.setCurrentEXP(player.getCurrentEXP());
-        expBar.setCurrentLevel(player.getLevel());
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        expBar.draw(shapeRenderer, game.getBatch());
-        shapeRenderer.end();
+        final float expBarDivisor = 2.2f;
+        final int expBarHeightAdjuster = 25;
+        this.expBar.setPosition((player.getX() - Gdx.graphics.getWidth() / expBarDivisor),
+                this.player.getY() + Gdx.graphics.getHeight() / 2f + expBarHeightAdjuster);
+        this.expBar.setMaxEXP(this.player.getLevelUpThreshold());
+        this.expBar.setCurrentEXP(this.player.getCurrentEXP());
+        this.expBar.setCurrentLevel(this.player.getLevel());
+        this.shapeRenderer.setProjectionMatrix(this.camera.combined);
+        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        this.expBar.draw(this.shapeRenderer, this.game.getBatch());
+        this.shapeRenderer.end();
     }
 
     private void drawCurrencyCounter() {
-        game.getBatch().begin();
+        this.game.getBatch().begin();
         CrowdSurvivor.getFont().setColor(Color.YELLOW);
-        CrowdSurvivor.getFont().draw(game.getBatch(), "Currency: " + player.getCollectedCurrency(),
-                player.getX() - Gdx.graphics.getWidth() / 2.2f,
-                player.getY() + (float) Gdx.graphics.getHeight() / 2 - 30);
+        final float currencyBarDivisor = 2.2f;
+        final int currencyHeightAdjuster = 30;
+        CrowdSurvivor.getFont().draw(this.game.getBatch(), "Currency: " + this.player.getCollectedCurrency(),
+                this.player.getX() - Gdx.graphics.getWidth() / currencyBarDivisor,
+                this.player.getY() + Gdx.graphics.getHeight() / 2f - currencyHeightAdjuster);
         CrowdSurvivor.getFont().setColor(Color.WHITE);
-        game.getBatch().end();
+        this.game.getBatch().end();
     }
 
+    /**
+     * Resets the game state, including player position, stats, and other relevant entities.
+     */
     public void resetGameState() {
-        player.resetPosition();
-        player.resetStats();
+        this.player.resetPosition();
+        this.player.resetStats();
         this.timeElapsed = 0;
         this.onFieldEnemies.clear();
-        this.onFieldBosses.clear();
         this.playerProjectilesOnScreen.clear();
         this.enemyProjectilesOnScreen.clear();
-        this.bossProjectilesOnScreen.clear();
     }
 
-
-    public void handlePlayerKill(Enemy enemy) {
-        player.addCollectedCurrency(enemy.getDropCurrency());
-        this.enterUpgradeScreenAmount = player.addEXP(enemy.getDropEXP());
+    /**
+     * Handles actions to be taken when a player kills an enemy, such as collecting currency and experience points.
+     *
+     * @param enemy Enemy object representing an enemy instance.
+     */
+    public void handlePlayerKill(final Enemy enemy) {
+        this.player.addCollectedCurrency(enemy.getDropCurrency());
+        this.enterUpgradeScreenAmount = this.player.addEXP(enemy.getDropEXP());
     }
 
+    /**
+     * Renders the current frame as a background and tints it.
+     */
     public void renderFrameAsBackground() {
         game.getBatch().setColor(this.darkTint);
         renderBackground(game, background);
@@ -328,52 +438,147 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     }
 
+    /**
+     * Handles the key press events.
+     *
+     * @param keyCode the key code of the pressed key.
+     * @return true if the event was handled, otherwise false.
+     */
     @Override
-    public boolean keyDown(int keyCode) {
+    public boolean keyDown(final int keyCode) {
         if (keyCode == Input.Keys.ESCAPE) {
-            this.game.setScreen(game.getPauseMenuScreen());
+            this.game.setScreen(this.game.getPauseMenuScreen());
             return true;
         }
         return false;
     }
 
+    /**
+     * Handles the key release events.
+     *
+     * @param keyCode the key code of the released key.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean keyUp(int i) {
+    public boolean keyUp(final int keyCode) {
         return false;
     }
 
+    /**
+     * Handles the typed key events.
+     *
+     * @param character the character of the typed key.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean keyTyped(char c) {
+    public boolean keyTyped(final char character) {
         return false;
     }
 
+    /**
+     * Handles the touch-down events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @param button  the button.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
+    public boolean touchDown(final int touchX, final int touchY, final int pointer, final int button) {
         return false;
     }
 
+    /**
+     * Handles the touch-up events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @param button  the button.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchUp(int i, int i1, int i2, int i3) {
+    public boolean touchUp(final int touchX, final int touchY, final int pointer, final int button) {
         return false;
     }
 
+    /**
+     * Handles the touch-cancelled events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @param button  the button.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchCancelled(int i, int i1, int i2, int i3) {
+    public boolean touchCancelled(final int touchX, final int touchY, final int pointer, final int button) {
         return false;
     }
 
+    /**
+     * Handles the touch-dragged events.
+     *
+     * @param touchX  the x-coordinate of the touch.
+     * @param touchY  the y-coordinate of the touch.
+     * @param pointer the pointer.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean touchDragged(int i, int i1, int i2) {
+    public boolean touchDragged(final int touchX, final int touchY, final int pointer) {
         return false;
     }
 
+    /**
+     * Handles the mouse-moved events.
+     *
+     * @param mouseX the x-coordinate of the mouse.
+     * @param mouseY the y-coordinate of the mouse.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean mouseMoved(int i, int i1) {
+    public boolean mouseMoved(final int mouseX, final int mouseY) {
         return false;
     }
 
+    /**
+     * Handles the scrolled events.
+     *
+     * @param scrollHorizontal the horizontal scrolling amount.
+     * @param scrollVertical   the vertical scrolling amount.
+     * @return false if the event was handled.
+     */
     @Override
-    public boolean scrolled(float v, float v1) {
+    public boolean scrolled(final float scrollHorizontal, final float scrollVertical) {
         return false;
+    }
+
+    /**
+     * Returns a string representation of the InGameScreen object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "InGameScreen{"
+                + "timeElapsed=" + timeElapsed
+                + ", shapeRenderer=" + shapeRenderer
+                + ", camera=" + camera
+                + ", game=" + game
+                + ", music=" + music
+                + ", background=" + background
+                + ", gameUI=" + gameUI
+                + ", hpBar=" + hpBar
+                + ", expBar=" + expBar
+                + ", enemyManager=" + enemyManager
+                + ", playerManager=" + playerManager
+                + ", darkTint=" + darkTint
+                + ", player=" + player
+                + ", onFieldEnemies=" + onFieldEnemies
+                + ", playerProjectilesOnScreen=" + playerProjectilesOnScreen
+                + ", enemyProjectilesOnScreen=" + enemyProjectilesOnScreen
+                + ", enterUpgradeScreenAmount=" + enterUpgradeScreenAmount
+                + '}';
     }
 }

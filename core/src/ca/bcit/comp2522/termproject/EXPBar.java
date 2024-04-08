@@ -115,7 +115,7 @@ public class EXPBar {
     public void draw(final ShapeRenderer shapeRenderer, final Batch batch) {
         // draw background
         shapeRenderer.setColor(this.backgroundColour);
-        final float rectWidth = 1.075F;
+        final float rectWidth = 1.075f;
         shapeRenderer.rect(this.x, this.y, (this.width / rectWidth), this.height);
 
         // draw foreground (experience)
@@ -124,10 +124,10 @@ public class EXPBar {
         shapeRenderer.rect(this.x, this.y, foregroundWidth, this.height);
 
         batch.begin();
-        final float textXWidth = 1.05F;
+        final float textXWidth = 1.05f;
         float textX = (this.x + this.getWidth() / textXWidth);
         float textY = this.y + this.getHeight() / 2;
-        final float textEXPScale = 0.75F;
+        final float textEXPScale = 0.75f;
         CrowdSurvivor.getFont().getData().setScale(textEXPScale);
         CrowdSurvivor.getFont().draw(batch, "Level: " + this.playerLevel, textX, textY);
         CrowdSurvivor.getFont().getData().setScale(1);
