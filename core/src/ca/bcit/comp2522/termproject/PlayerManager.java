@@ -107,8 +107,15 @@ public final class PlayerManager {
             deltaX = deltaX * (float) Math.abs(Math.cos(Math.atan(deltaY / deltaX)));
             deltaY = deltaY * (float) Math.abs(Math.sin(Math.atan(deltaY / deltaX)));
         }
+
         this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() + deltaX);
+        if (!gameScreen.getBackground().getBoundingRectangle().contains(gameScreen.getPlayer().getHitbox())) {
+            this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() - deltaX);
+        }
         this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() + deltaY);
+        if (!gameScreen.getBackground().getBoundingRectangle().contains(gameScreen.getPlayer().getHitbox())) {
+            this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() - deltaY);
+        }
     }
 
     /**
