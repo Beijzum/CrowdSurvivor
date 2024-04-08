@@ -20,6 +20,8 @@ final public class EnemyManager {
     final private static int BASE_ENEMY_SPEED = 100;
     final private static int WAVE_SIZE = 8;
     final private static int BOSS_SPAWN_TIMER = 30;
+    final private static int BASE_BOSS_SIZE = 100;
+    final private static int BASE_BOSS_ATTACK = 30;
     final private InGameScreen gameScreen;
     private static EnemyManager instance = null;
     private int currentBasicEnemySpawnTime;
@@ -142,7 +144,6 @@ final public class EnemyManager {
     public void handleEnemySpawn() {
         if (this.basicEnemyTimer >= this.currentBasicEnemySpawnTime) {
             if (randomNumberGenerator.nextInt(10) == 4) {
-                System.out.println("batched spawned!");
                 for (int i = 0; i < WAVE_SIZE; i++) {
                     float[] spawnPoint = generateSpawnPoint();
                     gameScreen.getOnFieldEnemies().add(createBasicEnemy(spawnPoint[0] + i, spawnPoint[1] + i));
@@ -267,8 +268,8 @@ final public class EnemyManager {
     private Boss createBoss(float xCoord, float yCoord) {
         int health = BASE_BOSS_HEALTH * Math.round(gameScreen.getTimeElapsed()) / BOSS_SPAWN_TIMER;
         int speed = BASE_ENEMY_SPEED + Math.round(gameScreen.getTimeElapsed() / 5);
-        int size = randomNumberGenerator.nextInt(100, 301);
-        int attack = randomNumberGenerator.nextInt(20, 41);
+        int size = BASE_BOSS_SIZE + 25 * Math.round(gameScreen.getTimeElapsed() / 30) - 25;
+        int attack = BASE_BOSS_ATTACK + 5 * Math.round(gameScreen.getTimeElapsed() / 30) - 10;
         Boss newBoss = new Boss(health, speed, attack, size, "boss.png");
         newBoss.setCenterPosition(xCoord, yCoord);
         return newBoss;
