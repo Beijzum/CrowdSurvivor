@@ -202,8 +202,10 @@ public class Projectile {
     /**
      * Rotates the projectile sprite based on its speed.
      * The rotation angle is determined by dividing the projectile's speed by a constant divisor.
+     *
+     * @param spinSpeed float representing the spin speed of the projectile.
      */
-    public void spinProjectile(float spinSpeed) {
+    public void spinProjectile(final float spinSpeed) {
         this.sprite.rotate(spinSpeed);
     }
 
