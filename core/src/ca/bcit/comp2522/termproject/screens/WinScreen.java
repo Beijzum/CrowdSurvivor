@@ -43,8 +43,8 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.setScreen(game.getInGameScreen());
                 dispose();
+                game.setScreen(game.getInGameScreen());
                 return true;
             }
         });
