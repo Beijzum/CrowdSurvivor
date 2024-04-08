@@ -184,7 +184,6 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.music.setLooping(true);
         this.music.play();
         Gdx.input.setInputProcessor(this);
-        System.out.println(onFieldBosses);
     }
 
     /**
@@ -439,10 +438,12 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
      * Renders the current frame as a background and tints it.
      */
     public void renderFrameAsBackground() {
+        CrowdSurvivor.getFont().setColor(this.darkTint);
         game.getBatch().setColor(this.darkTint);
         drawAssets();
         drawHUD();
         game.getBatch().setColor(CrowdSurvivor.getStandardColour());
+        CrowdSurvivor.getFont().setColor(CrowdSurvivor.getStandardColour());
     }
 
     /**
