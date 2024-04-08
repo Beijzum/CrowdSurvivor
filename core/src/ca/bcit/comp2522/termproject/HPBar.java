@@ -98,8 +98,8 @@ public class HPBar {
      * Draws the HP bar using the provided ShapeRenderer and Batch.
      * This method draws the background, foreground colours, and the current/max HP text.
      *
-     * @param shapeRenderer the ShapeRenderer used to draw shapes.
-     * @param batch         the Batch used to draw text.
+     * @param shapeRenderer ShapeRenderer object used to draw shapes.
+     * @param batch         Batch object used to draw text.
      */
     public void draw(final ShapeRenderer shapeRenderer, final Batch batch) {
         // draw background

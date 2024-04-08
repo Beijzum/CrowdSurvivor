@@ -75,6 +75,7 @@ public class Projectile {
 
     /**
      * Retrieves the hitbox of the projectile as a rectangle.
+     * Bounding rectangle of the projectile object represents the area covered by the projectile in the game world.
      *
      * @return the hitbox of the projectile as a Rectangle.
      */

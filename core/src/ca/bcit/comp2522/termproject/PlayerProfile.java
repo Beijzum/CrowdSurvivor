@@ -40,7 +40,7 @@ public final class PlayerProfile implements Serializable {
     }
 
     /**
-     * Creates a single instance of PlayerProfile.
+     * Creates a single instance of the PlayerProfile object.
      *
      * @return the created or loaded PlayerProfile instance.
      */
@@ -214,10 +214,10 @@ public final class PlayerProfile implements Serializable {
     /**
      * Sets the experience multiplier booster upgrade value.
      *
-     * @param expMultiplyBooster float representing the experience multiplier booster upgrade value.
+     * @param experienceMultiplierBooster float representing the experience multiplier booster upgrade value.
      */
-    public void setEXPMultiplierBooster(final float expMultiplyBooster) {
-        this.expMultiplierBooster = expMultiplyBooster;
+    public void setEXPMultiplierBooster(final float experienceMultiplierBooster) {
+        this.expMultiplierBooster = experienceMultiplierBooster;
     }
 
     /**
@@ -276,7 +276,10 @@ public final class PlayerProfile implements Serializable {
         player.setHealthRegenMultiplier(player.getHealthRegenMultiplier() + this.healthRegenMultiplierBooster);
     }
 
-    private void setThisToDefault() {
+    /**
+     * Sets the player profile to its default values.
+     */
+    public void setThisToDefault() {
         this.maxHealthBooster = 0;
         this.attackBooster = 0;
         this.defenseBooster = 0;

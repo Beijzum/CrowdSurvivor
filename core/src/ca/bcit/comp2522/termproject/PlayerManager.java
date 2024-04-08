@@ -7,7 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
 
 /**
- * Represents the player manager class.
+ * Represents the PlayerManager class.
  * Implements the singleton method design pattern.
  *
  * @author Jonathan Liu
@@ -28,9 +28,9 @@ public final class PlayerManager {
     }
 
     /**
-     * Creates a single instance of PlayerManager.
+     * Creates a single instance of the PlayerManager object.
      *
-     * @param gameScreen gameScreen Object used to represent the game screen.
+     * @param gameScreen GameScreen object used to represent the game screen.
      * @return the created or loaded PlayerManager instance.
      */
     public static PlayerManager createPlayerManager(final InGameScreen gameScreen) {
@@ -42,6 +42,9 @@ public final class PlayerManager {
 
     /**
      * Handles the player's health regeneration and damage taken from enemies and projectiles.
+     * Regenerates the player's health using the regenHealth method from the game screen.
+     * Iterates through the list of on-field enemies and inflicts damage to the player based on each enemy's attack.
+     * Iterates through the list of enemy projectiles on the screen and each projectile inflicts damage to the player.
      */
     public void handlePlayerHealth() {
         gameScreen.player.regenHealth();
@@ -64,6 +67,10 @@ public final class PlayerManager {
     /**
      * Handles continuous player movement based on keyboard input.
      * Allows the player to move in four directions: up, down, left, and right.
+     * The movement speed of the player is determined by the player's current speed attribute.
+     * The movement is updated based on the delta time to for consistent movement across different frame rates.
+     * The method calculates the movement vector based on the keys pressed and updates the player's position.
+     * If multiple directional keys are pressed simultaneously, the movement vector is normalized for consistent speed.
      */
     public void handleContinuousPlayerKeyboardInput() {
         if (!Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
@@ -97,6 +104,10 @@ public final class PlayerManager {
     /**
      * Handles the player's attack mechanism.
      * Manages the firing of projectiles and their movement and lifetime.
+     * Fires a new projectile towards the current mouse position.
+     * After firing, adds it to the list of active projectiles on the screen.
+     * Updates the position and lifetime of active projectiles to move them and check if they are expired.
+     * Removes expired projectiles from the screen to free up memory and resources.
      */
     public void handleAttack() {
         // remove expired projectiles
