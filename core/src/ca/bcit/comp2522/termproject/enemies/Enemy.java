@@ -32,10 +32,6 @@ public class Enemy extends Entity {
     final private LinkedList<Projectile> hitByProjectileList = new LinkedList<>();
     final protected Random randomNumberGenerator = new Random();
 
-    public Enemy() {
-
-    }
-
     public Enemy(int health, int speed, int attack, String imageFilePath) {
         this.maxHealth = health;
         this.health = this.maxHealth;
