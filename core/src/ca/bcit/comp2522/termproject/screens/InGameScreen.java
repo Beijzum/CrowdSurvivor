@@ -276,11 +276,15 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public void renderFrameAsBackground() {
         game.getBatch().setColor(this.darkTint);
         renderBackground(game, background);
-        game.getInGameScreen().player.draw(game.getBatch());
-        game.getInGameScreen().drawEnemies();
-        game.getInGameScreen().drawAllPlayerProjectiles();
-        this.gameUI.draw();
+        player.draw(game.getBatch());
+        this.drawEnemies();
+        this.drawAllEnemyProjectiles();
+        this.drawAllPlayerProjectiles();
+        drawMessageFromCenter(timeElapsedMessage, game.getBatch(),
+                camera.position.x, camera.position.y + Gdx.graphics.getHeight() / 3f, 1);
         game.getBatch().setColor(CrowdSurvivor.getStandardColour());
+
+
     }
 
     @Override
