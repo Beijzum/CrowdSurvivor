@@ -185,7 +185,7 @@ final public class EnemyManager {
     private Enemy createCharger(float xCoord, float yCoord) {
         // temp scaling
         int health = Math.round(BASE_CHARGER_HEALTH + gameScreen.timeElapsed / 5);
-        int acceleration = 75;
+        int acceleration = 100;
         int attack = 20;
         Charger newCharger = new Charger(health, acceleration, attack, "charger.jpg");
         newCharger.setCenterPosition(xCoord, yCoord);
