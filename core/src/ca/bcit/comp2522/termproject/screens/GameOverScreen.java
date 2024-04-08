@@ -1,7 +1,7 @@
 package ca.bcit.comp2522.termproject.screens;
 
-import ca.bcit.comp2522.termproject.interfaces.ActorManager;
 import ca.bcit.comp2522.termproject.CrowdSurvivor;
+import ca.bcit.comp2522.termproject.interfaces.ActorManager;
 import ca.bcit.comp2522.termproject.interfaces.MessageLayout;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -29,9 +29,15 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
     private final int numberOfButtons = 2;
     private final CrowdSurvivor game;
     private final TextButton[] menuItems = new TextButton[numberOfButtons]; // try again, quit
+    private final TextButton tryAgainButton;
+    private final TextButton quitButton;
     private GlyphLayout[] messageLayouts;
     private final Music music;
     private final Music startOfMusic;
+    private final float buttonWidth;
+    private final float buttonHeight;
+    private final float buttonPositionX;
+    private final float firstButtonPositionY;
 
     /**
      * Constructs an instance of the GameOverScreen class.
@@ -43,57 +49,25 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         this.game = game;
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/gameOverMusic.mp3"));
         this.startOfMusic = Gdx.audio.newMusic(Gdx.files.internal("sfx/gameOverSFX.mp3"));
+        final float buttonWidthDivisor = 3f;
+        this.buttonWidth = Gdx.graphics.getWidth() / buttonWidthDivisor;
+        final float buttonHeightDivisor = 10f;
+        this.buttonHeight = Gdx.graphics.getHeight() / buttonHeightDivisor;
+        this.buttonPositionX = Gdx.graphics.getWidth() / 2f - buttonWidth / 2;
+        this.firstButtonPositionY = Gdx.graphics.getHeight() / 2f;
+        this.tryAgainButton = new TextButton("Try Again", this.game.getSkin());
+        this.quitButton = new TextButton("Return To Menu", this.game.getSkin());
         createButtons();
     }
 
     private void createButtons() {
-
-        // calculate values for menu placement
-        int buttonWidth = Gdx.graphics.getWidth() / 3;
-        int buttonHeight = Gdx.graphics.getHeight() / 10;
-        int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
-        int firstButtonPositionY = Gdx.graphics.getHeight() / 2;
-
         // start game button
-        TextButton tryAgainButton = new TextButton("Try Again", this.game.getSkin());
-        tryAgainButton.setSize(buttonWidth, buttonHeight);
-        tryAgainButton.setPosition(buttonPositionX, firstButtonPositionY);
-        tryAgainButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(final InputEvent event, final float x, final float y,
-                                     final int pointer, final int button) {
-                if (button != Input.Buttons.LEFT) {
-                    return false;
-                }
-                dispose();
-                game.getInGameScreen().resetGameState();
-                clearStage(game.getButtonsUI());
-                game.setScreen(game.getInGameScreen());
-                return true;
-            }
-        });
-        this.menuItems[0] = tryAgainButton;
+        handleTryAgainButton();
+        this.menuItems[0] = this.tryAgainButton;
 
         // quit game button
-        TextButton quitButton = new TextButton("Return To Menu", this.game.getSkin());
-        quitButton.setSize(buttonWidth, buttonHeight);
-        quitButton.setPosition(buttonPositionX, firstButtonPositionY - buttonHeight * 2);
-        quitButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(final InputEvent event, final float x, final float y,
-                                     final int pointer, final int button) {
-                if (button != Input.Buttons.LEFT) {
-                    return false;
-                }
-                dispose();
-                clearStage(game.getButtonsUI());
-                game.getInGameScreen().resetGameState();
-                game.getInGameScreen().dispose();
-                game.setScreen(game.getMainMenuScreen());
-                return true;
-            }
-        });
-        this.menuItems[1] = quitButton;
+        handleQuitButton();
+        this.menuItems[1] = this.quitButton;
     }
 
     private GlyphLayout[] createMessageLayout() {
@@ -109,6 +83,45 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         return new GlyphLayout[]{youDiedMessage, gameOverMessage, timeElapsedMessage, scoreMessage};
     }
 
+    private void handleTryAgainButton() {
+        this.tryAgainButton.setSize(this.buttonWidth, this.buttonHeight);
+        this.tryAgainButton.setPosition(this.buttonPositionX, this.firstButtonPositionY);
+        this.tryAgainButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(final InputEvent event, final float x, final float y,
+                                     final int pointer, final int button) {
+                if (button != Input.Buttons.LEFT) {
+                    return false;
+                }
+                dispose();
+                game.getInGameScreen().resetGameState();
+                clearStage(game.getButtonsUI());
+                game.setScreen(game.getInGameScreen());
+                return true;
+            }
+        });
+    }
+
+    private void handleQuitButton() {
+        this.quitButton.setSize(this.buttonWidth, this.buttonHeight);
+        this.quitButton.setPosition(this.buttonPositionX, this.firstButtonPositionY - this.buttonHeight * 2);
+        this.quitButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(final InputEvent event, final float x, final float y,
+                                     final int pointer, final int button) {
+                if (button != Input.Buttons.LEFT) {
+                    return false;
+                }
+                dispose();
+                clearStage(game.getButtonsUI());
+                game.getInGameScreen().resetGameState();
+                game.getInGameScreen().dispose();
+                game.setScreen(game.getMainMenuScreen());
+                return true;
+            }
+        });
+    }
+
     /**
      * Initializes the screen when active.
      * Plays the background music and presents messages when initialized.
@@ -122,8 +135,13 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         this.startOfMusic.play();
     }
 
+    /**
+     * Renders the assets for the game over screen.
+     *
+     * @param deltaTime the delta time since the last frame.
+     */
     @Override
-    public void render(final float v) {
+    public void render(final float deltaTime) {
         if (!this.startOfMusic.isPlaying()) {
             this.music.play();
         }
@@ -164,8 +182,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
 
     /**
      * Hides the screen when no longer active or visible.
-     * It updates the player's total currency in their profile by adding the currency they have collected during the current in-game session.
-     * The updated currency value is then set back to the player's profile.
+     * Adds the currency found during gameplay to the player's profile.
      */
     @Override
     public void hide() {
