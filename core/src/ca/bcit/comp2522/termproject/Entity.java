@@ -170,12 +170,12 @@ public abstract class Entity {
     @Override
     public String toString() {
         return "Entity{"
-                + "health=" + health
-                + ", maxHealth=" + maxHealth
-                + ", speed=" + speed
-                + ", attack=" + attack
-                + ", defense=" + defense
-                + ", sprite=" + sprite
+                + "health=" + this.health
+                + ", maxHealth=" + this.maxHealth
+                + ", speed=" + this.speed
+                + ", attack=" + this.attack
+                + ", defense=" + this.defense
+                + ", sprite=" + this.sprite
                 + '}';
     }
 }

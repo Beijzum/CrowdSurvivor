@@ -384,7 +384,7 @@ public final class Player extends Entity {
     public void fireProjectile(final LinkedList<Projectile> playerProjectiles, final float mouseX, final float mouseY) {
         // runs every attackSpeed seconds
         if (this.attackTimer >= this.attackSpeed) {
-            Projectile newProjectile = new Projectile(projectileTemplate);
+            Projectile newProjectile = new Projectile(this.projectileTemplate);
 
             newProjectile.getDirectionVector()
                     .set(mouseX - this.getCenterX(), mouseY - this.getCenterY());

@@ -64,7 +64,7 @@ public final class PlayerProfile implements Serializable {
      * @return the attack speed booster upgrade.
      */
     public float getAttackSpeedBooster() {
-        return attackSpeedBooster;
+        return this.attackSpeedBooster;
     }
 
     /**
@@ -73,7 +73,7 @@ public final class PlayerProfile implements Serializable {
      * @return the critical multiplier booster upgrade.
      */
     public float getCritMultiplierBooster() {
-        return critMultiplierBooster;
+        return this.critMultiplierBooster;
     }
 
     /**
@@ -82,7 +82,7 @@ public final class PlayerProfile implements Serializable {
      * @return the critical rate booster upgrade.
      */
     public float getCritRateBooster() {
-        return critRateBooster;
+        return this.critRateBooster;
     }
 
     /**
@@ -91,7 +91,7 @@ public final class PlayerProfile implements Serializable {
      * @return the defense booster upgrade.
      */
     public float getDefenseBooster() {
-        return defenseBooster;
+        return this.defenseBooster;
     }
 
     /**
@@ -100,7 +100,7 @@ public final class PlayerProfile implements Serializable {
      * @return the currency multiplier booster upgrade.
      */
     public float getCurrencyMultiplierBooster() {
-        return currencyMultiplierBooster;
+        return this.currencyMultiplierBooster;
     }
 
     /**
@@ -109,7 +109,7 @@ public final class PlayerProfile implements Serializable {
      * @return the experience multiplier booster upgrade.
      */
     public float getEXPMultiplierBooster() {
-        return expMultiplierBooster;
+        return this.expMultiplierBooster;
     }
 
     /**
@@ -118,7 +118,7 @@ public final class PlayerProfile implements Serializable {
      * @return the health regeneration multiplier booster upgrade.
      */
     public float getHealthRegenMultiplierBooster() {
-        return healthRegenMultiplierBooster;
+        return this.healthRegenMultiplierBooster;
     }
 
     /**
@@ -127,7 +127,7 @@ public final class PlayerProfile implements Serializable {
      * @return the attack booster upgrade.
      */
     public int getAttackBooster() {
-        return attackBooster;
+        return this.attackBooster;
     }
 
     /**
@@ -136,7 +136,7 @@ public final class PlayerProfile implements Serializable {
      * @return the maximum health booster upgrade.
      */
     public int getMaxHealthBooster() {
-        return maxHealthBooster;
+        return this.maxHealthBooster;
     }
 
     /**
@@ -145,7 +145,7 @@ public final class PlayerProfile implements Serializable {
      * @return the speed booster upgrade.
      */
     public int getSpeedBooster() {
-        return speedBooster;
+        return this.speedBooster;
     }
 
     /**
@@ -154,7 +154,7 @@ public final class PlayerProfile implements Serializable {
      * @return the current currency.
      */
     public int getCurrency() {
-        return currency;
+        return this.currency;
     }
 
     /**
@@ -322,17 +322,17 @@ public final class PlayerProfile implements Serializable {
     @Override
     public String toString() {
         return "PlayerProfile{"
-                + "maxHealthBooster=" + maxHealthBooster
-                + ", attackBooster=" + attackBooster
-                + ", defenseBooster=" + defenseBooster
-                + ", speedBooster=" + speedBooster
-                + ", expMultiplierBooster=" + expMultiplierBooster
-                + ", currencyMultiplierBooster=" + currencyMultiplierBooster
-                + ", attackSpeedBooster=" + attackSpeedBooster
-                + ", critRateBooster=" + critRateBooster
-                + ", critMultiplierBooster=" + critMultiplierBooster
-                + ", healthRegenMultiplierBooster=" + healthRegenMultiplierBooster
-                + ", currency=" + currency
+                + "maxHealthBooster=" + this.maxHealthBooster
+                + ", attackBooster=" + this.attackBooster
+                + ", defenseBooster=" + this.defenseBooster
+                + ", speedBooster=" + this.speedBooster
+                + ", expMultiplierBooster=" + this.expMultiplierBooster
+                + ", currencyMultiplierBooster=" + this.currencyMultiplierBooster
+                + ", attackSpeedBooster=" + this.attackSpeedBooster
+                + ", critRateBooster=" + this.critRateBooster
+                + ", critMultiplierBooster=" + this.critMultiplierBooster
+                + ", healthRegenMultiplierBooster=" + this.healthRegenMultiplierBooster
+                + ", currency=" + this.currency
                 + '}';
     }
 }

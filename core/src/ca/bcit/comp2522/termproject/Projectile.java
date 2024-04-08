@@ -61,7 +61,7 @@ public class Projectile {
      * @return the speed of the projectile.
      */
     public int getSpeed() {
-        return speed;
+        return this.speed;
     }
 
     /**
@@ -70,7 +70,7 @@ public class Projectile {
      * @return the sprite of the projectile.
      */
     public Sprite getSprite() {
-        return sprite;
+        return this.sprite;
     }
 
     /**
@@ -98,7 +98,7 @@ public class Projectile {
      * @return the lifetime of the projectile.
      */
     public int getLifetime() {
-        return lifetime;
+        return this.lifetime;
     }
 
     /**
@@ -224,11 +224,11 @@ public class Projectile {
     @Override
     public String toString() {
         return "Projectile{"
-                + "speed=" + speed
-                + ", lifetime=" + lifetime
-                + ", sprite=" + sprite
-                + ", lifetimeTimer=" + lifetimeTimer
-                + ", directionVector=" + directionVector
+                + "speed=" + this.speed
+                + ", lifetime=" + this.lifetime
+                + ", sprite=" + this.sprite
+                + ", lifetimeTimer=" + this.lifetimeTimer
+                + ", directionVector=" + this.directionVector
                 + '}';
     }
 }

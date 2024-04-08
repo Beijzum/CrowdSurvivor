@@ -118,7 +118,7 @@ public class HPBar {
         float textY = this.y + this.getHeight() / 2;
         final float textHPScale = 0.5F;
         font.getData().setScale(textHPScale);
-        font.draw(batch, currentHP + "/" + maxHP, textX, textY);
+        font.draw(batch, this.currentHP + "/" + this.maxHP, textX, textY);
         font.getData().setScale(1);
         batch.end();
     }
@@ -131,14 +131,14 @@ public class HPBar {
     @Override
     public String toString() {
         return "HPBar{"
-                + "x=" + x
-                + ", y=" + y
-                + ", width=" + width
-                + ", height=" + height
-                + ", maxHP=" + maxHP
-                + ", currentHP=" + currentHP
-                + ", backgroundColor=" + backgroundColor
-                + ", foregroundColor=" + foregroundColor
+                + "x=" + this.x
+                + ", y=" + this.y
+                + ", width=" + this.width
+                + ", height=" + this.height
+                + ", maxHP=" + this.maxHP
+                + ", currentHP=" + this.currentHP
+                + ", backgroundColor=" + this.backgroundColor
+                + ", foregroundColor=" + this.foregroundColor
                 + '}';
     }
 }
