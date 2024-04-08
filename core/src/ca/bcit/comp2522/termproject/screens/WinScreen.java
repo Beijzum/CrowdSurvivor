@@ -67,7 +67,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                 return true;
             }
         });
-        return new TextButton[] {playAgain, returnToMenu};
+        return new TextButton[]{playAgain, returnToMenu};
     }
 
     private GlyphLayout[] createMessageLayout() {
@@ -76,9 +76,9 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                 Math.round(game.inGameScreen.timeElapsed) / 60,
                 Math.round(game.inGameScreen.timeElapsed) % 60), 2.5f);
         GlyphLayout scoreMessage = createLayout(String.format("SCORE: %d",
-                game.inGameScreen.player.getCollectedCurrency() + game.inGameScreen.player.getAccumulatedEXP()),
+                        game.inGameScreen.player.getCollectedCurrency() + game.inGameScreen.player.getAccumulatedEXP()),
                 2.5f);
-        return new GlyphLayout[] {congratulationMessage, timeElapsedMessage, scoreMessage};
+        return new GlyphLayout[]{congratulationMessage, timeElapsedMessage, scoreMessage};
     }
 
     @Override
@@ -95,7 +95,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
         game.inGameScreen.renderFrameAsBackground();
         game.buttonsUI.act();
         game.buttonsUI.draw();
-        drawMultipleMessageFromCenter(messageLayouts, game.batch, game.inGameScreen.camera.position.x,
+        drawMultipleMessageFromCenter(messageLayouts, game.getBatch(), game.inGameScreen.camera.position.x,
                 game.inGameScreen.camera.position.y + Gdx.graphics.getHeight() / 2f, 2.5f);
 
     }

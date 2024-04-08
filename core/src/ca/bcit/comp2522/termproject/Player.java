@@ -3,33 +3,45 @@ package ca.bcit.comp2522.termproject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.LinkedList;
 
-public class Player extends Entity {
-    final private static float DEFAULT_DEFENSE = 0.0f;
-    final private static int DEFAULT_MAX_HEALTH = 100;
-    final private static int DEFAULT_SPEED = 200;
-    final private static float DEFAULT_ATTACK_SPEED = 1.5f;
-    final private static float DEFAULT_CRIT_RATE = 0.1f;
-    final private static float DEFAULT_CRIT_MULTIPLIER = 1.5f;
-    final private static float DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01f;
-    final private static int DEFAULT_ATTACK = 20;
-    final private static float BASE_IFRAME_LENGTH = 1.5f;
-    final private static float HEALTH_REGEN_TICK_TIME = 1.5f;
-    final private static int BASE_LEVEL_UP_THRESHOLD = 50;
-    final private static int BASE_EXP_MULTIPLIER = 1;
-    final private static int BASE_CURRENCY_MULTIPLIER = 1;
+/**
+ * Represents the Player class.
+ * Inherits from the Entity class.
+ * Implements the singleton method design pattern.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
+public final class Player extends Entity {
+    private static Player instance = null;
+    private static final float DEFAULT_DEFENSE = 0.0f;
+    private static final int DEFAULT_MAX_HEALTH = 100;
+    private static final int DEFAULT_SPEED = 200;
+    private static final float DEFAULT_ATTACK_SPEED = 1.5f;
+    private static final float DEFAULT_CRIT_RATE = 0.1f;
+    private static final float DEFAULT_CRIT_MULTIPLIER = 1.5f;
+    private static final float DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01f;
+    private static final int DEFAULT_ATTACK = 20;
+    private static final float BASE_IFRAME_LENGTH = 1.5f;
+    private static final float HEALTH_REGEN_TICK_TIME = 1.5f;
+    private static final int BASE_LEVEL_UP_THRESHOLD = 50;
+    private static final int BASE_EXP_MULTIPLIER = 1;
+    private static final int BASE_CURRENCY_MULTIPLIER = 1;
     private int levelUpThreshold;
     private int accumulatedEXP;
     private int level;
     private int currentEXP;
-    private float EXPMultiplier;
+    private float expMultiplier;
     private int collectedCurrency;
     private float currencyMultiplier;
-    private static Player instance = null;
     private float attackSpeed;
     private float critRate;
     private float critMultiplier;
@@ -41,16 +53,23 @@ public class Player extends Entity {
     private float healthRegenMultiplier;
     private Projectile projectileTemplate;
 
-
     private Player() {
         resetStats();
         Sprite projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/playerProjectile.png")));
-        this.projectileTemplate = new Projectile(projectileSprite, 500, 3, 150);
-        int spriteX = 100, spriteY = 100;
+        final int speedValue = 500;
+        final int lifetimeValue = 3;
+        final int sizeValue = 150;
+        this.projectileTemplate = new Projectile(projectileSprite, speedValue, lifetimeValue, sizeValue);
         this.sprite = new Sprite(new Texture(Gdx.files.internal("tempPlayerSprite.png")));
-        this.sprite.setSize(spriteX, spriteY);
+        final int spriteSize = 100;
+        this.sprite.setSize(spriteSize, spriteSize);
     }
 
+    /**
+     * Creates a single instance of the Player object.
+     *
+     * @return the created or loaded PlayerManager instance.
+     */
     public static Player createPlayer() {
         if (instance == null) {
             instance = new Player();
@@ -58,110 +77,261 @@ public class Player extends Entity {
         return instance;
     }
 
-    public void setAttackSpeed(float attackSpeed) {
+    /**
+     * Sets the player's attack speed.
+     *
+     * @param attackSpeed float representing the new attack speed value.
+     */
+    public void setAttackSpeed(final float attackSpeed) {
         this.attackSpeed = attackSpeed;
     }
 
-    public void setCritMultiplier(float critMultiplier) {
+    /**
+     * Sets the player's critical hit multiplier.
+     *
+     * @param critMultiplier float representing the new critical hit multiplier value.
+     */
+    public void setCritMultiplier(final float critMultiplier) {
         this.critMultiplier = critMultiplier;
     }
 
-    public void setCritRate(float critRate) {
+    /**
+     * Sets the player's critical hit rate.
+     *
+     * @param critRate float representing the new critical hit rate value.
+     */
+    public void setCritRate(final float critRate) {
         this.critRate = critRate;
     }
 
-    public void setHealthRegenMultiplier(float healthRegenMultiplier) {
+    /**
+     * Sets the player's health regeneration multiplier.
+     *
+     * @param healthRegenMultiplier float representing the new health regeneration multiplier value.
+     */
+    public void setHealthRegenMultiplier(final float healthRegenMultiplier) {
         this.healthRegenMultiplier = healthRegenMultiplier;
     }
 
-    public void setProjectileTemplate(Projectile projectile) {
+    /**
+     * Sets the player's projectile template.
+     *
+     * @param projectile Projectile object used as the new projectile template.
+     */
+    public void setProjectileTemplate(final Projectile projectile) {
         this.projectileTemplate = projectile;
     }
 
-    public float getAttackSpeed() {
-        return attackSpeed;
-    }
-
-    public float getCritMultiplier() {
-        return critMultiplier;
-    }
-
-    public float getCritRate() {
-        return critRate;
-    }
-
-    public float getHealthRegenMultiplier() {
-        return healthRegenMultiplier;
-    }
-
-    public float getIFramesLength() {
-        return iFramesLength;
-    }
-
-    public void setIFramesLength(float newLength) {
+    /**
+     * Sets the player's IFrame length.
+     *
+     * @param newLength float representing the new length of the IFrames.
+     */
+    public void setIFramesLength(final float newLength) {
         this.iFramesLength = newLength;
     }
 
+    /**
+     * Sets the player's x-coordinate position.
+     *
+     * @param x float representing the new x-coordinate value.
+     */
+    public void setX(final float x) {
+        this.sprite.setX(x);
+    }
+
+    /**
+     * Sets the player's y-coordinate position.
+     *
+     * @param y float representing the new y-coordinate value.
+     */
+    public void setY(final float y) {
+        this.sprite.setY(y);
+    }
+
+    /**
+     * Sets the experience multiplier.
+     *
+     * @param experienceMultiplier float representing the new experience multiplier value.
+     */
+    public void setEXPMultiplier(final float experienceMultiplier) {
+        this.expMultiplier = experienceMultiplier;
+    }
+
+    /**
+     * Sets the currency multiplier.
+     *
+     * @param currencyMultiplier float representing the new currency multiplier value.
+     */
+    public void setCurrencyMultiplier(final float currencyMultiplier) {
+        this.currencyMultiplier = currencyMultiplier;
+    }
+
+    /**
+     * Retrieves the player's attack speed.
+     *
+     * @return the player's attack speed.
+     */
+    public float getAttackSpeed() {
+        return this.attackSpeed;
+    }
+
+    /**
+     * Retrieves the player's critical hit multiplier.
+     *
+     * @return the player's critical hit multiplier.
+     */
+    public float getCritMultiplier() {
+        return this.critMultiplier;
+    }
+
+    /**
+     * Retrieves the player's critical hit rate.
+     *
+     * @return the player's critical hit rate.
+     */
+    public float getCritRate() {
+        return this.critRate;
+    }
+
+    /**
+     * Retrieves the player's health regeneration multiplier.
+     *
+     * @return the player's health regeneration multiplier.
+     */
+    public float getHealthRegenMultiplier() {
+        return this.healthRegenMultiplier;
+    }
+
+    /**
+     * Retrieves the player's invincibility frame (IFrame) length.
+     *
+     * @return the player's IFrame length.
+     */
+    public float getIFramesLength() {
+        return this.iFramesLength;
+    }
+
+    /**
+     * Retrieves the player's current experience points (EXP).
+     *
+     * @return the player's EXP.
+     */
     public int getCurrentEXP() {
         return this.currentEXP;
     }
 
+    /**
+     * Retrieves the player's accumulated EXP.
+     *
+     * @return the player's accumulated EXP.
+     */
     public int getAccumulatedEXP() {
         return this.accumulatedEXP;
     }
 
+    /**
+     * Retrieves the player's level up threshold.
+     *
+     * @return the player's level up threshold.
+     */
     public int getLevelUpThreshold() {
         return this.levelUpThreshold;
     }
 
+    /**
+     * Retrieves the player's collected currency.
+     *
+     * @return the player's collected currency.
+     */
     public int getCollectedCurrency() {
         return this.collectedCurrency;
     }
 
+    /**
+     * Retrieves the player's level.
+     *
+     * @return the player's level.
+     */
     public int getLevel() {
         return this.level;
     }
 
-    public void setX(float x) {
-        this.sprite.setX(x);
-    }
-
-    public void setY(float y) {
-        this.sprite.setY(y);
-    }
-
+    /**
+     * Retrieves the player's x-coordinate position.
+     *
+     * @return the player's x-coordinate position.
+     */
     public float getX() {
         return this.sprite.getX();
     }
 
+    /**
+     * Gets the player's y-coordinate position.
+     *
+     * @return the player's y-coordinate position.
+     */
     public float getY() {
         return this.sprite.getY();
     }
 
+    /**
+     * Retrieves the player's center x-coordinate position.
+     *
+     * @return the player's center x-coordinate position.
+     */
     public float getCenterX() {
         return this.sprite.getX() + this.sprite.getWidth() / 2;
     }
 
+    /**
+     * Retrieves the player's center y-coordinate position.
+     *
+     * @return the player's center y-coordinate position.
+     */
     public float getCenterY() {
         return this.sprite.getY() + this.sprite.getHeight() / 2;
     }
 
+    /**
+     * Retrieves the experience multiplier.
+     *
+     * @return the experience multiplier.
+     */
     public float getEXPMultiplier() {
-        return this.EXPMultiplier;
+        return this.expMultiplier;
     }
 
-    public void setEXPMultiplier(float EXPMultiplier) {
-        this.EXPMultiplier = EXPMultiplier;
-    }
-
+    /**
+     * Retrieves the currency multiplier.
+     *
+     * @return the currency multiplier.
+     */
     public float getCurrencyMultiplier() {
         return this.currencyMultiplier;
     }
 
-    public void setCurrencyMultiplier(float currencyMultiplier) {
-        this.currencyMultiplier = currencyMultiplier;
+    /**
+     * Retrieves the player's maximum health points.
+     *
+     * @return the player's maximum health points.
+     */
+    public int getMaxHP() {
+        return this.maxHealth;
     }
 
+    /**
+     * Retrieves the player's current health points.
+     *
+     * @return the player's current health points.
+     */
+    public int getCurrentHP() {
+        return this.health;
+    }
+
+    /**
+     * Resets the player's statistics to their default values.
+     */
     public void resetStats() {
         this.maxHealth = DEFAULT_MAX_HEALTH;
         this.health = DEFAULT_MAX_HEALTH;
@@ -173,7 +343,7 @@ public class Player extends Entity {
         this.critMultiplier = DEFAULT_CRIT_MULTIPLIER;
         this.healthRegenMultiplier = DEFAULT_HEALTH_REGEN_MULTIPLIER;
         this.iFramesLength = BASE_IFRAME_LENGTH;
-        this.EXPMultiplier = BASE_EXP_MULTIPLIER;
+        this.expMultiplier = BASE_EXP_MULTIPLIER;
         this.currencyMultiplier = BASE_CURRENCY_MULTIPLIER;
         this.iFrameIsOn = false;
         this.levelUpThreshold = BASE_LEVEL_UP_THRESHOLD;
@@ -186,14 +356,31 @@ public class Player extends Entity {
         this.healthRegenTimer = 0;
     }
 
+    /**
+     * Resets the player's position to the center of the screen.
+     */
     public void resetPosition() {
         this.sprite.setCenter(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
     }
 
-    public void fireProjectile(LinkedList<Projectile> playerProjectiles, float mouseX, float mouseY) {
+    /**
+     * Fires a projectile from the player towards a specified target position.
+     * Determines the direction of the projectile based on the target position and calculates its angle for orientation.
+     * Checks if the attack timer has reached the attack speed threshold to determine if a new projectile can be fired.
+     * If true, creates a new projectile object, sets its direction vector towards the target position,
+     * and calculates its orientation angle.
+     * Adds the new projectile to the linked list of player's projectiles.
+     * Resets the attack timer to 0 to start counting for the next attack.
+     * If the attack timer has not reached the attack speed threshold, increments the attack timer by the elapsed time.
+     *
+     * @param playerProjectiles LinkedList of Projectiles that contains the list of player's projectiles.
+     * @param mouseX            float representing the x-coordinate of the target position.
+     * @param mouseY            float representing the y-coordinate of the target position.
+     */
+    public void fireProjectile(final LinkedList<Projectile> playerProjectiles, final float mouseX, final float mouseY) {
         // runs every attackSpeed seconds
         if (this.attackTimer >= this.attackSpeed) {
-            Projectile newProjectile = new Projectile(projectileTemplate);
+            Projectile newProjectile = new Projectile(this.projectileTemplate);
 
             newProjectile.getDirectionVector()
                     .set(mouseX - this.getCenterX(), mouseY - this.getCenterY());
@@ -209,13 +396,16 @@ public class Player extends Entity {
         }
     }
 
-
+    /**
+     * Regenerates the player's health over time.
+     * If the player's health is full, no regeneration occurs.
+     */
     public void regenHealth() {
         if (this.health == this.maxHealth) {
             return;
         }
         if (this.healthRegenTimer >= HEALTH_REGEN_TICK_TIME) {
-            int newHealth = this.health + (int) Math.round(this.maxHealth * healthRegenMultiplier);
+            int newHealth = this.health + Math.round(this.maxHealth * this.healthRegenMultiplier);
             this.health = Math.min(newHealth, this.maxHealth);
             this.healthRegenTimer = 0;
         } else {
@@ -223,7 +413,14 @@ public class Player extends Entity {
         }
     }
 
-    public void takeDamage(Rectangle enemyHitbox, int enemyAttack) {
+    /**
+     * Inflicts damage on the player based on enemy attack and collision.
+     * If the player is currently invincible, no damage is taken.
+     *
+     * @param enemyHitbox Rectangle object representing the hitbox of the enemy that caused the damage.
+     * @param enemyAttack int representing the attack value of the enemy.
+     */
+    public void takeDamage(final Rectangle enemyHitbox, final int enemyAttack) {
         if (this.sprite.getBoundingRectangle().overlaps(enemyHitbox) && !this.iFrameIsOn) {
             this.health -= Math.round(enemyAttack * (1 - this.defense));
             this.iFrameIsOn = true;
@@ -238,62 +435,75 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Increments the IFrame timer if the player is currently invincible.
+     */
     public void incrementIFrames() {
         if (this.iFrameIsOn) {
-            iFramesTimer += Gdx.graphics.getDeltaTime();
+            this.iFramesTimer += Gdx.graphics.getDeltaTime();
         }
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "levelUpThreshold=" + levelUpThreshold +
-                ", accumulatedEXP=" + accumulatedEXP +
-                ", level=" + level +
-                ", currentEXP=" + currentEXP +
-                ", EXPMultiplier=" + EXPMultiplier +
-                ", collectedCurrency=" + collectedCurrency +
-                ", currencyMultiplier=" + currencyMultiplier +
-                ", attackSpeed=" + attackSpeed +
-                ", critRate=" + critRate +
-                ", critMultiplier=" + critMultiplier +
-                ", attackTimer=" + attackTimer +
-                ", iFramesLength=" + iFramesLength +
-                ", iFramesTimer=" + iFramesTimer +
-                ", healthRegenTimer=" + healthRegenTimer +
-                ", iFrameIsOn=" + iFrameIsOn +
-                ", healthRegenMultiplier=" + healthRegenMultiplier +
-                ", projectileTemplate=" + projectileTemplate +
-                '}';
-    }
-
-    // returns the amount of levels gained from adding exp to player
-    public int addEXP(int EXP) {
-        this.accumulatedEXP += EXP;
-        this.currentEXP += EXP * EXPMultiplier;
+    /**
+     * Converts accumulated experience into player levels.
+     * Updates the player's level and adjusts the experience points and level up threshold.
+     *
+     * @param exp int representing the amount of experience points to be added.
+     * @return the number of levels gained from the added experience.
+     */
+    public int addEXP(final int exp) {
+        this.accumulatedEXP += exp;
+        this.currentEXP += (int) (exp * this.expMultiplier);
         if (this.currentEXP >= this.levelUpThreshold) {
             int leveledAmount = calculateLeveledAmount();
             this.level += leveledAmount;
             this.currentEXP %= this.levelUpThreshold;
-            this.levelUpThreshold += this.levelUpThreshold / 4 * leveledAmount;
+            final int levelDivisor = 4;
+            this.levelUpThreshold += this.levelUpThreshold / levelDivisor * leveledAmount;
             return leveledAmount;
         }
         return 0;
     }
 
-    public int getMaxHP() {
-        return this.maxHealth;
-    }
-
-    public int getCurrentHP() {
-        return this.health;
-    }
-
-    public void addCollectedCurrency(int currency) {
-        this.collectedCurrency += Math.round(currency * currencyMultiplier);
-    }
-
     private int calculateLeveledAmount() {
         return this.currentEXP / this.levelUpThreshold;
+    }
+
+    /**
+     * Increases the player's collected currency by a specified amount.
+     * The currency is multiplied by the currency multiplier.
+     *
+     * @param currency int representing the amount of currency to be added.
+     */
+    public void addCollectedCurrency(final int currency) {
+        this.collectedCurrency += Math.round(currency * this.currencyMultiplier);
+    }
+
+    /**
+     * Returns a string representation of the Player object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "Player{"
+                + "levelUpThreshold=" + this.levelUpThreshold
+                + ", accumulatedEXP=" + this.accumulatedEXP
+                + ", level=" + this.level
+                + ", currentEXP=" + this.currentEXP
+                + ", EXPMultiplier=" + this.expMultiplier
+                + ", collectedCurrency=" + this.collectedCurrency
+                + ", currencyMultiplier=" + this.currencyMultiplier
+                + ", attackSpeed=" + this.attackSpeed
+                + ", critRate=" + this.critRate
+                + ", critMultiplier=" + this.critMultiplier
+                + ", attackTimer=" + this.attackTimer
+                + ", iFramesLength=" + this.iFramesLength
+                + ", iFramesTimer=" + this.iFramesTimer
+                + ", healthRegenTimer=" + this.healthRegenTimer
+                + ", iFrameIsOn=" + this.iFrameIsOn
+                + ", healthRegenMultiplier=" + this.healthRegenMultiplier
+                + ", projectileTemplate=" + this.projectileTemplate
+                + '}';
     }
 }

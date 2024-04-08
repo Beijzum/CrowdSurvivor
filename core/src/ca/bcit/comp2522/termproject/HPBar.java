@@ -47,7 +47,7 @@ public class HPBar {
     }
 
     /**
-     * Returns the width of the HP bar.
+     * Retrieves the width of the HP bar.
      *
      * @return the width of the HP bar.
      */
@@ -56,7 +56,7 @@ public class HPBar {
     }
 
     /**
-     * Returns the height of the HP bar.
+     * Retrieves the height of the HP bar.
      *
      * @return the height of the HP bar.
      */
@@ -98,8 +98,8 @@ public class HPBar {
      * Draws the HP bar using the provided ShapeRenderer and Batch.
      * This method draws the background, foreground colours, and the current/max HP text.
      *
-     * @param shapeRenderer the ShapeRenderer used to draw shapes.
-     * @param batch         the Batch used to draw text.
+     * @param shapeRenderer ShapeRenderer object used to draw shapes.
+     * @param batch         Batch object used to draw text.
      */
     public void draw(final ShapeRenderer shapeRenderer, final Batch batch) {
         // draw background
@@ -118,7 +118,7 @@ public class HPBar {
         float textY = this.y + this.getHeight() / 2;
         final float textHPScale = 0.5F;
         font.getData().setScale(textHPScale);
-        font.draw(batch, currentHP + "/" + maxHP, textX, textY);
+        font.draw(batch, this.currentHP + "/" + this.maxHP, textX, textY);
         font.getData().setScale(1);
         batch.end();
     }
@@ -126,19 +126,19 @@ public class HPBar {
     /**
      * Returns a string representation of the HPBar object.
      *
-     * @return toString description
+     * @return toString description.
      */
     @Override
     public String toString() {
         return "HPBar{"
-                + "x=" + x
-                + ", y=" + y
-                + ", width=" + width
-                + ", height=" + height
-                + ", maxHP=" + maxHP
-                + ", currentHP=" + currentHP
-                + ", backgroundColor=" + backgroundColor
-                + ", foregroundColor=" + foregroundColor
+                + "x=" + this.x
+                + ", y=" + this.y
+                + ", width=" + this.width
+                + ", height=" + this.height
+                + ", maxHP=" + this.maxHP
+                + ", currentHP=" + this.currentHP
+                + ", backgroundColor=" + this.backgroundColor
+                + ", foregroundColor=" + this.foregroundColor
                 + '}';
     }
 }

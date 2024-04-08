@@ -75,7 +75,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         ScreenUtils.clear(0, 0, 0.2f, 1);
         game.buttonsUI.act();
 
-        game.batch.setProjectionMatrix(camera.combined);
+        game.getBatch().setProjectionMatrix(camera.combined);
 
         // handle camera
         camera.position.set(player.getCenterX(), player.getCenterY(), 0);
@@ -93,7 +93,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
         // draw assets
         renderBackground(game, background);
-        player.draw(game.batch);
+        player.draw(game.getBatch());
         this.drawEnemies();
         this.drawAllEnemyProjectiles();
         this.drawAllPlayerProjectiles();
@@ -150,30 +150,30 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         if (this.playerProjectilesOnScreen.isEmpty()) {
             return;
         }
-        game.batch.begin();
+        game.getBatch().begin();
         for (Projectile playerProjectile : playerProjectilesOnScreen) {
-            playerProjectile.draw(game.batch);
+            playerProjectile.draw(game.getBatch());
         }
-        game.batch.end();
+        game.getBatch().end();
     }
 
     private void drawAllEnemyProjectiles() {
         if (this.enemyProjectilesOnScreen.isEmpty()) {
             return;
         }
-        game.batch.begin();
+        game.getBatch().begin();
         for (Projectile enemyProjectile : enemyProjectilesOnScreen) {
-            enemyProjectile.draw(game.batch);
+            enemyProjectile.draw(game.getBatch());
         }
-        game.batch.end();
+        game.getBatch().end();
     }
 
     private void drawEnemies() {
         shapeRenderer.setProjectionMatrix(camera.combined);
 
         for (Enemy enemy : this.onFieldEnemies) {
-            enemy.draw(game.batch);
-            enemy.drawDamageNumbers(game.batch);
+            enemy.draw(game.getBatch());
+            enemy.drawDamageNumbers(game.getBatch());
 
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             enemy.drawHPBar(shapeRenderer);
@@ -189,7 +189,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        hpBar.draw(shapeRenderer, game.batch);
+        hpBar.draw(shapeRenderer, game.getBatch());
         shapeRenderer.end();
     }
 
@@ -202,18 +202,18 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        expBar.draw(shapeRenderer, game.batch);
+        expBar.draw(shapeRenderer, game.getBatch());
         shapeRenderer.end();
     }
 
     private void drawCurrencyCounter() {
-        game.batch.begin();
+        game.getBatch().begin();
         font.setColor(Color.YELLOW);
-        font.draw(game.batch, "Currency: " + player.getCollectedCurrency(),
+        font.draw(game.getBatch(), "Currency: " + player.getCollectedCurrency(),
                 player.getX() - Gdx.graphics.getWidth() / 2.2f,
                 player.getY() + (float) Gdx.graphics.getHeight() / 2 - 30);
         font.setColor(Color.WHITE);
-        game.batch.end();
+        game.getBatch().end();
     }
 
     public void resetGameState() {
@@ -232,13 +232,13 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     }
 
     public void renderFrameAsBackground() {
-        game.batch.setColor(this.darkTint);
+        game.getBatch().setColor(this.darkTint);
         renderBackground(game, background);
-        game.inGameScreen.player.draw(game.batch);
+        game.inGameScreen.player.draw(game.getBatch());
         game.inGameScreen.drawEnemies();
         game.inGameScreen.drawAllPlayerProjectiles();
         this.gameUI.draw();
-        game.batch.setColor(CrowdSurvivor.STANDARD_COLOR);
+        game.getBatch().setColor(CrowdSurvivor.STANDARD_COLOR);
     }
 
     @Override

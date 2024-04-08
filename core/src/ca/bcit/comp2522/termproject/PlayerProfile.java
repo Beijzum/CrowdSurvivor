@@ -10,8 +10,8 @@ import java.io.Serializable;
 
 /**
  * Represents the player profile for the game.
- * The class implements Serializable to enable saving and loading the player's progress.
- * Uses the singleton method design pattern.
+ * Implements serializable to enable saving and loading the player's progress.
+ * Implements the singleton method design pattern.
  *
  * @author Jonathan Liu
  * @author A01375621
@@ -40,7 +40,7 @@ public final class PlayerProfile implements Serializable {
     }
 
     /**
-     * Creates a single instance of PlayerProfile.
+     * Creates a single instance of the PlayerProfile object.
      *
      * @return the created or loaded PlayerProfile instance.
      */
@@ -57,14 +57,13 @@ public final class PlayerProfile implements Serializable {
         return loadedProfile;
     }
 
-
     /**
      * Retrieves the attack speed booster upgrade.
      *
      * @return the attack speed booster upgrade.
      */
     public float getAttackSpeedBooster() {
-        return attackSpeedBooster;
+        return this.attackSpeedBooster;
     }
 
     /**
@@ -73,7 +72,7 @@ public final class PlayerProfile implements Serializable {
      * @return the critical multiplier booster upgrade.
      */
     public float getCritMultiplierBooster() {
-        return critMultiplierBooster;
+        return this.critMultiplierBooster;
     }
 
     /**
@@ -82,7 +81,7 @@ public final class PlayerProfile implements Serializable {
      * @return the critical rate booster upgrade.
      */
     public float getCritRateBooster() {
-        return critRateBooster;
+        return this.critRateBooster;
     }
 
     /**
@@ -91,7 +90,7 @@ public final class PlayerProfile implements Serializable {
      * @return the defense booster upgrade.
      */
     public float getDefenseBooster() {
-        return defenseBooster;
+        return this.defenseBooster;
     }
 
     /**
@@ -100,7 +99,7 @@ public final class PlayerProfile implements Serializable {
      * @return the currency multiplier booster upgrade.
      */
     public float getCurrencyMultiplierBooster() {
-        return currencyMultiplierBooster;
+        return this.currencyMultiplierBooster;
     }
 
     /**
@@ -109,7 +108,7 @@ public final class PlayerProfile implements Serializable {
      * @return the experience multiplier booster upgrade.
      */
     public float getEXPMultiplierBooster() {
-        return expMultiplierBooster;
+        return this.expMultiplierBooster;
     }
 
     /**
@@ -118,7 +117,7 @@ public final class PlayerProfile implements Serializable {
      * @return the health regeneration multiplier booster upgrade.
      */
     public float getHealthRegenMultiplierBooster() {
-        return healthRegenMultiplierBooster;
+        return this.healthRegenMultiplierBooster;
     }
 
     /**
@@ -127,7 +126,7 @@ public final class PlayerProfile implements Serializable {
      * @return the attack booster upgrade.
      */
     public int getAttackBooster() {
-        return attackBooster;
+        return this.attackBooster;
     }
 
     /**
@@ -136,7 +135,7 @@ public final class PlayerProfile implements Serializable {
      * @return the maximum health booster upgrade.
      */
     public int getMaxHealthBooster() {
-        return maxHealthBooster;
+        return this.maxHealthBooster;
     }
 
     /**
@@ -145,7 +144,7 @@ public final class PlayerProfile implements Serializable {
      * @return the speed booster upgrade.
      */
     public int getSpeedBooster() {
-        return speedBooster;
+        return this.speedBooster;
     }
 
     /**
@@ -154,7 +153,7 @@ public final class PlayerProfile implements Serializable {
      * @return the current currency.
      */
     public int getCurrency() {
-        return currency;
+        return this.currency;
     }
 
     /**
@@ -214,10 +213,10 @@ public final class PlayerProfile implements Serializable {
     /**
      * Sets the experience multiplier booster upgrade value.
      *
-     * @param expMultiplyBooster float representing the experience multiplier booster upgrade value.
+     * @param experienceMultiplierBooster float representing the experience multiplier booster upgrade value.
      */
-    public void setEXPMultiplierBooster(final float expMultiplyBooster) {
-        this.expMultiplierBooster = expMultiplyBooster;
+    public void setEXPMultiplierBooster(final float experienceMultiplierBooster) {
+        this.expMultiplierBooster = experienceMultiplierBooster;
     }
 
     /**
@@ -255,7 +254,6 @@ public final class PlayerProfile implements Serializable {
     public void setCurrency(final int currency) {
         this.currency = currency;
     }
-
 
     /**
      * Applies the player upgrades stored in this profile to the Player object.
@@ -314,22 +312,22 @@ public final class PlayerProfile implements Serializable {
     /**
      * Returns a string representation of the PlayerProfile object.
      *
-     * @return toString description
+     * @return toString description.
      */
     @Override
     public String toString() {
         return "PlayerProfile{"
-                + "maxHealthBooster=" + maxHealthBooster
-                + ", attackBooster=" + attackBooster
-                + ", defenseBooster=" + defenseBooster
-                + ", speedBooster=" + speedBooster
-                + ", expMultiplierBooster=" + expMultiplierBooster
-                + ", currencyMultiplierBooster=" + currencyMultiplierBooster
-                + ", attackSpeedBooster=" + attackSpeedBooster
-                + ", critRateBooster=" + critRateBooster
-                + ", critMultiplierBooster=" + critMultiplierBooster
-                + ", healthRegenMultiplierBooster=" + healthRegenMultiplierBooster
-                + ", currency=" + currency
+                + "maxHealthBooster=" + this.maxHealthBooster
+                + ", attackBooster=" + this.attackBooster
+                + ", defenseBooster=" + this.defenseBooster
+                + ", speedBooster=" + this.speedBooster
+                + ", expMultiplierBooster=" + this.expMultiplierBooster
+                + ", currencyMultiplierBooster=" + this.currencyMultiplierBooster
+                + ", attackSpeedBooster=" + this.attackSpeedBooster
+                + ", critRateBooster=" + this.critRateBooster
+                + ", critMultiplierBooster=" + this.critMultiplierBooster
+                + ", healthRegenMultiplierBooster=" + this.healthRegenMultiplierBooster
+                + ", currency=" + this.currency
                 + '}';
     }
 }

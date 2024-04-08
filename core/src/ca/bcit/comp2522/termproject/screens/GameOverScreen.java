@@ -84,7 +84,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         GlyphLayout scoreMessage = createLayout(String.format("SCORE: %d",
                         game.inGameScreen.player.getCollectedCurrency() + game.inGameScreen.player.getAccumulatedEXP()),
                 2f);
-        return new GlyphLayout[] {youDiedMessage, gameOverMessage, timeElapsedMessage, scoreMessage};
+        return new GlyphLayout[]{youDiedMessage, gameOverMessage, timeElapsedMessage, scoreMessage};
     }
 
     @Override
@@ -104,7 +104,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         game.inGameScreen.renderFrameAsBackground();
         game.buttonsUI.act();
         game.buttonsUI.draw();
-        drawMultipleMessageFromCenter(this.messageLayouts, game.batch, game.inGameScreen.camera.position.x,
+        drawMultipleMessageFromCenter(this.messageLayouts, game.getBatch(), game.inGameScreen.camera.position.x,
                 game.inGameScreen.camera.position.y + Gdx.graphics.getHeight() / 2f, 2f);
     }
 

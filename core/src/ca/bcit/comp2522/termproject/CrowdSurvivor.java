@@ -1,23 +1,35 @@
 package ca.bcit.comp2522.termproject;
 
-import ca.bcit.comp2522.termproject.screens.*;
+import ca.bcit.comp2522.termproject.screens.GameOverScreen;
+import ca.bcit.comp2522.termproject.screens.InGameScreen;
+import ca.bcit.comp2522.termproject.screens.MainMenuScreen;
+import ca.bcit.comp2522.termproject.screens.PauseMenuScreen;
+import ca.bcit.comp2522.termproject.screens.ShopScreen;
+import ca.bcit.comp2522.termproject.screens.UpgradeSelectionScreen;
+import ca.bcit.comp2522.termproject.screens.WinScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+/**
+ * Represents the Crowd Survivor class, which manages the game's screens, rendering, and resources.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public class CrowdSurvivor extends Game {
-
-    public int viewportX;
-    public int viewportY;
-    public SpriteBatch batch;
     public static BitmapFont font;
+    private SpriteBatch batch;
     public Stage buttonsUI;
     public Skin skin;
     public static Color STANDARD_COLOR = new Color(1, 1, 1, 1);
@@ -36,9 +48,6 @@ public class CrowdSurvivor extends Game {
         buttonsUI = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal("skin/vhs-ui.json"));
         font = skin.getFont("font");
-        viewportX = Gdx.graphics.getWidth();
-        viewportY = Gdx.graphics.getHeight();
-
         mainMenuScreen = new MainMenuScreen(this);
         shopScreen = new ShopScreen(this);
         inGameScreen = new InGameScreen(this);
@@ -51,6 +60,14 @@ public class CrowdSurvivor extends Game {
         this.setScreen(mainMenuScreen);
     }
 
+    public SpriteBatch getBatch() {
+        return this.batch;
+    }
+
+    public BitmapFont getFont() {
+        return font;
+    }
+
     @Override
     public void render() {
         super.render();
@@ -61,4 +78,5 @@ public class CrowdSurvivor extends Game {
         batch.dispose();
         font.dispose();
     }
+
 }

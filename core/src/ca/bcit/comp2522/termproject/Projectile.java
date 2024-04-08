@@ -61,7 +61,7 @@ public class Projectile {
      * @return the speed of the projectile.
      */
     public int getSpeed() {
-        return speed;
+        return this.speed;
     }
 
     /**
@@ -70,11 +70,12 @@ public class Projectile {
      * @return the sprite of the projectile.
      */
     public Sprite getSprite() {
-        return sprite;
+        return this.sprite;
     }
 
     /**
      * Retrieves the hitbox of the projectile as a rectangle.
+     * Bounding rectangle of the projectile object represents the area covered by the projectile in the game world.
      *
      * @return the hitbox of the projectile as a Rectangle.
      */
@@ -97,7 +98,7 @@ public class Projectile {
      * @return the lifetime of the projectile.
      */
     public int getLifetime() {
-        return lifetime;
+        return this.lifetime;
     }
 
     /**
@@ -198,8 +199,13 @@ public class Projectile {
         this.setProjectileCenter(this.getCenterX() + deltaX, this.getCenterY() + deltaY);
     }
 
+    /**
+     * Rotates the projectile sprite based on its speed.
+     * The rotation angle is determined by dividing the projectile's speed by a constant divisor.
+     */
     public void spinProjectile() {
-        this.sprite.rotate(this.speed / 100f);
+        final float constantDivisor = 100f;
+        this.sprite.rotate(this.speed / constantDivisor);
     }
 
     private float getCenterX() {
@@ -213,16 +219,16 @@ public class Projectile {
     /**
      * Returns a string representation of the Projectile object.
      *
-     * @return toString description
+     * @return toString description.
      */
     @Override
     public String toString() {
         return "Projectile{"
-                + "speed=" + speed
-                + ", lifetime=" + lifetime
-                + ", sprite=" + sprite
-                + ", lifetimeTimer=" + lifetimeTimer
-                + ", directionVector=" + directionVector
+                + "speed=" + this.speed
+                + ", lifetime=" + this.lifetime
+                + ", sprite=" + this.sprite
+                + ", lifetimeTimer=" + this.lifetimeTimer
+                + ", directionVector=" + this.directionVector
                 + '}';
     }
 }

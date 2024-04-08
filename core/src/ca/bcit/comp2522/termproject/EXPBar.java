@@ -139,20 +139,20 @@ public class EXPBar {
     /**
      * Returns a string representation of the EXPBar object.
      *
-     * @return toString description
+     * @return toString description.
      */
     @Override
     public String toString() {
         return "EXPBar{"
-                + "x=" + x
-                + ", y=" + y
-                + ", width=" + width
-                + ", height=" + height
-                + ", levelThreshold=" + levelThreshold
-                + ", currentEXP=" + currentEXP
-                + ", backgroundColour=" + backgroundColour
-                + ", foregroundColour=" + foregroundColour
-                + ", playerLevel=" + playerLevel
+                + "x=" + this.x
+                + ", y=" + this.y
+                + ", width=" + this.width
+                + ", height=" + this.height
+                + ", levelThreshold=" + this.levelThreshold
+                + ", currentEXP=" + this.currentEXP
+                + ", backgroundColour=" + this.backgroundColour
+                + ", foregroundColour=" + this.foregroundColour
+                + ", playerLevel=" + this.playerLevel
                 + '}';
     }
 }

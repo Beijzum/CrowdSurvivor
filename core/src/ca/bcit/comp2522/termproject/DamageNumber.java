@@ -51,17 +51,17 @@ public class DamageNumber {
      * @param deltaTime float representing the elapsed time since the last update.
      */
     public void update(final float deltaTime) {
-        timer += deltaTime;
+        this.timer += deltaTime;
 
         final float arcHeight = 20f;
         final float arcPeriod = 1f;
         final int arcHeightMultiplier = 4;
 
-        float xOffset = arcHeight * timer;
-        float yOffset = arcHeight * arcHeightMultiplier * timer * (1 - timer / arcPeriod);
+        float xOffset = arcHeight * this.timer;
+        float yOffset = arcHeight * arcHeightMultiplier * this.timer * (1 - this.timer / arcPeriod);
 
-        this.newX = x + xOffset;
-        this.newY = y + yOffset;
+        this.newX = this.x + xOffset;
+        this.newY = this.y + yOffset;
     }
 
     /**
@@ -70,7 +70,7 @@ public class DamageNumber {
      * @return true if the damage number has expired, otherwise false.
      */
     public boolean isExpired() {
-        return timer >= lifetime;
+        return this.timer >= this.lifetime;
     }
 
     /**
@@ -96,19 +96,19 @@ public class DamageNumber {
     /**
      * Returns a string representation of the DamageNumber object.
      *
-     * @return toString description
+     * @return toString description.
      */
     @Override
     public String toString() {
         return "DamageNumber{"
-                + "x=" + x
-                + ", y=" + y
-                + ", damage=" + damage
-                + ", lifetime=" + lifetime
-                + ", isCritical=" + isCritical
-                + ", newX=" + newX
-                + ", newY=" + newY
-                + ", timer=" + timer
+                + "x=" + this.x
+                + ", y=" + this.y
+                + ", damage=" + this.damage
+                + ", lifetime=" + this.lifetime
+                + ", isCritical=" + this.isCritical
+                + ", newX=" + this.newX
+                + ", newY=" + this.newY
+                + ", timer=" + this.timer
                 + '}';
     }
 }
