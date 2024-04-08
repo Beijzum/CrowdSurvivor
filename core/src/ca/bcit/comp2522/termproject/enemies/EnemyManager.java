@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.audio.Music;
 import org.w3c.dom.ranges.Range;
 
+import java.awt.event.WindowAdapter;
 import java.util.Random;
 
 final public class EnemyManager {
@@ -17,7 +18,7 @@ final public class EnemyManager {
     final private static int BASE_RANGED_ENEMY_SPAWN_TIME = 5;
     final private static int BASE_CHARGER_HEALTH = 125;
     final private static int BASE_ENEMY_SPEED = 100;
-    final private static int BASE_WAVE_SIZE = 10;
+    final private static int WAVE_SIZE = 8;
     final private static int BOSS_SPAWN_TIMER = 30;
     final private InGameScreen gameScreen;
     private static EnemyManager instance = null;
@@ -140,41 +141,60 @@ final public class EnemyManager {
 
     public void handleEnemySpawn() {
         if (this.basicEnemyTimer >= this.currentBasicEnemySpawnTime) {
-            // randomize spawn point outside of screen, camera position x, y returns center of screen
-            float[] spawnPoint = generateSpawnPoint();
-
-            gameScreen.getOnFieldEnemies().add(createBasicEnemy(spawnPoint[0], spawnPoint[1]));
-            this.enemySpawnSFX.play();
+            if (randomNumberGenerator.nextInt(10) == 4) {
+                System.out.println("batched spawned!");
+                for (int i = 0; i < WAVE_SIZE; i++) {
+                    float[] spawnPoint = generateSpawnPoint();
+                    gameScreen.getOnFieldEnemies().add(createBasicEnemy(spawnPoint[0] + i, spawnPoint[1] + i));
+                }
+            } else {
+                // randomize spawn point outside of screen, camera position x, y returns center of screen
+                float[] spawnPoint = generateSpawnPoint();
+                gameScreen.getOnFieldEnemies().add(createBasicEnemy(spawnPoint[0], spawnPoint[1]));
+            }
             this.basicEnemyTimer = 0;
             this.currentBasicEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
+            this.enemySpawnSFX.play();
         }
 
         if (this.chargerEnemyTimer >= this.currentChargerEnemySpawnTime) {
-            float[] spawnPoint = generateSpawnPoint();
-
-            gameScreen.getOnFieldEnemies().add(createCharger(spawnPoint[0], spawnPoint[1]));
-            this.enemySpawnSFX.play();
+            if (randomNumberGenerator.nextInt(10) == 4) {
+                for (int i = 0; i < WAVE_SIZE; i++) {
+                    float[] spawnPoint = generateSpawnPoint();
+                    gameScreen.getOnFieldEnemies().add(createCharger(spawnPoint[0] + i, spawnPoint[1] + i));
+                }
+            } else {
+                float[] spawnPoint = generateSpawnPoint();
+                gameScreen.getOnFieldEnemies().add(createCharger(spawnPoint[0], spawnPoint[1]));
+            }
             this.chargerEnemyTimer = 0;
             this.currentChargerEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_CHARGER_ENEMY_SPAWN_TIME) + BASE_CHARGER_ENEMY_SPAWN_TIME;
+            this.enemySpawnSFX.play();
         }
 
         if (this.rangedEnemyTimer >= this.currentRangedEnemySpawnTime) {
-            float[] spawnPoint = generateSpawnPoint();
-
-            gameScreen.getOnFieldEnemies().add(createRangedEnemy(spawnPoint[0], spawnPoint[1]));
-            this.enemySpawnSFX.play();
+            if (randomNumberGenerator.nextInt(10) == 4) {
+                if (randomNumberGenerator.nextInt(10) == 4) {
+                    float[] spawnPoint = generateSpawnPoint();
+                    gameScreen.getOnFieldEnemies().add(createRangedEnemy(spawnPoint[0], spawnPoint[1]));
+                }
+            } else {
+                float[] spawnPoint = generateSpawnPoint();
+                gameScreen.getOnFieldEnemies().add(createRangedEnemy(spawnPoint[0], spawnPoint[1]));
+            }
             this.rangedEnemyTimer = 0;
             this.currentRangedEnemySpawnTime = this.randomNumberGenerator
                     .nextInt(BASE_RANGED_ENEMY_SPAWN_TIME) + BASE_RANGED_ENEMY_SPAWN_TIME;
+            this.enemySpawnSFX.play();
         }
 
         if (this.bossTimer >= BOSS_SPAWN_TIMER && gameScreen.getTimeElapsed() <= InGameScreen.getMaxGameLength()) {
             float[] spawnPoint = generateSpawnPoint();
             gameScreen.getOnFieldBosses().add(createBoss(spawnPoint[0], spawnPoint[1]));
-            this.bossSpawnSFX.play();
             this.bossTimer = 0;
+            this.bossSpawnSFX.play();
         }
     }
 
