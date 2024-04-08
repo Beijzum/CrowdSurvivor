@@ -168,7 +168,7 @@ public final class PlayerManager {
         boolean fired = this.gameScreen.getPlayer()
                 .fireProjectile(this.gameScreen.getPlayerProjectilesOnScreen(), mousePosition.x, mousePosition.y);
         if (fired) {
-            this.playerProjectileSFX.play();
+            this.playerProjectileSFX.play(0.5f);
         }
     }
 
