@@ -304,6 +304,7 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.getButtonClickSFX().play();
                 dispose();
                 game.setScreen(game.getMainMenuScreen());
                 return true;

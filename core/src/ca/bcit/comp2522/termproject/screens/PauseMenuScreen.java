@@ -75,6 +75,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.getButtonClickSFX().play();
                 clearStage(game.getButtonsUI());
                 game.setScreen(game.getInGameScreen());
                 return true;
@@ -92,6 +93,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.getButtonClickSFX().play();
                 game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency()
                         + game.getInGameScreen().getPlayer().getCollectedCurrency());
                 game.getInGameScreen().resetGameState();

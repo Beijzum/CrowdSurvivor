@@ -93,6 +93,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.getButtonClickSFX().play();
                 dispose();
                 game.getInGameScreen().resetGameState();
                 clearStage(game.getButtonsUI());
@@ -112,6 +113,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.getButtonClickSFX().play();
                 dispose();
                 clearStage(game.getButtonsUI());
                 game.getInGameScreen().resetGameState();

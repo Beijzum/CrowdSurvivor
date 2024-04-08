@@ -42,6 +42,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.getButtonClickSFX().play();
                 clearStage(game.getButtonsUI());
                 dispose();
                 game.setScreen(game.getInGameScreen());
@@ -59,6 +60,7 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.getButtonClickSFX().play();
                 clearStage(game.getButtonsUI());
                 game.setScreen(game.getMainMenuScreen());
                 dispose();

@@ -116,6 +116,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.getButtonClickSFX().play();
                 game.getPlayerProfile().applyPlayerUpgrades(game.getInGameScreen().getPlayer());
                 game.setScreen(game.getInGameScreen());
                 return true;
@@ -135,6 +136,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.getButtonClickSFX().play();
                 game.setScreen(game.getShopScreen());
                 return true;
             }
@@ -151,6 +153,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
+                game.getButtonClickSFX().play();
                 clearStage(game.getButtonsUI());
                 Gdx.app.exit();
                 return true;
