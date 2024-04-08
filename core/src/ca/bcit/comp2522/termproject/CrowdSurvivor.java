@@ -9,6 +9,7 @@ import ca.bcit.comp2522.termproject.screens.UpgradeSelectionScreen;
 import ca.bcit.comp2522.termproject.screens.WinScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,6 +31,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class CrowdSurvivor extends Game {
     private static BitmapFont font;
     private static final Color STANDARD_COLOUR = new Color(1, 1, 1, 1);
+    private Sound buttonClickSFX;
     private SpriteBatch batch;
     private Stage buttonsUI;
     private Skin skin;
@@ -60,8 +62,17 @@ public class CrowdSurvivor extends Game {
         this.gameOverScreen = new GameOverScreen(this);
         this.winScreen = new WinScreen(this);
         this.playerProfile = PlayerProfile.createPlayerProfile();
-
+        this.buttonClickSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/buttonClickSFX.mp3"));
         this.setScreen(this.mainMenuScreen);
+    }
+
+    /**
+     * Retrieves the sound effect for button clicks.
+     *
+     * @return the button click sound effect.
+     */
+    public Sound getButtonClickSFX() {
+        return this.buttonClickSFX;
     }
 
     /**
