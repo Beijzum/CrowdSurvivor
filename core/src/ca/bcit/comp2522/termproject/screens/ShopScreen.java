@@ -38,7 +38,7 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
         this.currencyMessage = new GlyphLayout();
         this.menuItems = createButtons();
         this.purchaseSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/purchaseSFX.mp3"));
-        this.failPurchaseSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/failPurchase.mp3"));
+        this.failPurchaseSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/failPurchaseSFX.mp3"));
         positionMenuItems();
     }
 
