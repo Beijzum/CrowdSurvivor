@@ -73,10 +73,10 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
     private GlyphLayout[] createMessageLayout() {
         GlyphLayout congratulationMessage = createLayout("CONGRATULATIONS YOU WIN!", 2.5f);
         GlyphLayout timeElapsedMessage = createLayout(String.format("TIME ELAPSED: %d:%02d",
-                Math.round(game.getInGameScreen().timeElapsed) / 60,
-                Math.round(game.getInGameScreen().timeElapsed) % 60), 2.5f);
+                Math.round(game.getInGameScreen().getTimeElapsed()) / 60,
+                Math.round(game.getInGameScreen().getTimeElapsed()) % 60), 2.5f);
         GlyphLayout scoreMessage = createLayout(String.format("SCORE: %d",
-                        game.getInGameScreen().player.getCollectedCurrency() + game.getInGameScreen().player.getAccumulatedEXP()),
+                        game.getInGameScreen().getPlayer().getCollectedCurrency() + game.getInGameScreen().getPlayer().getAccumulatedEXP()),
                 2.5f);
         return new GlyphLayout[]{congratulationMessage, timeElapsedMessage, scoreMessage};
     }
@@ -95,8 +95,8 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
         game.getInGameScreen().renderFrameAsBackground();
         game.getButtonsUI().act();
         game.getButtonsUI().draw();
-        drawMultipleMessageFromCenter(messageLayouts, game.getBatch(), game.getInGameScreen().camera.position.x,
-                game.getInGameScreen().camera.position.y + Gdx.graphics.getHeight() / 2f, 2.5f);
+        drawMultipleMessageFromCenter(messageLayouts, game.getBatch(), game.getInGameScreen().getCamera().position.x,
+                game.getInGameScreen().getCamera().position.y + Gdx.graphics.getHeight() / 2f, 2.5f);
 
     }
 
@@ -118,7 +118,8 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
     @Override
     public void hide() {
         game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency()
-                + game.getInGameScreen().player.getCollectedCurrency() + Math.round(game.getInGameScreen().timeElapsed * 2));
+                + game.getInGameScreen().getPlayer().getCollectedCurrency()
+                + Math.round(game.getInGameScreen().getTimeElapsed() * 2));
     }
 
     @Override

@@ -93,7 +93,7 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
                     return false;
                 }
                 game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency()
-                        + game.getInGameScreen().player.getCollectedCurrency());
+                        + game.getInGameScreen().getPlayer().getCollectedCurrency());
                 game.getInGameScreen().resetGameState();
                 clearStage(game.getButtonsUI());
                 game.getInGameScreen().dispose();

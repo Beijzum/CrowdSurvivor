@@ -92,7 +92,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player.setAttack(game.getInGameScreen().player.getAttack() + 10);
+                game.getInGameScreen().getPlayer().setAttack(game.getInGameScreen().getPlayer().getAttack() + 10);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
@@ -106,7 +106,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player.setSpeed(game.getInGameScreen().player.getSpeed() + 10);
+                game.getInGameScreen().getPlayer().setSpeed(game.getInGameScreen().getPlayer().getSpeed() + 10);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
@@ -121,7 +121,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player.setMaxHealth(game.getInGameScreen().player.getMaxHealth() + 10);
+                game.getInGameScreen().getPlayer().setMaxHealth(game.getInGameScreen().getPlayer().getMaxHealth() + 10);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
@@ -135,7 +135,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player.setEXPMultiplier(game.getInGameScreen().player.getEXPMultiplier() * (float) 1.1);
+                game.getInGameScreen().getPlayer().setEXPMultiplier(game.getInGameScreen().getPlayer().getEXPMultiplier() * (float) 1.1);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
@@ -149,8 +149,8 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player
-                        .setCurrencyMultiplier(game.getInGameScreen().player.getCurrencyMultiplier() * (float) 1.1);
+                game.getInGameScreen().getPlayer()
+                        .setCurrencyMultiplier(game.getInGameScreen().getPlayer().getCurrencyMultiplier() * (float) 1.1);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
@@ -164,7 +164,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player.setAttackSpeed(game.getInGameScreen().player.getAttackSpeed() * (float) 0.9);
+                game.getInGameScreen().getPlayer().setAttackSpeed(game.getInGameScreen().getPlayer().getAttackSpeed() * (float) 0.9);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
@@ -178,7 +178,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player.setIFramesLength(game.getInGameScreen().player.getIFramesLength() * (float) 1.1);
+                game.getInGameScreen().getPlayer().setIFramesLength(game.getInGameScreen().getPlayer().getIFramesLength() * (float) 1.1);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
@@ -192,7 +192,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player.setCritMultiplier(game.getInGameScreen().player.getCritMultiplier() + 0.1f);
+                game.getInGameScreen().getPlayer().setCritMultiplier(game.getInGameScreen().getPlayer().getCritMultiplier() + 0.1f);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
@@ -206,7 +206,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player.setCritRate(game.getInGameScreen().player.getCritRate() + 0.05f);
+                game.getInGameScreen().getPlayer().setCritRate(game.getInGameScreen().getPlayer().getCritRate() + 0.05f);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
@@ -220,7 +220,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player.setDefense(game.getInGameScreen().player.getDefense() + 0.05f);
+                game.getInGameScreen().getPlayer().setDefense(game.getInGameScreen().getPlayer().getDefense() + 0.05f);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
@@ -234,8 +234,8 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                     return false;
                 }
                 clearStage(game.getButtonsUI());
-                game.getInGameScreen().player
-                        .setHealthRegenMultiplier(game.getInGameScreen().player.getHealthRegenMultiplier() + 0.05f);
+                game.getInGameScreen().getPlayer()
+                        .setHealthRegenMultiplier(game.getInGameScreen().getPlayer().getHealthRegenMultiplier() + 0.05f);
                 game.setScreen(game.getInGameScreen());
                 return true;
             }

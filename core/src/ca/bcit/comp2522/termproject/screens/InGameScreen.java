@@ -1,7 +1,19 @@
 package ca.bcit.comp2522.termproject.screens;
 
-import ca.bcit.comp2522.termproject.*;
-import com.badlogic.gdx.*;
+import ca.bcit.comp2522.termproject.CrowdSurvivor;
+import ca.bcit.comp2522.termproject.EXPBar;
+import ca.bcit.comp2522.termproject.HPBar;
+import ca.bcit.comp2522.termproject.Player;
+import ca.bcit.comp2522.termproject.PlayerManager;
+import ca.bcit.comp2522.termproject.Projectile;
+import ca.bcit.comp2522.termproject.enemies.Enemy;
+import ca.bcit.comp2522.termproject.enemies.EnemyManager;
+import ca.bcit.comp2522.termproject.interfaces.ActorManager;
+import ca.bcit.comp2522.termproject.interfaces.Background;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,34 +22,29 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import ca.bcit.comp2522.termproject.enemies.Enemy;
-import ca.bcit.comp2522.termproject.enemies.EnemyManager;
-import ca.bcit.comp2522.termproject.interfaces.ActorManager;
-import ca.bcit.comp2522.termproject.interfaces.Background;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor {
-    final private static int MAX_GAME_LENGTH = 300;
-    public float timeElapsed = 0;
-    ShapeRenderer shapeRenderer = new ShapeRenderer();
-
-    public OrthographicCamera camera;
-    final private CrowdSurvivor game;
-    final private Music music;
-    final private Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
-    final private Stage gameUI = new Stage();
-    final public Player player;
-    final private HPBar hpBar;
-    final private EXPBar expBar;
-    final private EnemyManager enemyManager;
-    final private PlayerManager playerManager;
-    final private Color darkTint = new Color(75 / 255f, 75 / 255f, 75 / 255f, 1);
+    private static final int MAX_GAME_LENGTH = 300;
+    private float timeElapsed = 0;
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final OrthographicCamera camera;
+    private final CrowdSurvivor game;
+    private final Music music;
+    private final Sprite background = new Sprite(new Texture("backgrounds/tempBackground.jpg"));
+    private final Stage gameUI = new Stage();
+    private final HPBar hpBar;
+    private final EXPBar expBar;
+    private final EnemyManager enemyManager;
+    private final PlayerManager playerManager;
+    private final Color darkTint = new Color(75 / 255f, 75 / 255f, 75 / 255f, 1);
+    private final Player player;
+    private final ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
+    private final LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
+    private final LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
     private int enterUpgradeScreenAmount;
-    final public ArrayList<Enemy> onFieldEnemies = new ArrayList<>();
-    final public LinkedList<Projectile> playerProjectilesOnScreen = new LinkedList<>();
-    final public LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
 
 
     public InGameScreen(final CrowdSurvivor crowdSurvivor) {
@@ -54,6 +61,30 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.resetGameState();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    public float getTimeElapsed() {
+        return this.timeElapsed;
+    }
+
+    public OrthographicCamera getCamera() {
+        return this.camera;
+    }
+
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public ArrayList<Enemy> getOnFieldEnemies() {
+        return this.onFieldEnemies;
+    }
+
+    public LinkedList<Projectile> getPlayerProjectilesOnScreen() {
+        return this.playerProjectilesOnScreen;
+    }
+
+    public LinkedList<Projectile> getEnemyProjectilesOnScreen() {
+        return this.enemyProjectilesOnScreen;
     }
 
     @Override

@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.Objects;
+
 /**
  * Represents the PlayerManager class.
  * Implements the singleton method design pattern.
@@ -47,13 +49,13 @@ public final class PlayerManager {
      * Iterates through the list of enemy projectiles on the screen and each projectile inflicts damage to the player.
      */
     public void handlePlayerHealth() {
-        this.gameScreen.player.regenHealth();
-        for (Enemy enemy : this.gameScreen.onFieldEnemies) {
-            this.gameScreen.player.takeDamage(enemy.getHitbox(), enemy.getAttack());
+        this.gameScreen.getPlayer().regenHealth();
+        for (Enemy enemy : this.gameScreen.getOnFieldEnemies()) {
+            this.gameScreen.getPlayer().takeDamage(enemy.getHitbox(), enemy.getAttack());
         }
-        for (Projectile projectile : this.gameScreen.enemyProjectilesOnScreen) {
+        for (Projectile projectile : this.gameScreen.getEnemyProjectilesOnScreen()) {
             final int projectileDamage = 10;
-            this.gameScreen.player.takeDamage(projectile.getHitbox(), projectileDamage);
+            this.gameScreen.getPlayer().takeDamage(projectile.getHitbox(), projectileDamage);
         }
     }
 
@@ -61,7 +63,7 @@ public final class PlayerManager {
      * Increments the player's invincibility frames (IFrames).
      */
     public void incrementPlayerIframe() {
-        this.gameScreen.player.incrementIFrames();
+        this.gameScreen.getPlayer().incrementIFrames();
     }
 
     /**
@@ -81,24 +83,24 @@ public final class PlayerManager {
         float deltaY = 0;
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            deltaY = this.gameScreen.player.getSpeed() * Gdx.graphics.getDeltaTime();
+            deltaY = this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            deltaY = -this.gameScreen.player.getSpeed() * Gdx.graphics.getDeltaTime();
+            deltaY = -this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            deltaX = -this.gameScreen.player.getSpeed() * Gdx.graphics.getDeltaTime();
+            deltaX = -this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            deltaX = this.gameScreen.player.getSpeed() * Gdx.graphics.getDeltaTime();
+            deltaX = this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
         }
         // normalize vector
         if (deltaX != 0 && deltaY != 0) {
             deltaX = deltaX * (float) Math.abs(Math.cos(Math.atan(deltaY / deltaX)));
             deltaY = deltaY * (float) Math.abs(Math.sin(Math.atan(deltaY / deltaX)));
         }
-        this.gameScreen.player.setX(this.gameScreen.player.getX() + deltaX);
-        this.gameScreen.player.setY(this.gameScreen.player.getY() + deltaY);
+        this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() + deltaX);
+        this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() + deltaY);
     }
 
     /**
@@ -111,22 +113,22 @@ public final class PlayerManager {
      */
     public void handleAttack() {
         // remove expired projectiles
-        if (this.gameScreen.playerProjectilesOnScreen.peek() != null
-                && this.gameScreen.playerProjectilesOnScreen.peek().isOverLifeTime()) {
-            this.gameScreen.playerProjectilesOnScreen.removeFirst();
+        if (this.gameScreen.getPlayerProjectilesOnScreen().peek() != null
+                && Objects.requireNonNull(this.gameScreen.getPlayerProjectilesOnScreen().peek()).isOverLifeTime()) {
+            this.gameScreen.getPlayerProjectilesOnScreen().removeFirst();
         }
 
         // move projectiles not expired
-        for (Projectile projectile : this.gameScreen.playerProjectilesOnScreen) {
+        for (Projectile projectile : this.gameScreen.getPlayerProjectilesOnScreen()) {
             projectile.incrementLifetimeTimer();
             projectile.moveProjectile();
         }
 
         // fire projectile
         this.mouseVector.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        Vector3 mousePosition = this.gameScreen.camera.unproject(this.mouseVector);
-        this.gameScreen.player
-                .fireProjectile(this.gameScreen.playerProjectilesOnScreen, mousePosition.x, mousePosition.y);
+        Vector3 mousePosition = this.gameScreen.getCamera().unproject(this.mouseVector);
+        this.gameScreen.getPlayer()
+                .fireProjectile(this.gameScreen.getPlayerProjectilesOnScreen(), mousePosition.x, mousePosition.y);
 
     }
 

@@ -79,10 +79,11 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         GlyphLayout youDiedMessage = createLayout("YOU DIED", 2f);
         GlyphLayout gameOverMessage = createLayout("GAME OVER", 2f);
         GlyphLayout timeElapsedMessage = createLayout(String.format("TIME ELAPSED: %d:%02d",
-                Math.round(game.getInGameScreen().timeElapsed) / 60,
-                Math.round(game.getInGameScreen().timeElapsed) % 60), 2f);
+                Math.round(game.getInGameScreen().getTimeElapsed()) / 60,
+                Math.round(game.getInGameScreen().getTimeElapsed()) % 60), 2f);
         GlyphLayout scoreMessage = createLayout(String.format("SCORE: %d",
-                        game.getInGameScreen().player.getCollectedCurrency() + game.getInGameScreen().player.getAccumulatedEXP()),
+                        game.getInGameScreen().getPlayer().getCollectedCurrency()
+                                + game.getInGameScreen().getPlayer().getAccumulatedEXP()),
                 2f);
         return new GlyphLayout[]{youDiedMessage, gameOverMessage, timeElapsedMessage, scoreMessage};
     }
@@ -104,8 +105,9 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
         game.getInGameScreen().renderFrameAsBackground();
         game.getButtonsUI().act();
         game.getButtonsUI().draw();
-        drawMultipleMessageFromCenter(this.messageLayouts, game.getBatch(), game.getInGameScreen().camera.position.x,
-                game.getInGameScreen().camera.position.y + Gdx.graphics.getHeight() / 2f, 2f);
+        drawMultipleMessageFromCenter(this.messageLayouts, game.getBatch(),
+                game.getInGameScreen().getCamera().position.x, game.getInGameScreen().getCamera().position.y
+                        + Gdx.graphics.getHeight() / 2f, 2f);
     }
 
     @Override
@@ -126,7 +128,7 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
     @Override
     public void hide() {
         game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency()
-                + game.getInGameScreen().player.getCollectedCurrency());
+                + game.getInGameScreen().getPlayer().getCollectedCurrency());
     }
 
     @Override

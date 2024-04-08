@@ -99,7 +99,7 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
-                game.getPlayerProfile().applyPlayerUpgrades(game.getInGameScreen().player);
+                game.getPlayerProfile().applyPlayerUpgrades(game.getInGameScreen().getPlayer());
                 game.setScreen(game.getInGameScreen());
                 return true;
             }
