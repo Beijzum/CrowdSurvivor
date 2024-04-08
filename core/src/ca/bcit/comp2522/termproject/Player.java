@@ -379,8 +379,10 @@ public final class Player extends Entity {
      * @param playerProjectiles LinkedList of Projectiles that contains the list of player's projectiles.
      * @param mouseX            float representing the x-coordinate of the target position.
      * @param mouseY            float representing the y-coordinate of the target position.
+     *
+     * @return boolean          returns true if projectile was successfully fired, returns false otherwise.
      */
-    public void fireProjectile(final LinkedList<Projectile> playerProjectiles, final float mouseX, final float mouseY) {
+    public boolean fireProjectile(final LinkedList<Projectile> playerProjectiles, final float mouseX, final float mouseY) {
         // runs every attackSpeed seconds
         if (this.attackTimer >= this.attackSpeed) {
             Projectile newProjectile = new Projectile(this.projectileTemplate);
@@ -394,8 +396,10 @@ public final class Player extends Entity {
 
             playerProjectiles.add(newProjectile);
             this.attackTimer = 0;
+            return true;
         } else {
             this.attackTimer += Gdx.graphics.getDeltaTime();
+            return false;
         }
     }
 
@@ -422,20 +426,23 @@ public final class Player extends Entity {
      *
      * @param enemyHitbox Rectangle object representing the hitbox of the enemy that caused the damage.
      * @param enemyAttack int representing the attack value of the enemy.
+     *
+     * @return boolean    returns true if damage was taken, false no damage was taken.
      */
-    public void takeDamage(final Rectangle enemyHitbox, final int enemyAttack) {
+    public boolean takeDamage(final Rectangle enemyHitbox, final int enemyAttack) {
         if (this.sprite.getBoundingRectangle().overlaps(enemyHitbox) && !this.iFrameIsOn) {
             this.health -= Math.round(enemyAttack * (1 - this.defense));
             this.iFrameIsOn = true;
-            return;
+            return true;
         }
         if (!this.iFrameIsOn) {
-            return;
+            return false;
         }
         if (this.iFramesTimer >= this.iFramesLength) {
             this.iFrameIsOn = false;
             this.iFramesTimer = 0;
         }
+        return false;
     }
 
     /**
