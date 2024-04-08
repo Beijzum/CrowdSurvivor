@@ -128,9 +128,11 @@ public final class PlayerManager {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             this.deltaX = -this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
+            this.gameScreen.getPlayer().flipLeft();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             this.deltaX = this.gameScreen.getPlayer().getSpeed() * Gdx.graphics.getDeltaTime();
+            this.gameScreen.getPlayer().flipRight();
         }
 
         // normalize vector
