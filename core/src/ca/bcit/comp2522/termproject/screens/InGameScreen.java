@@ -23,6 +23,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -323,7 +325,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         }
         this.game.getBatch().begin();
         for (Projectile playerProjectile : this.playerProjectilesOnScreen) {
-            playerProjectile.draw(this.game.getBatch());
+            if (inCameraView(playerProjectile.getHitbox())) {
+                playerProjectile.draw(this.game.getBatch());
+            }
         }
         this.game.getBatch().end();
     }
@@ -334,7 +338,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         }
         game.getBatch().begin();
         for (Projectile bossProjectile : bossProjectilesOnScreen) {
-            bossProjectile.draw(game.getBatch());
+            if (inCameraView(bossProjectile.getHitbox())) {
+                bossProjectile.draw(game.getBatch());
+            }
         }
         game.getBatch().end();
     }
@@ -345,7 +351,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         }
         this.game.getBatch().begin();
         for (Projectile enemyProjectile : this.enemyProjectilesOnScreen) {
-            enemyProjectile.draw(this.game.getBatch());
+            if (inCameraView(enemyProjectile.getHitbox())) {
+                enemyProjectile.draw(this.game.getBatch());
+            }
         }
         this.game.getBatch().end();
     }
@@ -354,22 +362,31 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.shapeRenderer.setProjectionMatrix(this.camera.combined);
 
         for (Enemy enemy : this.onFieldEnemies) {
-            enemy.draw(this.game.getBatch());
-            enemy.drawDamageNumbers(this.game.getBatch());
+            if (inCameraView(enemy.getHitbox())) {
+                enemy.draw(this.game.getBatch());
+                enemy.drawDamageNumbers(this.game.getBatch());
+                this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                enemy.drawHPBar(this.shapeRenderer);
+                this.shapeRenderer.end();
+            }
 
-            this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            enemy.drawHPBar(this.shapeRenderer);
-            this.shapeRenderer.end();
         }
 
         for (Boss boss : this.onFieldBosses) {
-            boss.draw(game.getBatch());
-            boss.drawDamageNumbers(game.getBatch());
+            if (inCameraView(boss.getHitbox())) {
+                boss.draw(game.getBatch());
+                boss.drawDamageNumbers(game.getBatch());
 
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            boss.drawHPBar(shapeRenderer);
-            shapeRenderer.end();
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                boss.drawHPBar(shapeRenderer);
+                shapeRenderer.end();
+            }
         }
+    }
+
+    private boolean inCameraView(Rectangle hitbox) {
+        return this.camera.frustum.boundsInFrustum(hitbox.getX(), hitbox.getY(), 0, hitbox.getWidth(),
+                hitbox.getHeight(), 0);
     }
 
     private void drawHPBar() {
