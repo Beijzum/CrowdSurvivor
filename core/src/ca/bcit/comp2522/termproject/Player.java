@@ -78,96 +78,6 @@ public final class Player extends Entity {
     }
 
     /**
-     * Sets the player's attack speed.
-     *
-     * @param attackSpeed float representing the new attack speed value.
-     */
-    public void setAttackSpeed(final float attackSpeed) {
-        this.attackSpeed = attackSpeed;
-    }
-
-    /**
-     * Sets the player's critical hit multiplier.
-     *
-     * @param critMultiplier float representing the new critical hit multiplier value.
-     */
-    public void setCritMultiplier(final float critMultiplier) {
-        this.critMultiplier = critMultiplier;
-    }
-
-    /**
-     * Sets the player's critical hit rate.
-     *
-     * @param critRate float representing the new critical hit rate value.
-     */
-    public void setCritRate(final float critRate) {
-        this.critRate = critRate;
-    }
-
-    /**
-     * Sets the player's health regeneration multiplier.
-     *
-     * @param healthRegenMultiplier float representing the new health regeneration multiplier value.
-     */
-    public void setHealthRegenMultiplier(final float healthRegenMultiplier) {
-        this.healthRegenMultiplier = healthRegenMultiplier;
-    }
-
-    /**
-     * Sets the player's projectile template.
-     *
-     * @param projectile Projectile object used as the new projectile template.
-     */
-    public void setProjectileTemplate(final Projectile projectile) {
-        this.projectileTemplate = projectile;
-    }
-
-    /**
-     * Sets the player's IFrame length.
-     *
-     * @param newLength float representing the new length of the IFrames.
-     */
-    public void setIFramesLength(final float newLength) {
-        this.iFramesLength = newLength;
-    }
-
-    /**
-     * Sets the player's x-coordinate position.
-     *
-     * @param x float representing the new x-coordinate value.
-     */
-    public void setX(final float x) {
-        this.sprite.setX(x);
-    }
-
-    /**
-     * Sets the player's y-coordinate position.
-     *
-     * @param y float representing the new y-coordinate value.
-     */
-    public void setY(final float y) {
-        this.sprite.setY(y);
-    }
-
-    /**
-     * Sets the experience multiplier.
-     *
-     * @param experienceMultiplier float representing the new experience multiplier value.
-     */
-    public void setEXPMultiplier(final float experienceMultiplier) {
-        this.expMultiplier = experienceMultiplier;
-    }
-
-    /**
-     * Sets the currency multiplier.
-     *
-     * @param currencyMultiplier float representing the new currency multiplier value.
-     */
-    public void setCurrencyMultiplier(final float currencyMultiplier) {
-        this.currencyMultiplier = currencyMultiplier;
-    }
-
-    /**
      * Retrieves the player's attack speed.
      *
      * @return the player's attack speed.
@@ -328,6 +238,97 @@ public final class Player extends Entity {
     public int getCurrentHP() {
         return this.health;
     }
+
+    /**
+     * Sets the player's attack speed.
+     *
+     * @param attackSpeed float representing the new attack speed value.
+     */
+    public void setAttackSpeed(final float attackSpeed) {
+        this.attackSpeed = attackSpeed;
+    }
+
+    /**
+     * Sets the player's critical hit multiplier.
+     *
+     * @param critMultiplier float representing the new critical hit multiplier value.
+     */
+    public void setCritMultiplier(final float critMultiplier) {
+        this.critMultiplier = critMultiplier;
+    }
+
+    /**
+     * Sets the player's critical hit rate.
+     *
+     * @param critRate float representing the new critical hit rate value.
+     */
+    public void setCritRate(final float critRate) {
+        this.critRate = critRate;
+    }
+
+    /**
+     * Sets the player's health regeneration multiplier.
+     *
+     * @param healthRegenMultiplier float representing the new health regeneration multiplier value.
+     */
+    public void setHealthRegenMultiplier(final float healthRegenMultiplier) {
+        this.healthRegenMultiplier = healthRegenMultiplier;
+    }
+
+    /**
+     * Sets the player's projectile template.
+     *
+     * @param projectile Projectile object used as the new projectile template.
+     */
+    public void setProjectileTemplate(final Projectile projectile) {
+        this.projectileTemplate = projectile;
+    }
+
+    /**
+     * Sets the player's IFrame length.
+     *
+     * @param newLength float representing the new length of the IFrames.
+     */
+    public void setIFramesLength(final float newLength) {
+        this.iFramesLength = newLength;
+    }
+
+    /**
+     * Sets the player's x-coordinate position.
+     *
+     * @param x float representing the new x-coordinate value.
+     */
+    public void setX(final float x) {
+        this.sprite.setX(x);
+    }
+
+    /**
+     * Sets the player's y-coordinate position.
+     *
+     * @param y float representing the new y-coordinate value.
+     */
+    public void setY(final float y) {
+        this.sprite.setY(y);
+    }
+
+    /**
+     * Sets the experience multiplier.
+     *
+     * @param experienceMultiplier float representing the new experience multiplier value.
+     */
+    public void setEXPMultiplier(final float experienceMultiplier) {
+        this.expMultiplier = experienceMultiplier;
+    }
+
+    /**
+     * Sets the currency multiplier.
+     *
+     * @param currencyMultiplier float representing the new currency multiplier value.
+     */
+    public void setCurrencyMultiplier(final float currencyMultiplier) {
+        this.currencyMultiplier = currencyMultiplier;
+    }
+
 
     /**
      * Resets the player's statistics to their default values.
