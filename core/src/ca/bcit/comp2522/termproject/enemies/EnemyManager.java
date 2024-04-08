@@ -267,6 +267,16 @@ final public class EnemyManager {
         return newEnemy;
     }
 
+    public void resetEnemyTimers() {
+        this.bossTimer = 0;
+        this.rangedEnemyTimer = 0;
+        this.basicEnemyTimer = 0;
+        this.chargerEnemyTimer = 0;
+        this.currentRangedEnemySpawnTime = BASE_RANGED_ENEMY_SPAWN_TIME;
+        this.currentBasicEnemySpawnTime = BASE_BASIC_ENEMY_SPAWN_TIME;
+        this.currentChargerEnemySpawnTime = BASE_CHARGER_ENEMY_SPAWN_TIME;
+    }
+
     private Enemy createBasicEnemy(float xCoord, float yCoord) {
         int health = Math.round(BASE_BASIC_ENEMY_HEALTH + gameScreen.getTimeElapsed() / 5); // temp scaling
         int speed = Math.round(BASE_ENEMY_SPEED + gameScreen.getTimeElapsed() / 5);
