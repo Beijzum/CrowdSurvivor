@@ -325,12 +325,6 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
         }
     }
 
-    private void adjustButtonColor(int price, TextButton button) {
-        if (game.getPlayerProfile().getCurrency() < price) {
-            button.setColor(175 / 255f, 25 / 255f, 25 / 255f, 1);
-        }
-    }
-
     private void positionBackButton(TextButton button) {
         int buttonWidth = Gdx.graphics.getWidth() / 2;
         int buttonHeight = Gdx.graphics.getHeight() / 10;
@@ -344,7 +338,7 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
 
     private void positionItemButton(TextButton button, int col, int row) {
         // col max = 1, row max = 4
-        int buttonWidth = Gdx.graphics.getWidth() / 4;
+        int buttonWidth = Gdx.graphics.getWidth() / 3;
         int buttonHeight = Gdx.graphics.getHeight() / 10;
 
         int buttonPositionX = Gdx.graphics.getWidth() / 4 - buttonWidth / 2 + Gdx.graphics.getWidth() / 2 * col;
