@@ -5,6 +5,7 @@ import ca.bcit.comp2522.termproject.enemies.Enemy;
 import ca.bcit.comp2522.termproject.screens.InGameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.Objects;
@@ -25,9 +26,19 @@ public final class PlayerManager {
     private static PlayerManager instance = null;
     private final InGameScreen gameScreen;
     private final Vector3 mouseVector = new Vector3(0, 0, 0);
+    private final Sound playerProjectileSFX;
+    private final Sound playerDamageSFX;
+    private final Sound playerLevelUpSFX;
 
     private PlayerManager(final InGameScreen gameScreen) {
         this.gameScreen = gameScreen;
+        this.playerProjectileSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/playerProjectileSFX.mp3"));
+        this.playerDamageSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/playerDamageSFX.mp3"));
+        this.playerLevelUpSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/playerLevelUpSFX.mp3"));
+    }
+
+    public Sound getPlayerLevelUpSFX() {
+        return this.playerLevelUpSFX;
     }
 
     /**
@@ -51,19 +62,31 @@ public final class PlayerManager {
      */
     public void handlePlayerHealth() {
         this.gameScreen.getPlayer().regenHealth();
+        boolean damaged = false;
         for (Enemy enemy : this.gameScreen.getOnFieldEnemies()) {
-            this.gameScreen.getPlayer().takeDamage(enemy.getHitbox(), enemy.getAttack());
+            if (this.gameScreen.getPlayer().takeDamage(enemy.getHitbox(), enemy.getAttack())) {
+                damaged = true;
+            }
         }
         for (Boss boss : this.gameScreen.getOnFieldBosses()) {
-            this.gameScreen.getPlayer().takeDamage(boss.getHitbox(), boss.getAttack());
+            if (this.gameScreen.getPlayer().takeDamage(boss.getHitbox(), boss.getAttack())) {
+                damaged = true;
+            }
         }
         for (Projectile projectile : this.gameScreen.getEnemyProjectilesOnScreen()) {
             final int projectileDamage = 10;
-            this.gameScreen.getPlayer().takeDamage(projectile.getHitbox(), projectileDamage);
+            if (this.gameScreen.getPlayer().takeDamage(projectile.getHitbox(), projectileDamage)) {
+                damaged = true;
+            }
         }
         for (Projectile projectile : this.gameScreen.getBossProjectilesOnScreen()) {
             final int projectileDamage = 30;
-            this.gameScreen.getPlayer().takeDamage(projectile.getHitbox(), projectileDamage);
+            if (this.gameScreen.getPlayer().takeDamage(projectile.getHitbox(), projectileDamage)) {
+                damaged = true;
+            }
+        }
+        if (damaged) {
+            playerDamageSFX.play(0.2f);
         }
     }
 
@@ -142,9 +165,11 @@ public final class PlayerManager {
         // fire projectile
         this.mouseVector.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         Vector3 mousePosition = this.gameScreen.getCamera().unproject(this.mouseVector);
-        this.gameScreen.getPlayer()
+        boolean fired = this.gameScreen.getPlayer()
                 .fireProjectile(this.gameScreen.getPlayerProjectilesOnScreen(), mousePosition.x, mousePosition.y);
-
+        if (fired) {
+            this.playerProjectileSFX.play();
+        }
     }
 
     /**
