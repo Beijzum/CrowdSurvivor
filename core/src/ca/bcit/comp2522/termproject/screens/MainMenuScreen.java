@@ -47,9 +47,9 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        game.getBatch().setProjectionMatrix(camera.combined);
         renderBackground(game, background);
-        drawMessageFromCenter(createLayout("CROWD SURVIVOR", 3), game.batch,
+        drawMessageFromCenter(createLayout("CROWD SURVIVOR", 3), game.getBatch(),
                 Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() * 8 / 10f, 2);
         game.buttonsUI.act();
         game.buttonsUI.draw();

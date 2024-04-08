@@ -57,7 +57,6 @@ public final class PlayerProfile implements Serializable {
         return loadedProfile;
     }
 
-
     /**
      * Retrieves the attack speed booster upgrade.
      *
@@ -256,7 +255,6 @@ public final class PlayerProfile implements Serializable {
         this.currency = currency;
     }
 
-
     /**
      * Applies the player upgrades stored in this profile to the Player object.
      *
@@ -276,10 +274,7 @@ public final class PlayerProfile implements Serializable {
         player.setHealthRegenMultiplier(player.getHealthRegenMultiplier() + this.healthRegenMultiplierBooster);
     }
 
-    /**
-     * Sets the player profile to its default values.
-     */
-    public void setThisToDefault() {
+    private void setThisToDefault() {
         this.maxHealthBooster = 0;
         this.attackBooster = 0;
         this.defenseBooster = 0;

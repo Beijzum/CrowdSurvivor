@@ -53,7 +53,6 @@ public final class Player extends Entity {
     private float healthRegenMultiplier;
     private Projectile projectileTemplate;
 
-
     private Player() {
         resetStats();
         Sprite projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/playerProjectile.png")));
@@ -77,7 +76,6 @@ public final class Player extends Entity {
         }
         return instance;
     }
-
 
     /**
      * Sets the player's attack speed.
@@ -187,7 +185,6 @@ public final class Player extends Entity {
         return this.critMultiplier;
     }
 
-
     /**
      * Retrieves the player's critical hit rate.
      *
@@ -214,7 +211,6 @@ public final class Player extends Entity {
     public float getIFramesLength() {
         return this.iFramesLength;
     }
-
 
     /**
      * Retrieves the player's current experience points (EXP).
@@ -307,7 +303,7 @@ public final class Player extends Entity {
     }
 
     /**
-     * Gets the currency multiplier.
+     * Retrieves the currency multiplier.
      *
      * @return the currency multiplier.
      */
@@ -447,7 +443,6 @@ public final class Player extends Entity {
             this.iFramesTimer += Gdx.graphics.getDeltaTime();
         }
     }
-
 
     /**
      * Converts accumulated experience into player levels.

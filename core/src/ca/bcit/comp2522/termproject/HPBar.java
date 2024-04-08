@@ -47,7 +47,7 @@ public class HPBar {
     }
 
     /**
-     * Returns the width of the HP bar.
+     * Retrieves the width of the HP bar.
      *
      * @return the width of the HP bar.
      */
@@ -56,7 +56,7 @@ public class HPBar {
     }
 
     /**
-     * Returns the height of the HP bar.
+     * Retrieves the height of the HP bar.
      *
      * @return the height of the HP bar.
      */

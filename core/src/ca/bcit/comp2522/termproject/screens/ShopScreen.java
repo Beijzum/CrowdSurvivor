@@ -29,6 +29,7 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
     final private GlyphLayout currencyMessage;
     final private Sound purchaseSFX;
     final private Sound failPurchaseSFX;
+
     public ShopScreen(CrowdSurvivor crowdSurvivor) {
         this.game = crowdSurvivor;
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -55,8 +56,8 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
 
         setTextAndScale(this.currencyMessage, String.format("CURRENCY: $%d", game.playerProfile.getCurrency()), 2f);
         renderBackgroundWithFilter(game, background, backgroundFilter);
-        drawMessage(shopMessage, game.batch, 20, Gdx.graphics.getHeight() / 1.01f, 2f);
-        drawMessage(currencyMessage, game.batch,
+        drawMessage(shopMessage, game.getBatch(), 20, Gdx.graphics.getHeight() / 1.01f, 2f);
+        drawMessage(currencyMessage, game.getBatch(),
                 20, Gdx.graphics.getHeight() / 1.01f - this.shopMessage.height - 20, 2f);
         game.buttonsUI.act();
         game.buttonsUI.draw();
@@ -298,19 +299,19 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
 
         TextButton backButton = new TextButton("Back To Menu", game.skin);
         backButton.addListener(new InputListener() {
-           @Override
-           public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-               if (button != Input.Buttons.LEFT) {
-                   return false;
-               }
-               dispose();
-               game.setScreen(game.mainMenuScreen);
-               return true;
-           }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (button != Input.Buttons.LEFT) {
+                    return false;
+                }
+                dispose();
+                game.setScreen(game.mainMenuScreen);
+                return true;
+            }
         });
 
         positionBackButton(backButton);
-        return new TextButton[] {
+        return new TextButton[]{
                 buyAttack, buySpeed, buyHealth, buyHealthRegen, buyEXP, buyAttackSpeed, buyDefense, buyCritRate,
                 buyCritDamage, buyCurrency, backButton
         };
