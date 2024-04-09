@@ -13,14 +13,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import java.util.Random;
 
 public class UpgradeSelectionScreen implements Screen, ActorManager, Background {
-    final private static int BUTTON_COUNT_ON_SCREEN = 4;
-    final private CrowdSurvivor game;
-    final private Random randomNumberGenerator = new Random();
-    final private TextButton[] possibleUpgrades;
+    private static final int BUTTON_COUNT_ON_SCREEN = 4;
+    private final CrowdSurvivor game;
+    private final Random randomNumberGenerator = new Random();
+    private final TextButton[] possibleUpgrades;
+    private final TextButton attackUpgrade;
 
-    public UpgradeSelectionScreen(CrowdSurvivor game) {
+    public UpgradeSelectionScreen(final CrowdSurvivor game) {
         this.game = game;
-        possibleUpgrades = createButtons();
+        this.possibleUpgrades = createButtons();
+        this.attackUpgrade = new TextButton("+10 Attack", this.game.getSkin());
     }
 
     @Override
@@ -28,16 +30,16 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
         for (int i = 0; i < BUTTON_COUNT_ON_SCREEN; i++) {
             TextButton chosenUpgrade = chooseRandomButton();
             positionButton(chosenUpgrade, i);
-            game.getButtonsUI().addActor(chosenUpgrade);
+            this.game.getButtonsUI().addActor(chosenUpgrade);
         }
-        Gdx.input.setInputProcessor(game.getButtonsUI());
+        Gdx.input.setInputProcessor(this.game.getButtonsUI());
     }
 
     @Override
     public void render(float v) {
-        game.getInGameScreen().renderFrameAsBackground();
-        game.getButtonsUI().act();
-        game.getButtonsUI().draw();
+        this.game.getInGameScreen().renderFrameAsBackground();
+        this.game.getButtonsUI().act();
+        this.game.getButtonsUI().draw();
     }
 
     @Override
@@ -66,14 +68,14 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
     }
 
     private TextButton chooseRandomButton() {
-        int buttonIndex = randomNumberGenerator.nextInt(possibleUpgrades.length);
-        if (game.getButtonsUI().getActors().contains(possibleUpgrades[buttonIndex], true)) {
+        int buttonIndex = this.randomNumberGenerator.nextInt(this.possibleUpgrades.length);
+        if (this.game.getButtonsUI().getActors().contains(this.possibleUpgrades[buttonIndex], true)) {
             return chooseRandomButton();
         }
-        return possibleUpgrades[buttonIndex];
+        return this.possibleUpgrades[buttonIndex];
     }
 
-    private void positionButton(TextButton button, int buttonNumber) {
+    private void positionButton(final TextButton button, final int buttonNumber) {
         int buttonWidth = Gdx.graphics.getWidth() / 2;
         int buttonHeight = Gdx.graphics.getHeight() / 6;
         int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
@@ -84,25 +86,25 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
     }
 
     private TextButton[] createButtons() {
-        TextButton attackUpgrade = new TextButton("+10 Attack", game.getSkin());
-        attackUpgrade.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (button != Input.Buttons.LEFT) {
-                    return false;
-                }
-                game.getButtonClickSFX().play();
-                clearStage(game.getButtonsUI());
-                game.getInGameScreen().getPlayer().setAttack(game.getInGameScreen().getPlayer().getAttack() + 10);
-                game.setScreen(game.getInGameScreen());
-                return true;
-            }
-        });
 
-        TextButton speedUpgrade = new TextButton("+10 Speed", game.getSkin());
+        handleAttackUpdate();
+
+
+        TextButton speedUpgrade = new TextButton("+10 Speed", this.game.getSkin());
+        TextButton healthUpgrade = new TextButton("+10 Health", this.game.getSkin());
+        TextButton expUpgrade = new TextButton("+10% More Experience", this.game.getSkin());
+        TextButton currencyUpgrade = new TextButton("+10% More Currency", this.game.getSkin());
+        TextButton attackSpeedUpgrade = new TextButton("+10% More Attack Speed", this.game.getSkin());
+        TextButton iFrameUpgrade = new TextButton("+10% Longer Invicibility After Taking Damage", this.game.getSkin());
+        TextButton critDamageUpgrade = new TextButton("+10% Critical Hit Damage", this.game.getSkin());
+        TextButton critRateUpgrade = new TextButton("+5% Critical Hit Rate", this.game.getSkin());
+        TextButton defenseUpgrade = new TextButton("+5 Defense", this.game.getSkin());
+        TextButton healthRegenUpgrade = new TextButton("+5% Health Regeneration", this.game.getSkin());
+
         speedUpgrade.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -114,11 +116,11 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton healthUpgrade = new TextButton("+10 Health", game.getSkin());
 
         healthUpgrade.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -130,10 +132,11 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton EXPUpgrade = new TextButton("+10% More Experience", game.getSkin());
-        EXPUpgrade.addListener(new InputListener() {
+
+        expUpgrade.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -145,10 +148,11 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton currencyUpgrade = new TextButton("+10% More Currency", game.getSkin());
+
         currencyUpgrade.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -161,10 +165,11 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton attackSpeedUpgrade = new TextButton("+10% More Attack Speed", game.getSkin());
+
         attackSpeedUpgrade.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -176,10 +181,11 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton iFrameUpgrade = new TextButton("+10% Longer Invicibility After Taking Damage", game.getSkin());
+
         iFrameUpgrade.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -191,10 +197,11 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton critDamageUpgrade = new TextButton("+10% Critical Hit Damage", game.getSkin());
+
         critDamageUpgrade.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -206,10 +213,10 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton critRateUpgrade = new TextButton("+5% Critical Hit Rate", game.getSkin());
         critRateUpgrade.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -221,10 +228,11 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton defenseUpgrade = new TextButton("+5 Defense", game.getSkin());
+
         defenseUpgrade.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -236,10 +244,11 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
             }
         });
 
-        TextButton healthRegenUpgrade = new TextButton("+5% Health Regeneration", game.getSkin());
+
         healthRegenUpgrade.addListener(new InputListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
                 if (button != Input.Buttons.LEFT) {
                     return false;
                 }
@@ -253,8 +262,25 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
         });
 
         return new TextButton[]{
-                attackUpgrade, speedUpgrade, healthUpgrade, EXPUpgrade, currencyUpgrade, attackSpeedUpgrade,
+                this.attackUpgrade, speedUpgrade, healthUpgrade, expUpgrade, currencyUpgrade, attackSpeedUpgrade,
                 iFrameUpgrade, critDamageUpgrade, critRateUpgrade, defenseUpgrade, healthRegenUpgrade
         };
+    }
+
+    private void handleAttackUpdate() {
+        this.attackUpgrade.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer,
+                                     final int button) {
+                if (button != Input.Buttons.LEFT) {
+                    return false;
+                }
+                game.getButtonClickSFX().play();
+                clearStage(game.getButtonsUI());
+                game.getInGameScreen().getPlayer().setAttack(game.getInGameScreen().getPlayer().getAttack() + 10);
+                game.setScreen(game.getInGameScreen());
+                return true;
+            }
+        });
     }
 }
