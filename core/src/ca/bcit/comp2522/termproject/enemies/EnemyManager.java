@@ -4,10 +4,7 @@ import ca.bcit.comp2522.termproject.Projectile;
 import ca.bcit.comp2522.termproject.screens.InGameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.audio.Music;
-import org.w3c.dom.ranges.Range;
 
-import java.awt.event.WindowAdapter;
 import java.util.Random;
 
 final public class EnemyManager {
@@ -34,6 +31,7 @@ final public class EnemyManager {
     private final Sound bossSpawnSFX;
     private final Sound enemySpawnSFX;
     private final Sound bossProjectileSFX;
+    private final Sound bossDeathSFX;
     final private Random randomNumberGenerator = new Random();
 
     private EnemyManager(InGameScreen gameScreen) {
@@ -48,6 +46,7 @@ final public class EnemyManager {
         this.bossSpawnSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/bossSpawnSFX.mp3"));
         this.enemySpawnSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/enemySpawnSFX.mp3"));
         this.bossProjectileSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/bossProjectileSFX.mp3"));
+        this.bossDeathSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/bossDeathSFX.mp3"));
     }
 
     public static EnemyManager createManager(InGameScreen gameScreen) {
@@ -234,6 +233,7 @@ final public class EnemyManager {
             deadBoss.clearHitByProjectileList();
             gameScreen.getOnFieldBosses().remove(deadBoss);
             gameScreen.handlePlayerKill(deadBoss);
+            bossDeathSFX.play();
         }
     }
 
