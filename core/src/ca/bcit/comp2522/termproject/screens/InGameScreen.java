@@ -43,12 +43,18 @@ import java.util.LinkedList;
  */
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor, MessageLayout {
     private static final int MAX_GAME_LENGTH = 300;
+    private final static int BACKGROUND_MULTIPLIER = 3;
+    private final static int arenaOffsetX = 1055;
+    private final static int arenaOffsetY = 630;
+    private final static int arenaWidth = 3529;
+    private final static int arenaHeight = 1887;
     private float timeElapsed = 0;
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
     private final OrthographicCamera camera;
     private final CrowdSurvivor game;
     private final Music music;
     private final Sprite background = new Sprite(new Texture("backgrounds/gameBackground.png"));
+    private final Rectangle arenaBorders = new Rectangle(arenaOffsetX, arenaOffsetY, arenaWidth, arenaHeight);
     private final Stage gameUI = new Stage();
     private final HPBar hpBar;
     private final EXPBar expBar;
@@ -84,9 +90,8 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         this.enemyManager = EnemyManager.createManager(this);
         this.playerManager = PlayerManager.createPlayerManager(this);
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/inGameMusic.mp3"));
-        final int backgroundMultiplier = 3;
-        this.background.setSize(Gdx.graphics.getWidth() * backgroundMultiplier,
-                Gdx.graphics.getHeight() * backgroundMultiplier);
+        this.background.setSize(Gdx.graphics.getWidth() * BACKGROUND_MULTIPLIER,
+                Gdx.graphics.getHeight() * BACKGROUND_MULTIPLIER);
         this.resetGameState();
         this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
@@ -101,12 +106,12 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     }
 
     /**
-     * Retrieves the background image for the game.
+     * Retrieves the rectangle for the arena bounds for the game.
      *
-     * @return the background image for the game.
+     * @return the rectangle representing the arena bounds for the game.
      */
-    public Sprite getBackground() {
-        return this.background;
+    public Rectangle getArenaBorders() {
+        return this.arenaBorders;
     }
 
     /**
