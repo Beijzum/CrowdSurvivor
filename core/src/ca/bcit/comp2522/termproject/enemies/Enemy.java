@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -28,14 +29,15 @@ public class Enemy extends Entity {
     final private Vector2 directionVector = new Vector2();
     final private LinkedList<Projectile> hitByProjectileList = new LinkedList<>();
     final protected Random randomNumberGenerator = new Random();
+    final Sprite sprite;
 
-    public Enemy(int health, int speed, int attack, String imageFilePath) {
+    public Enemy(int health, int speed, int attack, Sprite enemySprite) {
         this.maxHealth = health;
         this.health = this.maxHealth;
         this.speed = speed;
         this.attack = attack;
         this.defense = DEFAULT_DEFENSE;
-        this.sprite = new AnimatedSprite(new Texture(Gdx.files.internal(imageFilePath)));
+        this.sprite = enemySprite;
         this.sprite.setSize(100, 100);
     }
 
@@ -60,6 +62,10 @@ public class Enemy extends Entity {
                 .nextInt(this.maxHealth / CURRENCY_CALCULATION_DIVISOR) + BASE_CURRENCY_DROP_AMOUNT;
     }
 
+    public Rectangle getHitbox() {
+        return this.sprite.getBoundingRectangle();
+    }
+
     public void move() {
         float angle = this.directionVector.angleRad();
 
@@ -78,7 +84,6 @@ public class Enemy extends Entity {
         this.sprite.setCenter(x, y);
     }
 
-    @Override
     public void draw(Batch batch) {
         batch.begin();
         if (this.isTakingDamage) {
