@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 /**
  * Represents the Crowd Survivor class, which manages the game's screens, rendering, and resources.
