@@ -35,10 +35,6 @@ public abstract class Entity {
      * The defense of the entity.
      */
     protected float defense;
-    /**
-     * Represents the sprite associated with the entity.
-     */
-    protected AnimatedSprite sprite;
 
     /**
      * Retrieves the attack power of the entity.
@@ -83,15 +79,6 @@ public abstract class Entity {
      */
     public int getSpeed() {
         return speed;
-    }
-
-    /**
-     * Retrieves the hitbox (bounding rectangle) of the entity's sprite.
-     *
-     * @return the hitbox rectangle of the entity's sprite.
-     */
-    public Rectangle getHitbox() {
-        return this.sprite.getBoundingRectangle();
     }
 
     /**
@@ -149,19 +136,6 @@ public abstract class Entity {
     }
 
     /**
-     * Draws the entity's sprite using the provided batch.
-     *
-     * @param batch Batch object used for rendering the entity.
-     */
-    public void draw(final Batch batch) {
-        batch.begin();
-        batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
-                this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
-                this.sprite.getScaleY(), this.sprite.getRotation());
-        batch.end();
-    }
-
-    /**
      * Returns a string representation of the abstract Entity class.
      *
      * @return toString description.
@@ -174,7 +148,6 @@ public abstract class Entity {
                 + ", speed=" + this.speed
                 + ", attack=" + this.attack
                 + ", defense=" + this.defense
-                + ", sprite=" + this.sprite
                 + '}';
     }
 }
