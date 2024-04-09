@@ -3,7 +3,7 @@ package ca.bcit.comp2522.termproject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.LinkedList;
@@ -36,7 +36,7 @@ public final class Player extends Entity {
     private static final int BASE_LEVEL_UP_THRESHOLD = 50;
     private static final int BASE_EXP_MULTIPLIER = 1;
     private static final int BASE_CURRENCY_MULTIPLIER = 1;
-    private static final Texture[] PLAYER_FRAMES = new Texture[]{
+    private static final Texture[] PLAYER_FRAMES = new Texture[] {
             new Texture(Gdx.files.internal("player/playerSpriteFrame0.png")),
             new Texture(Gdx.files.internal("player/playerSpriteFrame1.png")),
             new Texture(Gdx.files.internal("player/playerSpriteFrame2.png")),
@@ -61,14 +61,14 @@ public final class Player extends Entity {
     private Projectile projectileTemplate;
     private boolean isMoving = false;
     private boolean isFacingLeft = true;
+    private final AnimatedSprite sprite;
 
-    private Player() {
+    private Player(TextureAtlas atlas) {
         resetStats();
-        Sprite projectileSprite = new Sprite(new Texture(Gdx.files.internal("projectiles/playerProjectile.png")));
         final int speedValue = 500;
         final int lifetimeValue = 3;
         final int sizeValue = 150;
-        this.projectileTemplate = new Projectile(projectileSprite, speedValue, lifetimeValue, sizeValue);
+        this.projectileTemplate = new Projectile(atlas.createSprite("projectiles/playerProjectile"), speedValue, lifetimeValue, sizeValue);
         final int framesPerSecond = 20;
         this.sprite = new AnimatedSprite(PLAYER_FRAMES, framesPerSecond);
         final int spriteSize = 100;
@@ -80,9 +80,9 @@ public final class Player extends Entity {
      *
      * @return the created or loaded PlayerManager instance.
      */
-    public static Player createPlayer() {
+    public static Player createPlayer(TextureAtlas atlas) {
         if (instance == null) {
-            instance = new Player();
+            instance = new Player(atlas);
         }
         return instance;
     }
@@ -529,6 +529,10 @@ public final class Player extends Entity {
         this.collectedCurrency += Math.round(currency * this.currencyMultiplier);
     }
 
+    public Rectangle getHitbox() {
+        return this.sprite.getBoundingRectangle();
+    }
+
     /**
      * Returns a string representation of the Player object.
      *
@@ -557,7 +561,6 @@ public final class Player extends Entity {
                 + '}';
     }
 
-    @Override
     public void draw(final Batch batch) {
         if (this.isMoving) {
             this.sprite.setPausedAnimation(false);
