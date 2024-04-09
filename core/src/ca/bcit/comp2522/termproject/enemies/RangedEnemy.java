@@ -2,7 +2,6 @@ package ca.bcit.comp2522.termproject.enemies;
 
 import ca.bcit.comp2522.termproject.Projectile;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.LinkedList;
@@ -19,7 +18,7 @@ public class RangedEnemy extends Enemy {
     final private static int SPEWER_BASE_HEALTH = 50;
     final private static int BASIC_BASE_HEALTH = 125;
     final private static int SNIPER_BASE_HEALTH = 75;
-    final private static int SPEWER_ATACK = 10;
+    final private static int SPEWER_ATTACK = 10;
     final private static int BASIC_ATTACK = 10;
     final private static int SNIPER_ATTACK = 20;
     final private static int BASE_SPEED = 75;
@@ -37,7 +36,7 @@ public class RangedEnemy extends Enemy {
     public static RangedEnemy createSpewer(float timeElapsed, Sprite sprite, Sprite projectileSprite) {
         int health = Math.round(SPEWER_BASE_HEALTH + timeElapsed / 5);
         int speed = Math.round(BASE_SPEED + timeElapsed / 5);
-        return new RangedEnemy(health, speed, SPEWER_ATACK, SPEWER_PROJECTILE_SPEED,
+        return new RangedEnemy(health, speed, SPEWER_ATTACK, SPEWER_PROJECTILE_SPEED,
                 SPEWER_ATTACK_SPEED, projectileSprite, sprite);
     }
 
