@@ -1,0 +1,109 @@
+
+gameAssets.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+enemies/basicRanged
+  rotate: false
+  xy: 2, 1218
+  size: 1354, 784
+  orig: 1354, 784
+  offset: 0, 0
+  index: -1
+enemies/boss
+  rotate: false
+  xy: 1358, 1428
+  size: 631, 574
+  orig: 631, 574
+  offset: 0, 0
+  index: -1
+enemies/charger
+  rotate: false
+  xy: 732, 512
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1
+enemies/enemy
+  rotate: false
+  xy: 732, 814
+  size: 406, 402
+  orig: 406, 402
+  offset: 0, 0
+  index: -1
+enemies/sniper
+  rotate: false
+  xy: 2, 504
+  size: 728, 712
+  orig: 728, 712
+  offset: 0, 0
+  index: -1
+enemies/spewer
+  rotate: false
+  xy: 2, 2
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+
+gameAssets2.png
+size: 256, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+player/playerSpriteFrame0
+  rotate: false
+  xy: 2, 134
+  size: 170, 140
+  orig: 170, 140
+  offset: 0, 0
+  index: -1
+player/playerSpriteFrame2
+  rotate: false
+  xy: 2, 134
+  size: 170, 140
+  orig: 170, 140
+  offset: 0, 0
+  index: -1
+player/playerSpriteFrame1
+  rotate: false
+  xy: 2, 276
+  size: 190, 130
+  orig: 190, 130
+  offset: 0, 0
+  index: -1
+player/playerSpriteFrame3
+  rotate: false
+  xy: 2, 2
+  size: 160, 130
+  orig: 160, 130
+  offset: 0, 0
+  index: -1
+
+gameAssets3.png
+size: 1024, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+projectiles/bossProjectile
+  rotate: false
+  xy: 2, 449
+  size: 500, 513
+  orig: 500, 513
+  offset: 0, 0
+  index: -1
+projectiles/enemyProjectile
+  rotate: false
+  xy: 2, 2
+  size: 500, 445
+  orig: 500, 445
+  offset: 0, 0
+  index: -1
+projectiles/playerProjectile
+  rotate: false
+  xy: 504, 712
+  size: 315, 250
+  orig: 315, 250
+  offset: 0, 0
+  index: -1
