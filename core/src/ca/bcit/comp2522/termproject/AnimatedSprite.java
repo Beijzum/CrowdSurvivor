@@ -18,7 +18,7 @@ public class AnimatedSprite extends Sprite {
         this.timer = 0;
     }
 
-    public AnimatedSprite(final Texture[] frames, float framesPerSecond) {
+    public AnimatedSprite(final Texture[] frames, final float framesPerSecond) {
         super(frames[0]);
         this.frames = frames;
         this.framesPerSecond = framesPerSecond;
@@ -30,7 +30,7 @@ public class AnimatedSprite extends Sprite {
         if (this.pausedAnimation) {
             return;
         }
-        if (this.timer > 1 / framesPerSecond) {
+        if (this.timer > 1 / this.framesPerSecond) {
             this.nextFrame();
             this.timer = 0;
             return;
@@ -48,9 +48,9 @@ public class AnimatedSprite extends Sprite {
 
     private void nextFrame() {
         this.currentFrame++;
-        if (currentFrame >= frames.length) {
+        if (this.currentFrame >= this.frames.length) {
             resetFrames();
         }
-        setTexture(frames[currentFrame]);
+        setTexture(this.frames[this.currentFrame]);
     }
 }
