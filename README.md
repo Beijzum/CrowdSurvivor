@@ -13,9 +13,7 @@ Notes go here
 
 ## TODO BEFORE TUESDAY
 
-add boundaries to map
 optimize game
-add SFX for boss dying
 unit tests
 update uml
 update readme
