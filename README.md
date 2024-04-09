@@ -52,7 +52,6 @@ of us worked together on projects in other courses and we split our workload by 
 - Different player projectiles
 - Different projectile firing types
 - Ability to gamble currency for risk/reward experience
-- 
 
 ## TODO BEFORE TUESDAY
 unit tests
