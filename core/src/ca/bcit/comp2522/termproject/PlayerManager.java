@@ -145,11 +145,11 @@ public final class PlayerManager {
         gameScreen.getPlayer().setIsMoving(this.deltaX != 0 || this.deltaY != 0);
 
         this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() + this.deltaX);
-        if (!gameScreen.getBackground().getBoundingRectangle().contains(gameScreen.getPlayer().getHitbox())) {
+        if (!gameScreen.getArenaBorders().contains(gameScreen.getPlayer().getHitbox())) {
             this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() - this.deltaX);
         }
         this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() + this.deltaY);
-        if (!gameScreen.getBackground().getBoundingRectangle().contains(gameScreen.getPlayer().getHitbox())) {
+        if (!gameScreen.getArenaBorders().contains(gameScreen.getPlayer().getHitbox())) {
             this.gameScreen.getPlayer().setY(this.gameScreen.getPlayer().getY() - this.deltaY);
         }
     }
