@@ -141,9 +141,14 @@ public final class PlayerManager {
             this.deltaY = this.deltaY * (float) Math.abs(Math.sin(Math.atan(this.deltaY / this.deltaX)));
         }
 
-        // set player isMoving if wasd is pressed
+        // set player isMoving if WASD is pressed
         gameScreen.getPlayer().setIsMoving(this.deltaX != 0 || this.deltaY != 0);
 
+        // sets resets player coordinates when going towards arena border.
+        handleBorderMovement();
+    }
+
+    private void handleBorderMovement() {
         this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() + this.deltaX);
         if (!gameScreen.getArenaBorders().contains(gameScreen.getPlayer().getHitbox())) {
             this.gameScreen.getPlayer().setX(this.gameScreen.getPlayer().getX() - this.deltaX);
