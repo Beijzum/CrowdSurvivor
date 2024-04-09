@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -69,6 +70,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private final GlyphLayout timeElapsedMessage = new GlyphLayout();
     private int enterUpgradeScreenAmount;
     private final LinkedList<Boss> onFieldBosses = new LinkedList<>();
+    public final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("assets/gameAssets.atlas"));
 
     /**
      * Constructs the in-game screen for the Crowd Survivor game.
@@ -78,7 +80,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public InGameScreen(final CrowdSurvivor crowdSurvivor) {
         this.camera = new OrthographicCamera();
         this.game = crowdSurvivor;
-        this.player = Player.createPlayer();
+        this.player = Player.createPlayer(this.atlas);
         final int barHeight = 20;
         final int hpBarWidth = 300;
         this.hpBar = new HPBar(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), hpBarWidth, barHeight,
