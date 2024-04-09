@@ -54,6 +54,7 @@ of us worked together on projects in other courses and we split our workload by 
 - Ability to gamble currency for risk/reward experience
 
 ## TODO BEFORE TUESDAY
+change enemy spawning to use camera, not gdx viewport
 unit tests
 update uml
 update readme
