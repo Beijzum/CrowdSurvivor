@@ -29,7 +29,7 @@ public final class Player extends Entity {
     private static final float DEFAULT_ATTACK_SPEED = 1.5f;
     private static final float DEFAULT_CRIT_RATE = 0.1f;
     private static final float DEFAULT_CRIT_MULTIPLIER = 1.5f;
-    private static final float DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.01f;
+    private static final float DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.05f;
     private static final int DEFAULT_ATTACK = 20;
     private static final float BASE_IFRAME_LENGTH = 1.5f;
     private static final float HEALTH_REGEN_TICK_TIME = 1.5f;
@@ -447,6 +447,8 @@ public final class Player extends Entity {
             this.health -= Math.round(enemyAttack * (1 - this.defense));
             this.iFrameIsOn = true;
             return true;
+        } else if (this.sprite.getBoundingRectangle().overlaps(enemyHitbox) && this.iFrameIsOn) {
+            this.iFramesTimer += Gdx.graphics.getDeltaTime();
         }
         if (!this.iFrameIsOn) {
             return false;
