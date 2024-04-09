@@ -36,7 +36,7 @@ public final class Player extends Entity {
     private static final int BASE_LEVEL_UP_THRESHOLD = 50;
     private static final int BASE_EXP_MULTIPLIER = 1;
     private static final int BASE_CURRENCY_MULTIPLIER = 1;
-    private static final Texture[] PLAYER_FRAMES = new Texture[] {
+    private static final Texture[] PLAYER_FRAMES = new Texture[]{
             new Texture(Gdx.files.internal("player/playerSpriteFrame0.png")),
             new Texture(Gdx.files.internal("player/playerSpriteFrame1.png")),
             new Texture(Gdx.files.internal("player/playerSpriteFrame2.png")),
@@ -69,7 +69,8 @@ public final class Player extends Entity {
         final int lifetimeValue = 3;
         final int sizeValue = 150;
         this.projectileTemplate = new Projectile(projectileSprite, speedValue, lifetimeValue, sizeValue);
-        this.sprite = new AnimatedSprite(PLAYER_FRAMES, 20);
+        final int framesPerSecond = 20;
+        this.sprite = new AnimatedSprite(PLAYER_FRAMES, framesPerSecond);
         final int spriteSize = 100;
         this.sprite.setSize(spriteSize, spriteSize);
     }
@@ -338,10 +339,34 @@ public final class Player extends Entity {
         this.currencyMultiplier = currencyMultiplier;
     }
 
-    public void setIsMoving(boolean state) {
+    /**
+     * Retrieves the move state of the sprite.
+     *
+     * @param state boolean representing the move state of the sprite.
+     */
+    public void setIsMoving(final boolean state) {
         this.isMoving = state;
     }
 
+    /**
+     * Flips the sprite to the right.
+     */
+    public void flipRight() {
+        if (this.isFacingLeft) {
+            this.sprite.flip(true, false);
+            this.isFacingLeft = false;
+        }
+    }
+
+    /**
+     * Flips the sprite to the left.
+     */
+    public void flipLeft() {
+        if (!this.isFacingLeft) {
+            this.sprite.flip(true, false);
+            this.isFacingLeft = true;
+        }
+    }
 
     /**
      * Resets the player's statistics to their default values.
@@ -546,19 +571,5 @@ public final class Player extends Entity {
                 this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
                 this.sprite.getScaleY(), this.sprite.getRotation());
         batch.end();
-    }
-
-    public void flipRight() {
-        if (this.isFacingLeft) {
-            this.sprite.flip(true, false);
-            this.isFacingLeft = false;
-        }
-    }
-
-    public void flipLeft() {
-        if (!this.isFacingLeft) {
-            this.sprite.flip(true, false);
-            this.isFacingLeft = true;
-        }
     }
 }
