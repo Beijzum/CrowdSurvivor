@@ -11,14 +11,14 @@ public class AnimatedSprite extends Sprite {
     private float timer;
     private boolean pausedAnimation;
 
-    public AnimatedSprite(Texture texture) {
+    public AnimatedSprite(final Texture texture) {
         super(texture);
-        this.frames = new Texture[] {texture};
+        this.frames = new Texture[]{texture};
         this.framesPerSecond = 0;
         this.timer = 0;
     }
 
-    public AnimatedSprite(Texture[] frames, float framesPerSecond) {
+    public AnimatedSprite(final Texture[] frames, float framesPerSecond) {
         super(frames[0]);
         this.frames = frames;
         this.framesPerSecond = framesPerSecond;
@@ -42,7 +42,7 @@ public class AnimatedSprite extends Sprite {
         this.currentFrame = 0;
     }
 
-    public void setPausedAnimation(boolean state) {
+    public void setPausedAnimation(final boolean state) {
         this.pausedAnimation = state;
     }
 

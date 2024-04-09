@@ -13,7 +13,7 @@ final public class EnemyManager {
     final private static int BASE_BASIC_ENEMY_SPAWN_TIME = 2;
     final private static int BASE_CHARGER_ENEMY_SPAWN_TIME = 10;
     final private static int BASE_RANGED_ENEMY_SPAWN_TIME = 5;
-    final private static int BASE_CHARGER_HEALTH = 125;
+    final private static int BASE_CHARGER_HEALTH = 70;
     final private static int BASE_ENEMY_SPEED = 100;
     final private static int WAVE_SIZE = 8;
     final private static int BOSS_SPAWN_TIMER = 30;
@@ -70,7 +70,7 @@ final public class EnemyManager {
             gameScreen.getEnemyProjectilesOnScreen().removeFirst();
         }
         if (gameScreen.getBossProjectilesOnScreen().peek() != null
-        && gameScreen.getBossProjectilesOnScreen().peek().isOverLifeTime()) {
+                && gameScreen.getBossProjectilesOnScreen().peek().isOverLifeTime()) {
             gameScreen.getBossProjectilesOnScreen().removeFirst();
         }
 
@@ -279,7 +279,7 @@ final public class EnemyManager {
         // temp scaling
         int health = Math.round(BASE_CHARGER_HEALTH + gameScreen.getTimeElapsed() / 5);
         int acceleration = 100;
-        int attack = 20;
+        int attack = 10;
         Charger newCharger = new Charger(health, acceleration, attack, "charger.jpg");
         newCharger.setCenterPosition(xCoord, yCoord);
         return newCharger;
