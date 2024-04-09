@@ -1,22 +1,64 @@
-This game uses JDK 18. We suggest downloading the SDK here at Adoptium because it has many built-in libraries.
-https://adoptium.net/temurin/releases/?version=18&package=jdk&arch=any.
+# Crowd Survivor
+Crowd Survivor is a game inspired by the game "Vampire Survivors", a game in which many enemies spawn in a small arena 
+and the player must survive a constant onslaught of enemies charging towards the player. We made the game to emulate the
+same hectic play style, while also keeping a fun atmosphere using internet memes and Edro as the enemies.
 
-MacOS users need to start the application with the -XstartOnFirstThread JVM argument.
+## How To Play
+Use the WASD keys to move around the map, and use your mouse to aim at where to fire a projectile. Press escape to pause
+the game and kill enemies to level up. Upon level-up, choose an upgrade to improve your stats to make surviving, or 
+killing enemies easier.
 
-## Crowd Survivor
+## Features
+- Auto-saving
+- Shop with long-term progression
+- Permanent stat upgrades
+- Random organic spawning of enemies
 
-Inspired by the game "Vampire Survivors".
+## Important Notes
 
-## Notes
+### Mac Machines
+Crowd Survivor was developed on Windows machines, as such game stability has not been tested for Mac machines and should
+be taken into consideration, and should start the game with the JVM argument -XstartOnFirstThread as cited by LibGDX.
 
-Notes go here
+### Resolution
+Crowd Survivor was also developed at the window size of 1920 x 1080 resolution, hence menu layouts may not properly
+align if the window size deviates from this resolution. For the best gaming experience, the game should be played at the
+recommended resolution of 1920 x 1080.
+
+### Commits
+The GitHub commits on this repository is lopsided due to both pair programming and different commit styles. Jonathan
+tends to commit frequent but small changes, while Jason tends to commit infrequent but large changes. In addition, both
+of us worked together on projects in other courses and we split our workload by courses.
+
+### Versions Used
+- JDK version 18
+- LibGDX version 1.12.1
+- Gradle version 8.5
+- DOUBLE CHECK BEFORE FRIDAY
+
+## Post-Development Thoughts
+
+### Future Consideration
+- A more aesthetically pleasing UI
+- Fix the UI elements offsetting whenever the player moves
+- Animated enemies 
+- Settings menu to allow for more player customization
+
+### Dropped Features
+- Different death styles on enemies
+- More enemy variation
+- Special ultimate abilities the player can use
+- Load out page to choose different attack styles
+- Different player projectiles
+- Different projectile firing types
+- Ability to gamble currency for risk/reward experience
+- 
 
 ## TODO BEFORE TUESDAY
-
-optimize game
 unit tests
 update uml
 update readme
-talk about libgdx and gradle versions
-talk about resolutions.
-pair programming
+
+
+This game uses JDK 18. We suggest downloading the SDK here at Adoptium because it has many built-in libraries.
+https://adoptium.net/temurin/releases/?version=18&package=jdk&arch=any.
