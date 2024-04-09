@@ -15,7 +15,7 @@ final public class EnemyManager {
     final private static int BASE_RANGED_ENEMY_SPAWN_TIME = 5;
     final private static int BASE_CHARGER_HEALTH = 70;
     final private static int BASE_ENEMY_SPEED = 100;
-    final private static int WAVE_SIZE = 8;
+    final private static int WAVE_SIZE = 10;
     final private static int BOSS_SPAWN_TIMER = 30;
     final private static int BASE_BOSS_SIZE = 100;
     final private static int BASE_BOSS_ATTACK = 30;
@@ -270,7 +270,8 @@ final public class EnemyManager {
         int speed = BASE_ENEMY_SPEED + Math.round(gameScreen.getTimeElapsed() / 5);
         int size = BASE_BOSS_SIZE + 25 * Math.round(gameScreen.getTimeElapsed() / 30) - 25;
         int attack = BASE_BOSS_ATTACK + 5 * Math.round(gameScreen.getTimeElapsed() / 30) - 10;
-        Boss newBoss = new Boss(health, speed, attack, size, "boss.png");
+        Boss newBoss = new Boss(health, speed, attack, size, gameScreen.atlas.createSprite("enemies/boss"),
+                gameScreen.atlas.createSprite("projectiles/bossProjectile"));
         newBoss.setCenterPosition(xCoord, yCoord);
         return newBoss;
     }
@@ -280,7 +281,7 @@ final public class EnemyManager {
         int health = Math.round(BASE_CHARGER_HEALTH + gameScreen.getTimeElapsed() / 5);
         int acceleration = 100;
         int attack = 10;
-        Charger newCharger = new Charger(health, acceleration, attack, "charger.jpg");
+        Charger newCharger = new Charger(health, acceleration, attack, gameScreen.atlas.createSprite("enemies/charger"));
         newCharger.setCenterPosition(xCoord, yCoord);
         return newCharger;
     }
@@ -290,13 +291,19 @@ final public class EnemyManager {
         RangedEnemy newEnemy;
         switch (choice) {
             case 0:
-                newEnemy = RangedEnemy.createSniper(gameScreen.getTimeElapsed());
+                newEnemy = RangedEnemy.createSniper(gameScreen.getTimeElapsed(),
+                        gameScreen.atlas.createSprite("enemies/sniper"),
+                        gameScreen.atlas.createSprite("projectiles/enemyProjectile"));
                 break;
             case 1:
-                newEnemy = RangedEnemy.createSpewer(gameScreen.getTimeElapsed());
+                newEnemy = RangedEnemy.createSpewer(gameScreen.getTimeElapsed(),
+                        gameScreen.atlas.createSprite("enemies/spewer"),
+                        gameScreen.atlas.createSprite("projectiles/enemyProjectile"));
                 break;
             default:
-                newEnemy = RangedEnemy.createBasic(gameScreen.getTimeElapsed());
+                newEnemy = RangedEnemy.createBasic(gameScreen.getTimeElapsed(),
+                        gameScreen.atlas.createSprite("enemies/basicRanged"),
+                        gameScreen.atlas.createSprite("projectiles/enemyProjectile"));
                 break;
         }
         newEnemy.setCenterPosition(xCoord, yCoord);
@@ -317,7 +324,7 @@ final public class EnemyManager {
         int health = Math.round(BASE_BASIC_ENEMY_HEALTH + gameScreen.getTimeElapsed() / 5); // temp scaling
         int speed = Math.round(BASE_ENEMY_SPEED + gameScreen.getTimeElapsed() / 5);
         int attack = 10;
-        Enemy newEnemy = new Enemy(health, speed, attack, "enemy.png");
+        Enemy newEnemy = new Enemy(health, speed, attack, gameScreen.atlas.createSprite("enemies/enemy"));
         newEnemy.setCenterPosition(xCoord, yCoord);
         return newEnemy;
     }

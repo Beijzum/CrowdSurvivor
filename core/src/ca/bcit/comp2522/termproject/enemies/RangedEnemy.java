@@ -23,36 +23,34 @@ public class RangedEnemy extends Enemy {
     final private static int BASIC_ATTACK = 10;
     final private static int SNIPER_ATTACK = 20;
     final private static int BASE_SPEED = 75;
-    final private static Sprite DEFAULT_PROJECTILE_SPRITE =
-            new Sprite(new Texture(Gdx.files.internal("projectiles/enemyProjectile.png")));
-    private float attackSpeed;
+    final private float attackSpeed;
     private float attackTimer;
     final private Projectile projectileTemplate;
 
-    public static RangedEnemy createBasic(float timeElapsed) {
+    public static RangedEnemy createBasic(float timeElapsed, Sprite sprite, Sprite projectileSprite) {
         int health = Math.round(BASIC_BASE_HEALTH + timeElapsed / 5);
         int speed = Math.round(BASE_SPEED + timeElapsed / 5);
         return new RangedEnemy(health, speed, BASIC_ATTACK, BASIC_PROJECTILE_SPEED,
-                BASIC_ATTACK_SPEED, DEFAULT_PROJECTILE_SPRITE, "basicRanged.jpg");
+                BASIC_ATTACK_SPEED, projectileSprite, sprite);
     }
 
-    public static RangedEnemy createSpewer(float timeElapsed) {
+    public static RangedEnemy createSpewer(float timeElapsed, Sprite sprite, Sprite projectileSprite) {
         int health = Math.round(SPEWER_BASE_HEALTH + timeElapsed / 5);
         int speed = Math.round(BASE_SPEED + timeElapsed / 5);
         return new RangedEnemy(health, speed, SPEWER_ATACK, SPEWER_PROJECTILE_SPEED,
-                SPEWER_ATTACK_SPEED, DEFAULT_PROJECTILE_SPRITE, "spewer.jpg");
+                SPEWER_ATTACK_SPEED, projectileSprite, sprite);
     }
 
-    public static RangedEnemy createSniper(float timeElapsed) {
+    public static RangedEnemy createSniper(float timeElapsed, Sprite sprite, Sprite projectileSprite) {
         int health = Math.round(SNIPER_BASE_HEALTH + timeElapsed / 5);
         int speed = Math.round(BASE_SPEED + timeElapsed / 5);
         return new RangedEnemy(health, speed, SNIPER_ATTACK, SNIPER_PROJECTILE_SPEED,
-                SNIPER_ATTACK_SPEED, DEFAULT_PROJECTILE_SPRITE, "sniper.jpg");
+                SNIPER_ATTACK_SPEED, projectileSprite, sprite);
     }
 
     private RangedEnemy(int health, int speed, int attack, int projectileSpeed,
-                        float attackSpeed, Sprite projectileSprite, String filepath) {
-        super(health, speed, attack, filepath);
+                        float attackSpeed, Sprite projectileSprite, Sprite sprite) {
+        super(health, speed, attack, sprite);
         this.projectileTemplate =
                 new Projectile(projectileSprite, projectileSpeed, PROJECTILE_LIFETIME, PROJECTILE_SIZE);
         this.attackSpeed = attackSpeed;

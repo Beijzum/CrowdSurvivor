@@ -1,13 +1,15 @@
 package ca.bcit.comp2522.termproject.enemies;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
 public class Charger extends Enemy {
     final private int acceleration;
     final private Vector2 chargingVector = new Vector2();
-    public Charger(int health, int acceleration, int attack, String filepath) {
-        super(health, 0, attack, filepath);
+    public Charger(int health, int acceleration, int attack, Sprite sprite) {
+        super(health, 0, attack, sprite);
         this.acceleration = acceleration;
     }
 
