@@ -63,6 +63,7 @@ Jonathan tends to frequently commit small changes, while Jason tends to infreque
 - Different player projectiles
 - Different projectile firing types
 - Ability to gamble currency for risk/reward experience
+- Optimized code structure (generics, lambda)
 
 ## TODO BEFORE TUESDAY
 
