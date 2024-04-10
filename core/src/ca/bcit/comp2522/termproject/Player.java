@@ -36,7 +36,7 @@ public final class Player extends Entity {
     private static final int BASE_LEVEL_UP_THRESHOLD = 50;
     private static final int BASE_EXP_MULTIPLIER = 1;
     private static final int BASE_CURRENCY_MULTIPLIER = 1;
-    private static final Texture[] PLAYER_FRAMES = new Texture[] {
+    private static final Texture[] PLAYER_FRAMES = new Texture[]{
             new Texture(Gdx.files.internal("player/playerSpriteFrame0.png")),
             new Texture(Gdx.files.internal("player/playerSpriteFrame1.png")),
             new Texture(Gdx.files.internal("player/playerSpriteFrame2.png")),
@@ -63,12 +63,13 @@ public final class Player extends Entity {
     private boolean isFacingLeft = true;
     private final AnimatedSprite sprite;
 
-    private Player(TextureAtlas atlas) {
+    private Player(final TextureAtlas atlas) {
         resetStats();
         final int speedValue = 500;
         final int lifetimeValue = 3;
         final int sizeValue = 150;
-        this.projectileTemplate = new Projectile(atlas.createSprite("projectiles/playerProjectile"), speedValue, lifetimeValue, sizeValue);
+        this.projectileTemplate = new Projectile(atlas.createSprite("projectiles/playerProjectile"),
+                speedValue, lifetimeValue, sizeValue);
         final int framesPerSecond = 20;
         this.sprite = new AnimatedSprite(PLAYER_FRAMES, framesPerSecond);
         final int spriteSize = 100;
@@ -78,9 +79,10 @@ public final class Player extends Entity {
     /**
      * Creates a single instance of the Player object.
      *
+     * @param atlas TextureAtlas object representing the texture atlas containing the player's textures.
      * @return the created or loaded PlayerManager instance.
      */
-    public static Player createPlayer(TextureAtlas atlas) {
+    public static Player createPlayer(final TextureAtlas atlas) {
         if (instance == null) {
             instance = new Player(atlas);
         }
@@ -248,6 +250,16 @@ public final class Player extends Entity {
     public int getCurrentHP() {
         return this.health;
     }
+
+    /**
+     * Retrieves the player's hitbox.
+     *
+     * @return the player's hitbox.
+     */
+    public Rectangle getHitbox() {
+        return this.sprite.getBoundingRectangle();
+    }
+
 
     /**
      * Sets the player's attack speed.
@@ -529,8 +541,27 @@ public final class Player extends Entity {
         this.collectedCurrency += Math.round(currency * this.currencyMultiplier);
     }
 
-    public Rectangle getHitbox() {
-        return this.sprite.getBoundingRectangle();
+    /**
+     * Draws the player's sprite using the provided Batch.
+     * This method updates the sprite's animation state based on whether the object is moving or not.
+     * If the object is moving, it resumes the sprite's animation.
+     * If the object is not moving, it pauses the sprite's animation and resets the animation frames.
+     *
+     * @param batch Batch object used for rendering sprites.
+     */
+    public void draw(final Batch batch) {
+        if (this.isMoving) {
+            this.sprite.setPausedAnimation(false);
+        } else {
+            this.sprite.setPausedAnimation(true);
+            this.sprite.resetFrames();
+        }
+        this.sprite.update();
+        batch.begin();
+        batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
+                this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
+                this.sprite.getScaleY(), this.sprite.getRotation());
+        batch.end();
     }
 
     /**
@@ -561,18 +592,5 @@ public final class Player extends Entity {
                 + '}';
     }
 
-    public void draw(final Batch batch) {
-        if (this.isMoving) {
-            this.sprite.setPausedAnimation(false);
-        } else {
-            this.sprite.setPausedAnimation(true);
-            this.sprite.resetFrames();
-        }
-        this.sprite.update();
-        batch.begin();
-        batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
-                this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
-                this.sprite.getScaleY(), this.sprite.getRotation());
-        batch.end();
-    }
+
 }

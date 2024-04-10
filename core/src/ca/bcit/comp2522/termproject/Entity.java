@@ -1,8 +1,5 @@
 package ca.bcit.comp2522.termproject;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Rectangle;
-
 /**
  * Represents the abstract Entity class, which serves as the base class for all entities in the game.
  *

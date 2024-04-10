@@ -174,7 +174,7 @@ public class Projectile {
     }
 
     /**
-     * Draws the projectile using the provided batch.
+     * Draws the projectile using the provided Batch.
      *
      * @param batch Batch object used to render the projectile.
      */
