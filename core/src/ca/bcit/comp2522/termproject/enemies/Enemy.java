@@ -1,44 +1,48 @@
 package ca.bcit.comp2522.termproject.enemies;
 
-import ca.bcit.comp2522.termproject.*;
+import ca.bcit.comp2522.termproject.CrowdSurvivor;
+import ca.bcit.comp2522.termproject.DamageNumber;
+import ca.bcit.comp2522.termproject.Entity;
+import ca.bcit.comp2522.termproject.Projectile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 public class Enemy extends Entity {
-    final protected static float DEFAULT_DEFENSE = 0.0f;
-    final private static float DAMAGE_TINT_TIME = 0.6f;
-    final private static int BASE_CURRENCY_DROP_AMOUNT = 2;
-    final private static int CURRENCY_CALCULATION_DIVISOR = 50;
-    final private Color damageTint = new Color(1, 0, 0, 1);
-    final private LinkedList<DamageNumber> activeDamageNumbers = new LinkedList<>();
+    private static final float DEFAULT_DEFENSE = 0.0f;
+    private static final float DAMAGE_TINT_TIME = 0.6f;
+    private static final int BASE_CURRENCY_DROP_AMOUNT = 2;
+    private static final int CURRENCY_CALCULATION_DIVISOR = 50;
+    private final Color damageTint = new Color(1, 0, 0, 1);
+    private final LinkedList<DamageNumber> activeDamageNumbers = new LinkedList<>();
     private float tintTimer = 0;
     private boolean isTakingDamage;
-    final private Vector2 directionVector = new Vector2();
-    final private LinkedList<Projectile> hitByProjectileList = new LinkedList<>();
-    final protected Random randomNumberGenerator = new Random();
-    final Sprite sprite;
+    private final Vector2 directionVector = new Vector2();
+    private final LinkedList<Projectile> hitByProjectileList = new LinkedList<>();
+    private final Random randomNumberGenerator = new Random();
+    private final Sprite sprite;
 
-    public Enemy(int health, int speed, int attack, Sprite enemySprite) {
+    public Enemy(final int health, final int speed, final int attack, final Sprite enemySprite) {
         this.maxHealth = health;
         this.health = this.maxHealth;
         this.speed = speed;
         this.attack = attack;
         this.defense = DEFAULT_DEFENSE;
         this.sprite = enemySprite;
-        this.sprite.setSize(100, 100);
+        final int spriteSize = 100;
+        this.sprite.setSize(spriteSize, spriteSize);
+    }
+
+    public Sprite getSprite() {
+        return this.sprite;
     }
 
     public float getCenterX() {
@@ -54,7 +58,10 @@ public class Enemy extends Entity {
     }
 
     public int getDropEXP() {
-        return this.randomNumberGenerator.nextInt(this.maxHealth / 2, this.maxHealth * 3 / 4);
+        final int expHealthMultiplier = 3;
+        final int expDropDivisor = 4;
+        return this.randomNumberGenerator.nextInt(this.maxHealth / 2,
+                this.maxHealth * expHealthMultiplier / expDropDivisor);
     }
 
     public int getDropCurrency() {
@@ -76,22 +83,23 @@ public class Enemy extends Entity {
         this.sprite.setY(this.sprite.getY() + deltaY);
     }
 
-    public void calculateDirectionVector(float x, float y) {
+    public void calculateDirectionVector(final float x, final float y) {
         this.directionVector.set(x, y);
     }
 
-    public void setCenterPosition(float x, float y) {
+    public void setCenterPosition(final float x, final float y) {
         this.sprite.setCenter(x, y);
     }
 
-    public void draw(Batch batch) {
+    public void draw(final Batch batch) {
         batch.begin();
         if (this.isTakingDamage) {
             Color originalColor = new Color(batch.getColor());
             if (originalColor.equals(CrowdSurvivor.getStandardColour())) {
                 batch.setColor(this.damageTint);
             } else {
-                batch.setColor(originalColor.r + 0.3f, originalColor.g, originalColor.b, originalColor.a);
+                final float redValue = 0.3f;
+                batch.setColor(originalColor.r + redValue, originalColor.g, originalColor.b, originalColor.a);
             }
             batch.draw(this.sprite, this.sprite.getX(), this.sprite.getY(), this.sprite.getOriginX(),
                     this.sprite.getOriginY(), this.sprite.getWidth(), this.sprite.getHeight(), this.sprite.getScaleX(),
@@ -106,11 +114,11 @@ public class Enemy extends Entity {
         batch.end();
     }
 
-    public void drawHPBar(ShapeRenderer shapeRenderer) {
-        float hpBarWidth = this.sprite.getWidth();
-        float hpBarHeight = 5;
-        float hpBarX = this.sprite.getX();
-        float hpBarY = this.sprite.getY() + this.sprite.getHeight() + 5;
+    public void drawHPBar(final ShapeRenderer shapeRenderer) {
+        final float hpBarWidth = this.sprite.getWidth();
+        final float hpBarHeight = 5;
+        final float hpBarX = this.sprite.getX();
+        final float hpBarY = this.sprite.getY() + this.sprite.getHeight() + hpBarHeight;
 
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.rect(hpBarX, hpBarY, hpBarWidth, hpBarHeight);
@@ -119,7 +127,7 @@ public class Enemy extends Entity {
         shapeRenderer.rect(hpBarX, hpBarY, hpBarWidth * ((float) this.health / this.maxHealth), hpBarHeight);
     }
 
-    public void drawDamageNumbers(Batch batch) {
+    public void drawDamageNumbers(final Batch batch) {
         batch.begin();
         for (DamageNumber damageNumber : activeDamageNumbers) {
             damageNumber.draw((SpriteBatch) batch, CrowdSurvivor.getFont());
@@ -127,7 +135,7 @@ public class Enemy extends Entity {
         batch.end();
     }
 
-    public void updateDamageNumbers(float deltaTime) {
+    public void updateDamageNumbers(final float deltaTime) {
         for (DamageNumber number : activeDamageNumbers) {
             number.update(deltaTime);
         }
@@ -136,7 +144,7 @@ public class Enemy extends Entity {
         }
     }
 
-    public void takeDamage(Projectile projectile, int damage, boolean isCritical) {
+    public void takeDamage(final Projectile projectile, final int damage, final boolean isCritical) {
         if (!this.hitByProjectileList.contains(projectile)) {
             this.isTakingDamage = true;
             this.hitByProjectileList.add(projectile);
