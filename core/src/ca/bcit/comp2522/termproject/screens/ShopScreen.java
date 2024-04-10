@@ -406,7 +406,7 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                     final float upgradeHealthRegenValue = 0.02f;
                     game.getPlayerProfile().setHealthRegenMultiplierBooster(game.getPlayerProfile()
                             .getHealthRegenMultiplierBooster() + upgradeHealthRegenValue);
-                    game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyHealthPrice);
+                    game.getPlayerProfile().setCurrency(game.getPlayerProfile().getCurrency() - buyHealthRegenPrice);
                     return true;
                 } else {
                     return false;
