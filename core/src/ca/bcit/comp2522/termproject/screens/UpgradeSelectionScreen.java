@@ -12,6 +12,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import java.util.Random;
 
+/**
+ * Represents the upgrade selection screen where players can select various upgrades after leveling up.
+ * This screen displays a selection of four random upgrade buttons from which the player can choose.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public class UpgradeSelectionScreen implements Screen, ActorManager, Background {
     private static final int BUTTON_COUNT_ON_SCREEN = 4;
     private final CrowdSurvivor game;
@@ -29,8 +41,13 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
     private final TextButton defenseUpgrade;
     private final TextButton healthRegenUpgrade;
 
-    public UpgradeSelectionScreen(final CrowdSurvivor game) {
-        this.game = game;
+    /**
+     * Constructs an upgrade selection screen for the Crowd Survivor game.
+     *
+     * @param crowdSurvivor CrowdSurvivor object representing the game instance.
+     */
+    public UpgradeSelectionScreen(final CrowdSurvivor crowdSurvivor) {
+        this.game = crowdSurvivor;
         this.attackUpgrade = new TextButton("+10 Attack", this.game.getSkin());
         this.speedUpgrade = new TextButton("+10 Speed", this.game.getSkin());
         this.healthUpgrade = new TextButton("+10 Health", this.game.getSkin());
@@ -45,6 +62,10 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
         this.possibleUpgrades = createButtons();
     }
 
+    /**
+     * Initializes the upgrade selection screen.
+     * Randomly selects and positions a set number of upgrade buttons on the screen.
+     */
     @Override
     public void show() {
         for (int i = 0; i < BUTTON_COUNT_ON_SCREEN; i++) {
@@ -55,6 +76,11 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
         Gdx.input.setInputProcessor(this.game.getButtonsUI());
     }
 
+    /**
+     * Renders the assets for the upgrade selection screen.
+     *
+     * @param deltaTime The time passed since the last frame.
+     */
     @Override
     public void render(final float deltaTime) {
         this.game.getInGameScreen().renderFrameAsBackground();
