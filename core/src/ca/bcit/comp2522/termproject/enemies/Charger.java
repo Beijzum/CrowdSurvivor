@@ -73,4 +73,17 @@ public class Charger extends Enemy {
         this.getSprite().setX(this.getSprite().getX() + deltaX);
         this.getSprite().setY(this.getSprite().getY() + deltaY);
     }
+
+    /**
+     * Returns a string representation of the Charger object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "Charger{"
+                + "acceleration=" + this.acceleration
+                + ", chargingVector=" + this.chargingVector
+                + '}';
+    }
 }

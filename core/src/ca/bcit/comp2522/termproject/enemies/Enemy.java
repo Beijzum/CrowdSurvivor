@@ -287,4 +287,23 @@ public class Enemy extends Entity {
             this.hitByProjectileList.removeFirst();
         }
     }
+
+    /**
+     * Returns a string representation of the Enemy object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "Enemy{"
+                + "damageTint=" + this.damageTint
+                + ", activeDamageNumbers=" + this.activeDamageNumbers
+                + ", tintTimer=" + this.tintTimer
+                + ", isTakingDamage=" + this.isTakingDamage
+                + ", directionVector=" + this.directionVector
+                + ", hitByProjectileList=" + this.hitByProjectileList
+                + ", randomNumberGenerator=" + this.randomNumberGenerator
+                + ", sprite=" + this.sprite
+                + '}';
+    }
 }

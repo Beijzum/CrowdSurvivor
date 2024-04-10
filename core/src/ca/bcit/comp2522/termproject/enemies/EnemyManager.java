@@ -420,4 +420,28 @@ public final class EnemyManager {
                 this.gameScreen.getPlayer().getCenterY() - enemy.getCenterY());
         enemy.move();
     }
+
+    /**
+     * Returns a string representation of the EnemyManager object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "EnemyManager{"
+                + "gameScreen=" + this.gameScreen
+                + ", currentBasicEnemySpawnTime=" + this.currentBasicEnemySpawnTime
+                + ", currentRangedEnemySpawnTime=" + this.currentRangedEnemySpawnTime
+                + ", currentChargerEnemySpawnTime=" + this.currentChargerEnemySpawnTime
+                + ", basicEnemyTimer=" + this.basicEnemyTimer
+                + ", rangedEnemyTimer=" + this.rangedEnemyTimer
+                + ", chargerEnemyTimer=" + this.chargerEnemyTimer
+                + ", bossTimer=" + this.bossTimer
+                + ", bossSpawnSFX=" + this.bossSpawnSFX
+                + ", enemySpawnSFX=" + this.enemySpawnSFX
+                + ", bossProjectileSFX=" + this.bossProjectileSFX
+                + ", bossDeathSFX=" + this.bossDeathSFX
+                + ", randomNumberGenerator=" + this.randomNumberGenerator
+                + '}';
+    }
 }

@@ -67,4 +67,17 @@ public class Boss extends Enemy {
             return false;
         }
     }
+
+    /**
+     * Returns a string representation of the Boss object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "Boss{"
+                + "projectileTemplate=" + this.projectileTemplate
+                + ", attackTimer=" + this.attackTimer
+                + '}';
+    }
 }

@@ -117,4 +117,18 @@ public final class RangedEnemy extends Enemy {
             this.attackTimer += Gdx.graphics.getDeltaTime();
         }
     }
+
+    /**
+     * Returns a string representation of the RangedEnemy object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "RangedEnemy{"
+                + "attackSpeed=" + this.attackSpeed
+                + ", attackTimer=" + this.attackTimer
+                + ", projectileTemplate=" + this.projectileTemplate
+                + '}';
+    }
 }
