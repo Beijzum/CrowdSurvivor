@@ -43,10 +43,10 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
      * Constructs an instance of the GameOverScreen class.
      * Initializes the game over music and sound effects.
      *
-     * @param game CrowdSurvivor object representing the game instance.
+     * @param crowdSurvivor CrowdSurvivor object representing the game instance.
      */
-    public GameOverScreen(final CrowdSurvivor game) {
-        this.game = game;
+    public GameOverScreen(final CrowdSurvivor crowdSurvivor) {
+        this.game = crowdSurvivor;
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/gameOverMusic.mp3"));
         this.startOfMusic = Gdx.audio.newMusic(Gdx.files.internal("sfx/gameOverSFX.mp3"));
         final float buttonWidthDivisor = 3f;
