@@ -62,26 +62,44 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
         this.game.getButtonsUI().draw();
     }
 
+    /**
+     * Handles the resizing of the screen.
+     *
+     * @param width  the new width of the screen.
+     * @param height the new height of the screen.
+     */
     @Override
-    public void resize(int i, int i1) {
+    public void resize(final int width, final int height) {
 
     }
 
+    /**
+     * Pauses the game.
+     */
     @Override
     public void pause() {
 
     }
 
+    /**
+     * Resumes the game after it has been paused.
+     */
     @Override
     public void resume() {
 
     }
 
+    /**
+     * Hides the screen when no longer active or visible.
+     */
     @Override
     public void hide() {
 
     }
 
+    /**
+     * Disposes of resources.
+     */
     @Override
     public void dispose() {
 
@@ -97,16 +115,17 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
 
     private void positionButton(final TextButton button, final int buttonNumber) {
         int buttonWidth = Gdx.graphics.getWidth() / 2;
-        int buttonHeight = Gdx.graphics.getHeight() / 6;
+        final int buttonHeightDivisor = 6;
+        int buttonHeight = Gdx.graphics.getHeight() / buttonHeightDivisor;
         int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
-        int buttonPositionY = Gdx.graphics.getHeight() * 2 / 3 - buttonHeight * buttonNumber;
+        final int buttonPosYDivisor = 3;
+        int buttonPositionY = Gdx.graphics.getHeight() * 2 / buttonPosYDivisor - buttonHeight * buttonNumber;
 
         button.setSize(buttonWidth, buttonHeight);
         button.setPosition(buttonPositionX, buttonPositionY);
     }
 
     private TextButton[] createButtons() {
-
         handleAttackUpgrade();
         handleSpeedUpgrade();
         handleHealthUpgrade();
