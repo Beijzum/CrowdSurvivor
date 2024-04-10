@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 /**
  * Represents the shop screen where players can purchase various upgrades and items using in-game currency.
+ * This screen provides a selection of upgrades to enhance their character.
  *
  * @author Jonathan Liu
  * @author A01375621

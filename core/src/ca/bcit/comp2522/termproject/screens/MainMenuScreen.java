@@ -16,6 +16,18 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+/**
+ * Represents the main menu screen displayed when the game starts.
+ * This screen provides options for the player to start the game, access the shop, or quit the game.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public class MainMenuScreen implements Screen, Background, ActorManager, MessageLayout {
     private static final int NUMBER_OF_BUTTONS = 3;
     private final OrthographicCamera camera;
@@ -31,12 +43,18 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
     private final float buttonPositionX;
     private final float firstButtonPositionY;
 
-    public MainMenuScreen(final CrowdSurvivor game) {
+    /**
+     * Constructs a main menu screen for the Crowd Survivor game.
+     *
+     * @param crowdSurvivor CrowdSurvivor object representing the game instance.
+     */
+    public MainMenuScreen(final CrowdSurvivor crowdSurvivor) {
+        this.game = crowdSurvivor;
         this.camera = new OrthographicCamera();
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/mainMenuMusic.mp3"));
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        this.game = game;
+
         final float buttonWidthDivisor = 3f;
         this.buttonWidth = Gdx.graphics.getWidth() / buttonWidthDivisor;
         final float buttonHeightDivisor = 10f;
@@ -50,6 +68,10 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         createButtons();
     }
 
+    /**
+     * Initializes the main menu screen.
+     * Saves the player's profile, sets input, and plays music.
+     */
     @Override
     public void show() {
         this.game.getPlayerProfile().saveProfileState();
@@ -59,6 +81,11 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         this.music.play();
     }
 
+    /**
+     * Renders the assets for the main menu screen.
+     *
+     * @param deltaTime the delta time since the last frame.
+     */
     @Override
     public void render(final float deltaTime) {
         final float screenUtilsValueB = 0.2f;
