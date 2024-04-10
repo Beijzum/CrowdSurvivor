@@ -619,6 +619,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
                 + ", game=" + game
                 + ", music=" + music
                 + ", background=" + background
+                + ", arenaBorders=" + arenaBorders
                 + ", gameUI=" + gameUI
                 + ", hpBar=" + hpBar
                 + ", expBar=" + expBar
@@ -629,6 +630,10 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
                 + ", onFieldEnemies=" + onFieldEnemies
                 + ", playerProjectilesOnScreen=" + playerProjectilesOnScreen
                 + ", enemyProjectilesOnScreen=" + enemyProjectilesOnScreen
+                + ", bossProjectilesOnScreen=" + bossProjectilesOnScreen
+                + ", timeElapsedMessage=" + timeElapsedMessage
+                + ", onFieldBosses=" + onFieldBosses
+                + ", atlas=" + atlas
                 + ", enterUpgradeScreenAmount=" + enterUpgradeScreenAmount
                 + '}';
     }

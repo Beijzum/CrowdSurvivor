@@ -2,19 +2,19 @@ package ca.bcit.comp2522.termproject.enemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
 public class Charger extends Enemy {
-    final private int acceleration;
-    final private Vector2 chargingVector = new Vector2();
-    public Charger(int health, int acceleration, int attack, Sprite sprite) {
+    private final int acceleration;
+    private final Vector2 chargingVector = new Vector2();
+
+    public Charger(final int health, final int acceleration, final int attack, final Sprite sprite) {
         super(health, 0, attack, sprite);
         this.acceleration = acceleration;
     }
 
     @Override
-    public void calculateDirectionVector(float x, float y) {
+    public void calculateDirectionVector(final float x, final float y) {
         this.getDirectionVector().set(x, y);
         if (chargingVector.dot(this.getDirectionVector()) <= 0) {
             if (Math.abs(this.speed) <= 600) {
@@ -34,7 +34,7 @@ public class Charger extends Enemy {
 
         float deltaX = Math.abs(this.speed) * Gdx.graphics.getDeltaTime() * (float) Math.cos(angle);
         float deltaY = Math.abs(this.speed) * Gdx.graphics.getDeltaTime() * (float) Math.sin(angle);
-        this.sprite.setX(this.sprite.getX() + deltaX);
-        this.sprite.setY(this.sprite.getY() + deltaY);
+        this.getSprite().setX(this.getSprite().getX() + deltaX);
+        this.getSprite().setY(this.getSprite().getY() + deltaY);
     }
 }
