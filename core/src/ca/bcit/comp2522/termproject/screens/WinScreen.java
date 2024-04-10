@@ -201,16 +201,16 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
     @Override
     public String toString() {
         return "WinScreen{"
-                + "game=" + game
-                + ", menuItems=" + Arrays.toString(menuItems)
-                + ", messageLayouts=" + Arrays.toString(messageLayouts)
-                + ", music=" + music
-                + ", playAgain=" + playAgain
-                + ", returnToMenu=" + returnToMenu
-                + ", buttonWidth=" + buttonWidth
-                + ", buttonHeight=" + buttonHeight
-                + ", buttonPositionX=" + buttonPositionX
-                + ", firstButtonPositionY=" + firstButtonPositionY
+                + "game=" + this.game
+                + ", menuItems=" + Arrays.toString(this.menuItems)
+                + ", messageLayouts=" + Arrays.toString(this.messageLayouts)
+                + ", music=" + this.music
+                + ", playAgain=" + this.playAgain
+                + ", returnToMenu=" + this.returnToMenu
+                + ", buttonWidth=" + this.buttonWidth
+                + ", buttonHeight=" + this.buttonHeight
+                + ", buttonPositionX=" + this.buttonPositionX
+                + ", firstButtonPositionY=" + this.firstButtonPositionY
                 + '}';
     }
 }

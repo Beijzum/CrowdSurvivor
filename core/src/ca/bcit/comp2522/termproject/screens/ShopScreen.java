@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.util.Arrays;
+
 /**
  * Represents the shop screen where players can purchase various upgrades and items using in-game currency.
  * This screen provides a selection of upgrades to enhance their character.
@@ -486,5 +488,46 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
 
         button.setSize(buttonWidth, buttonHeight);
         button.setPosition(buttonPositionX, buttonPositionY);
+    }
+
+    /**
+     * Returns a string representation of the ShopScreen object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "ShopScreen{"
+                + "game=" + this.game
+                + ", music=" + this.music
+                + ", menuItems=" + Arrays.toString(this.menuItems)
+                + ", backgroundFilter=" + this.backgroundFilter
+                + ", background=" + this.background
+                + ", shopMessage=" + this.shopMessage
+                + ", currencyMessage=" + this.currencyMessage
+                + ", purchaseSFX=" + this.purchaseSFX
+                + ", failPurchaseSFX=" + this.failPurchaseSFX
+                + ", buyAttack=" + this.buyAttack
+                + ", buyHealth=" + this.buyHealth
+                + ", buySpeed=" + this.buySpeed
+                + ", buyDefense=" + this.buyDefense
+                + ", buyEXP=" + this.buyEXP
+                + ", buyCurrency=" + this.buyCurrency
+                + ", buyAttackSpeed=" + this.buyAttackSpeed
+                + ", buyCritRate=" + this.buyCritRate
+                + ", buyCritDamage=" + this.buyCritDamage
+                + ", buyHealthRegen=" + this.buyHealthRegen
+                + ", backButton=" + this.backButton
+                + ", buyAttackPrice=" + this.buyAttackPrice
+                + ", buyHealthPrice=" + this.buyHealthPrice
+                + ", buySpeedPrice=" + this.buySpeedPrice
+                + ", buyDefensePrice=" + this.buyDefensePrice
+                + ", buyEXPPrice=" + this.buyEXPPrice
+                + ", buyCurrencyPrice=" + this.buyCurrencyPrice
+                + ", buyAttackSpeedPrice=" + this.buyAttackSpeedPrice
+                + ", buyCritRatePrice=" + this.buyCritRatePrice
+                + ", buyCritDamagePrice=" + this.buyCritDamagePrice
+                + ", buyHealthRegenPrice=" + this.buyHealthRegenPrice
+                + '}';
     }
 }

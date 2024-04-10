@@ -280,17 +280,17 @@ public class CrowdSurvivor extends Game {
     @Override
     public String toString() {
         return "CrowdSurvivor{"
-                + "batch=" + batch
-                + ", buttonsUI=" + buttonsUI
-                + ", skin=" + skin
-                + ", mainMenuScreen=" + mainMenuScreen
-                + ", shopScreen=" + shopScreen
-                + ", inGameScreen=" + inGameScreen
-                + ", pauseMenuScreen=" + pauseMenuScreen
-                + ", upgradeSelectionScreen=" + upgradeSelectionScreen
-                + ", gameOverScreen=" + gameOverScreen
-                + ", winScreen=" + winScreen
-                + ", playerProfile=" + playerProfile
+                + "batch=" + this.batch
+                + ", buttonsUI=" + this.buttonsUI
+                + ", skin=" + this.skin
+                + ", mainMenuScreen=" + this.mainMenuScreen
+                + ", shopScreen=" + this.shopScreen
+                + ", inGameScreen=" + this.inGameScreen
+                + ", pauseMenuScreen=" + this.pauseMenuScreen
+                + ", upgradeSelectionScreen=" + this.upgradeSelectionScreen
+                + ", gameOverScreen=" + this.gameOverScreen
+                + ", winScreen=" + this.winScreen
+                + ", playerProfile=" + this.playerProfile
                 + '}';
     }
 }

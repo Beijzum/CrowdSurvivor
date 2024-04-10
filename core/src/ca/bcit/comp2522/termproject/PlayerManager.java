@@ -202,13 +202,13 @@ public final class PlayerManager {
     @Override
     public String toString() {
         return "PlayerManager{"
-                + "gameScreen=" + gameScreen
-                + ", mouseVector=" + mouseVector
-                + ", playerProjectileSFX=" + playerProjectileSFX
-                + ", playerDamageSFX=" + playerDamageSFX
-                + ", playerLevelUpSFX=" + playerLevelUpSFX
-                + ", deltaX=" + deltaX
-                + ", deltaY=" + deltaY
+                + "gameScreen=" + this.gameScreen
+                + ", mouseVector=" + this.mouseVector
+                + ", playerProjectileSFX=" + this.playerProjectileSFX
+                + ", playerDamageSFX=" + this.playerDamageSFX
+                + ", playerLevelUpSFX=" + this.playerLevelUpSFX
+                + ", deltaX=" + this.deltaX
+                + ", deltaY=" + this.deltaY
                 + '}';
     }
 }

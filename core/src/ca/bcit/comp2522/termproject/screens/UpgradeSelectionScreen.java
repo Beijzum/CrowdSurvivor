@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -378,4 +379,28 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
         });
     }
 
+    /**
+     * Returns a string representation of the UpgradeSelectionScreen object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "UpgradeSelectionScreen{"
+                + "game=" + this.game
+                + ", randomNumberGenerator=" + this.randomNumberGenerator
+                + ", possibleUpgrades=" + Arrays.toString(this.possibleUpgrades)
+                + ", attackUpgrade=" + this.attackUpgrade
+                + ", speedUpgrade=" + this.speedUpgrade
+                + ", healthUpgrade=" + this.healthUpgrade
+                + ", expUpgrade=" + this.expUpgrade
+                + ", currencyUpgrade=" + this.currencyUpgrade
+                + ", attackSpeedUpgrade=" + this.attackSpeedUpgrade
+                + ", iFrameUpgrade=" + this.iFrameUpgrade
+                + ", critDamageUpgrade=" + this.critDamageUpgrade
+                + ", critRateUpgrade=" + this.critRateUpgrade
+                + ", defenseUpgrade=" + this.defenseUpgrade
+                + ", healthRegenUpgrade=" + this.healthRegenUpgrade
+                + '}';
+    }
 }
