@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 
 /**
- * Represents an interface for creating, drawing, and manipulating message layouts.
+ * Represents the interface for creating, drawing, and manipulating message layouts.
  *
  * @author Jonathan Liu
  * @author A01375621

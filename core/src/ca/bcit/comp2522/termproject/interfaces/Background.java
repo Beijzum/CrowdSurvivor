@@ -4,24 +4,49 @@ import ca.bcit.comp2522.termproject.CrowdSurvivor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+/**
+ * Represents the interface for rendering background images with and without color filters.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public interface Background {
-    default void renderBackground(CrowdSurvivor game, Sprite background) {
-        game.getBatch().disableBlending();
-        game.getBatch().begin();
-        game.getBatch().draw(background, background.getX(), background.getY(), background.getOriginX(),
+
+    /**
+     * Renders the background sprite without any color filter.
+     *
+     * @param crowdSurvivor CrowdSurvivor object representing the game instance.
+     * @param background    Sprite object representing the background image.
+     */
+    default void renderBackground(CrowdSurvivor crowdSurvivor, Sprite background) {
+        crowdSurvivor.getBatch().disableBlending();
+        crowdSurvivor.getBatch().begin();
+        crowdSurvivor.getBatch().draw(background, background.getX(), background.getY(), background.getOriginX(),
                 background.getOriginY(), background.getWidth(), background.getHeight(), background.getScaleX(),
                 background.getScaleY(), background.getRotation());
-        game.getBatch().end();
-        game.getBatch().enableBlending();
+        crowdSurvivor.getBatch().end();
+        crowdSurvivor.getBatch().enableBlending();
     }
 
-    default void renderBackgroundWithFilter(CrowdSurvivor game, Sprite background, Color filter) {
-        game.getBatch().setColor(filter);
-        game.getBatch().begin();
-        game.getBatch().draw(background, background.getX(), background.getY(), background.getOriginX(),
+    /**
+     * Renders the background sprite with a specified color filter.
+     *
+     * @param crowdSurvivor CrowdSurvivor object representing the game instance.
+     * @param background    Sprite object representing the background image.
+     * @param filter        Color object representing the filter color to apply.
+     */
+    default void renderBackgroundWithFilter(CrowdSurvivor crowdSurvivor, Sprite background, Color filter) {
+        crowdSurvivor.getBatch().setColor(filter);
+        crowdSurvivor.getBatch().begin();
+        crowdSurvivor.getBatch().draw(background, background.getX(), background.getY(), background.getOriginX(),
                 background.getOriginY(), background.getWidth(), background.getHeight(), background.getScaleX(),
                 background.getScaleY(), background.getRotation());
-        game.getBatch().end();
-        game.getBatch().setColor(CrowdSurvivor.getStandardColour());
+        crowdSurvivor.getBatch().end();
+        crowdSurvivor.getBatch().setColor(CrowdSurvivor.getStandardColour());
     }
 }
