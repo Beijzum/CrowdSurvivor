@@ -113,6 +113,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
         handleExpUpgrade();
         handleCurrencyUpgrade();
         handleAttackSpeedUpgrade();
+        handleIFrameUpgrade();
         handleCritDamageUpgrade();
         handleCritRateUpgrade();
         handleDefenseUpgrade();
