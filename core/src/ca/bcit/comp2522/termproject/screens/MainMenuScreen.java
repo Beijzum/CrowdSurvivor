@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.util.Arrays;
+
 /**
  * Represents the main menu screen displayed when the game starts.
  * This screen provides options for the player to start the game, access the shop, or quit the game.
@@ -210,5 +212,28 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
                 return true;
             }
         });
+    }
+
+    /**
+     * Returns a string representation of the MainMenuScreen object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "MainMenuScreen{"
+                + "camera=" + this.camera
+                + ", game=" + this.game
+                + ", music=" + this.music
+                + ", background=" + this.background
+                + ", menuItems=" + Arrays.toString(this.menuItems)
+                + ", startGameButton=" + this.startGameButton
+                + ", shopButton=" + this.shopButton
+                + ", quitButton=" + this.quitButton
+                + ", buttonWidth=" + this.buttonWidth
+                + ", buttonHeight=" + this.buttonHeight
+                + ", buttonPositionX=" + this.buttonPositionX
+                + ", firstButtonPositionY=" + this.firstButtonPositionY
+                + '}';
     }
 }

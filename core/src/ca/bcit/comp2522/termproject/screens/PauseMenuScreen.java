@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import java.util.Arrays;
+
 /**
  * Represents the pause menu screen displayed when the game is paused.
  * This screen provides options for the player to resume the game or quit to the main menu.
@@ -282,5 +284,26 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     @Override
     public boolean scrolled(final float scrollHorizontal, final float scrollVertical) {
         return false;
+    }
+
+    /**
+     * Returns a string representation of the PauseMenuScreen object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "PauseMenuScreen{"
+                + "numberOfButtons=" + this.numberOfButtons
+                + ", game=" + this.game
+                + ", menuItems=" + Arrays.toString(this.menuItems)
+                + ", inputManager=" + this.inputManager
+                + ", resumeGameButton=" + this.resumeGameButton
+                + ", quitButton=" + this.quitButton
+                + ", buttonWidth=" + this.buttonWidth
+                + ", buttonHeight=" + this.buttonHeight
+                + ", buttonPositionX=" + this.buttonPositionX
+                + ", firstButtonPositionY=" + this.firstButtonPositionY
+                + '}';
     }
 }

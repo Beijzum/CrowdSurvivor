@@ -613,28 +613,28 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     @Override
     public String toString() {
         return "InGameScreen{"
-                + "timeElapsed=" + timeElapsed
-                + ", shapeRenderer=" + shapeRenderer
-                + ", camera=" + camera
-                + ", game=" + game
-                + ", music=" + music
-                + ", background=" + background
-                + ", arenaBorders=" + arenaBorders
-                + ", gameUI=" + gameUI
-                + ", hpBar=" + hpBar
-                + ", expBar=" + expBar
-                + ", enemyManager=" + enemyManager
-                + ", playerManager=" + playerManager
-                + ", darkTint=" + darkTint
-                + ", player=" + player
-                + ", onFieldEnemies=" + onFieldEnemies
-                + ", playerProjectilesOnScreen=" + playerProjectilesOnScreen
-                + ", enemyProjectilesOnScreen=" + enemyProjectilesOnScreen
-                + ", bossProjectilesOnScreen=" + bossProjectilesOnScreen
-                + ", timeElapsedMessage=" + timeElapsedMessage
-                + ", onFieldBosses=" + onFieldBosses
-                + ", atlas=" + atlas
-                + ", enterUpgradeScreenAmount=" + enterUpgradeScreenAmount
+                + "timeElapsed=" + this.timeElapsed
+                + ", shapeRenderer=" + this.shapeRenderer
+                + ", camera=" + this.camera
+                + ", game=" + this.game
+                + ", music=" + this.music
+                + ", background=" + this.background
+                + ", arenaBorders=" + this.arenaBorders
+                + ", gameUI=" + this.gameUI
+                + ", hpBar=" + this.hpBar
+                + ", expBar=" + this.expBar
+                + ", enemyManager=" + this.enemyManager
+                + ", playerManager=" + this.playerManager
+                + ", darkTint=" + this.darkTint
+                + ", player=" + this.player
+                + ", onFieldEnemies=" + this.onFieldEnemies
+                + ", playerProjectilesOnScreen=" + this.playerProjectilesOnScreen
+                + ", enemyProjectilesOnScreen=" + this.enemyProjectilesOnScreen
+                + ", bossProjectilesOnScreen=" + this.bossProjectilesOnScreen
+                + ", timeElapsedMessage=" + this.timeElapsedMessage
+                + ", onFieldBosses=" + this.onFieldBosses
+                + ", atlas=" + this.atlas
+                + ", enterUpgradeScreenAmount=" + this.enterUpgradeScreenAmount
                 + '}';
     }
 }

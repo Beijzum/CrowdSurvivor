@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import java.util.Arrays;
+
 /**
  * Represents the game over screen displayed when the player loses the game.
  * This screen provides options to try again or return to the main menu.
@@ -198,5 +200,28 @@ public class GameOverScreen implements Screen, ActorManager, MessageLayout {
     public void dispose() {
         this.startOfMusic.dispose();
         this.music.dispose();
+    }
+
+    /**
+     * Returns a string representation of the GameOverScreen object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "GameOverScreen{"
+                + "numberOfButtons=" + this.numberOfButtons
+                + ", game=" + this.game
+                + ", menuItems=" + Arrays.toString(this.menuItems)
+                + ", tryAgainButton=" + this.tryAgainButton
+                + ", quitButton=" + this.quitButton
+                + ", messageLayouts=" + Arrays.toString(this.messageLayouts)
+                + ", music=" + this.music
+                + ", startOfMusic=" + this.startOfMusic
+                + ", buttonWidth=" + this.buttonWidth
+                + ", buttonHeight=" + this.buttonHeight
+                + ", buttonPositionX=" + this.buttonPositionX
+                + ", firstButtonPositionY=" + this.firstButtonPositionY
+                + '}';
     }
 }

@@ -507,12 +507,8 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
                 + ", currencyMessage=" + this.currencyMessage
                 + ", purchaseSFX=" + this.purchaseSFX
                 + ", failPurchaseSFX=" + this.failPurchaseSFX
-                + ", buyAttack=" + this.buyAttack
-                + ", buyHealth=" + this.buyHealth
-                + ", buySpeed=" + this.buySpeed
-                + ", buyDefense=" + this.buyDefense
-                + ", buyEXP=" + this.buyEXP
-                + ", buyCurrency=" + this.buyCurrency
+                + ", buyAttack=" + this.buyAttack + ", buyHealth=" + this.buyHealth + ", buySpeed=" + this.buySpeed
+                + ", buyDefense=" + this.buyDefense + ", buyEXP=" + this.buyEXP + ", buyCurrency=" + this.buyCurrency
                 + ", buyAttackSpeed=" + this.buyAttackSpeed
                 + ", buyCritRate=" + this.buyCritRate
                 + ", buyCritDamage=" + this.buyCritDamage
