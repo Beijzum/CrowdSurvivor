@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import java.util.Arrays;
+
 /**
  * Represents the win screen when the player successfully completes the game.
  * It also displays relevant game statistics such as time elapsed and the player's score.
@@ -189,5 +191,26 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
     @Override
     public void dispose() {
         this.music.dispose();
+    }
+
+    /**
+     * Returns a string representation of the WinScreen object.
+     *
+     * @return toString description.
+     */
+    @Override
+    public String toString() {
+        return "WinScreen{"
+                + "game=" + game
+                + ", menuItems=" + Arrays.toString(menuItems)
+                + ", messageLayouts=" + Arrays.toString(messageLayouts)
+                + ", music=" + music
+                + ", playAgain=" + playAgain
+                + ", returnToMenu=" + returnToMenu
+                + ", buttonWidth=" + buttonWidth
+                + ", buttonHeight=" + buttonHeight
+                + ", buttonPositionX=" + buttonPositionX
+                + ", firstButtonPositionY=" + firstButtonPositionY
+                + '}';
     }
 }
