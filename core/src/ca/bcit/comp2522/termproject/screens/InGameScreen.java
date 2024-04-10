@@ -287,6 +287,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
 
     /**
      * Hides the screen when no longer active or visible.
+     * Sets the player movement model to false.
      */
     @Override
     public void hide() {
@@ -294,7 +295,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     }
 
     /**
-     * Disposes of resources and clears the stage.
+     * Disposes of resources and clears the stage and music.
      */
     @Override
     public void dispose() {
