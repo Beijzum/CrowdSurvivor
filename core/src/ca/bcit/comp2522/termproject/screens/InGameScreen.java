@@ -68,9 +68,9 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private final LinkedList<Projectile> enemyProjectilesOnScreen = new LinkedList<>();
     private final LinkedList<Projectile> bossProjectilesOnScreen = new LinkedList<>();
     private final GlyphLayout timeElapsedMessage = new GlyphLayout();
-    private int enterUpgradeScreenAmount;
     private final LinkedList<Boss> onFieldBosses = new LinkedList<>();
     private final TextureAtlas atlas;
+    private int enterUpgradeScreenAmount;
 
     /**
      * Constructs the in-game screen for the Crowd Survivor game.
