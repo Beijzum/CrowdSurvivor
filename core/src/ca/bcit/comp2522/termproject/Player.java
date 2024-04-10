@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 /**
  * Represents the Player class.
+ * Encapsulates the behavior and attributes of Player, including health, speed, attack, and sprite representation.
  * Inherits from the Entity class.
  * Implements the singleton method design pattern.
  *
@@ -252,9 +253,9 @@ public final class Player extends Entity {
     }
 
     /**
-     * Retrieves the player's hitbox.
+     * Retrieves the player's hitbox rectangle.
      *
-     * @return the player's hitbox.
+     * @return the player's hitbox rectangle.
      */
     public Rectangle getHitbox() {
         return this.sprite.getBoundingRectangle();
