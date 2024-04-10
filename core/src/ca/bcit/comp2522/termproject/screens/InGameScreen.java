@@ -75,11 +75,11 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     /**
      * Constructs the in-game screen for the Crowd Survivor game.
      *
-     * @param crowdSurvivor CrowdSurvivor object that represents the main game instance.
+     * @param crowdSurvivor CrowdSurvivor object representing the game instance.
      */
     public InGameScreen(final CrowdSurvivor crowdSurvivor) {
-        this.camera = new OrthographicCamera();
         this.game = crowdSurvivor;
+        this.camera = new OrthographicCamera();
         this.atlas = new TextureAtlas(Gdx.files.internal("assets/gameAssets.atlas"));
         this.player = Player.createPlayer(this.atlas);
         final int barHeight = 20;
