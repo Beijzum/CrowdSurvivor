@@ -8,6 +8,19 @@ import com.badlogic.gdx.audio.Sound;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * Represents the EnemyManager class.
+ * Manages the enemies, including their spawning, movement, and interactions with the player.
+ * Implements the singleton method design pattern.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public final class EnemyManager {
     private static EnemyManager instance = null;
     private static final int BASE_BASIC_ENEMY_HEALTH = 100;
@@ -50,6 +63,12 @@ public final class EnemyManager {
         this.bossDeathSFX = Gdx.audio.newSound(Gdx.files.internal("sfx/bossDeathSFX.mp3"));
     }
 
+    /**
+     * Creates a single instance of the EnemyManager object.
+     *
+     * @param gameScreen InGameScreen object used to represent the game screen
+     * @return the created instance of EnemyManager.
+     */
     public static EnemyManager createManager(final InGameScreen gameScreen) {
         if (instance == null) {
             instance = new EnemyManager(gameScreen);
@@ -57,6 +76,9 @@ public final class EnemyManager {
         return instance;
     }
 
+    /**
+     * Increments the spawn timers for all enemy types.
+     */
     public void incrementTimers() {
         this.basicEnemyTimer += Gdx.graphics.getDeltaTime();
         this.chargerEnemyTimer += Gdx.graphics.getDeltaTime();
@@ -64,6 +86,11 @@ public final class EnemyManager {
         this.bossTimer += Gdx.graphics.getDeltaTime();
     }
 
+    /**
+     * Handles the logic for enemy projectiles including their movement and lifespan.
+     * Removes expired projectiles, updating their movement, and managing their lifespan.
+     * Manages the new projectiles fired by enemy entities and bosses.
+     */
     public void handleEnemyProjectiles() {
         // remove projectile
         if (this.gameScreen.getEnemyProjectilesOnScreen().peek() != null
@@ -76,6 +103,12 @@ public final class EnemyManager {
         }
 
         // move projectile
+        handleProjectileMovement();
+        // fire enemy projectile
+        handleProjectileDischarge();
+    }
+
+    private void handleProjectileMovement() {
         for (Projectile enemyProjectile : this.gameScreen.getEnemyProjectilesOnScreen()) {
             enemyProjectile.incrementLifetimeTimer();
             enemyProjectile.moveProjectile();
@@ -88,8 +121,9 @@ public final class EnemyManager {
             final int spinSpeed = 30;
             bossProjectile.spinProjectile(spinSpeed);
         }
+    }
 
-        // fire enemy projectile
+    private void handleProjectileDischarge() {
         for (Enemy enemy : this.gameScreen.getOnFieldEnemies()) {
             if (!(enemy instanceof RangedEnemy)) {
                 continue;
@@ -109,6 +143,11 @@ public final class EnemyManager {
         }
     }
 
+    /**
+     * Handles the logic for managing collisions and interactions between player projectiles and enemies.
+     * Updates the damage tint timer, damage numbers, and moves enemies towards the player.
+     * Ensures the killing of one enemy and one boss per frame.
+     */
     public void handleEnemies() {
         for (Enemy enemy : this.gameScreen.getOnFieldEnemies()) {
             for (Projectile playerProjectile : this.gameScreen.getPlayerProjectilesOnScreen()) {
@@ -128,6 +167,10 @@ public final class EnemyManager {
         killBoss();
     }
 
+    /**
+     * Handles the logic for managing collisions and interactions between player projectiles and bosses.
+     * Updates the damage tint timer, damage numbers, and moves bosses towards the player.
+     */
     public void handleBosses() {
         for (Boss boss : this.gameScreen.getOnFieldBosses()) {
             for (Projectile playerProjectile : this.gameScreen.getPlayerProjectilesOnScreen()) {
@@ -143,7 +186,19 @@ public final class EnemyManager {
         }
     }
 
+    /**
+     * Handles the logic for spawning various types of enemies based on timers.
+     * Randomly determines the spawn point for each enemy type and plays a sound effect upon spawning.
+     * Different enemy types (basic, charger, ranged) have different spawn conditions.
+     */
     public void handleEnemySpawn() {
+        handleBasicEnemyTimer();
+        handleChargerTimer();
+        handleRangedEnemyTimer();
+        handleBossTimer();
+    }
+
+    private void handleBasicEnemyTimer() {
         if (this.basicEnemyTimer >= this.currentBasicEnemySpawnTime) {
             final int randomEnemy = 10;
             final int randomEnemyCompare = 4;
@@ -163,7 +218,9 @@ public final class EnemyManager {
                     .nextInt(BASE_BASIC_ENEMY_SPAWN_TIME) + BASE_BASIC_ENEMY_SPAWN_TIME;
             this.enemySpawnSFX.play();
         }
+    }
 
+    private void handleChargerTimer() {
         if (this.chargerEnemyTimer >= this.currentChargerEnemySpawnTime) {
             final int randomCharge = 10;
             final int randomChargeCompare = 4;
@@ -182,7 +239,9 @@ public final class EnemyManager {
                     .nextInt(BASE_CHARGER_ENEMY_SPAWN_TIME) + BASE_CHARGER_ENEMY_SPAWN_TIME;
             this.enemySpawnSFX.play();
         }
+    }
 
+    private void handleRangedEnemyTimer() {
         if (this.rangedEnemyTimer >= this.currentRangedEnemySpawnTime) {
             final int randomRange = 10;
             final int randomRangeCompare = 4;
@@ -200,7 +259,9 @@ public final class EnemyManager {
                     .nextInt(BASE_RANGED_ENEMY_SPAWN_TIME) + BASE_RANGED_ENEMY_SPAWN_TIME;
             this.enemySpawnSFX.play();
         }
+    }
 
+    private void handleBossTimer() {
         if (this.bossTimer >= BOSS_SPAWN_TIMER && this.gameScreen.getTimeElapsed() <= InGameScreen.getMaxGameLength()) {
             float[] spawnPoint = generateSpawnPoint();
             this.gameScreen.getOnFieldBosses().add(createBoss(spawnPoint[0], spawnPoint[1]));
@@ -330,6 +391,10 @@ public final class EnemyManager {
         return newEnemy;
     }
 
+    /**
+     * Resets the timers related to enemy and boss spawning.
+     * Sets all enemy and boss timers to zero and resets the spawn times.
+     */
     public void resetEnemyTimers() {
         this.bossTimer = 0;
         this.rangedEnemyTimer = 0;

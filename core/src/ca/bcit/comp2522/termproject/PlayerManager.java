@@ -12,6 +12,7 @@ import java.util.Objects;
 
 /**
  * Represents the PlayerManager class.
+ * Manages the player, including their assets, movement, attack, and enemy interactions.
  * Implements the singleton method design pattern.
  *
  * @author Jonathan Liu
