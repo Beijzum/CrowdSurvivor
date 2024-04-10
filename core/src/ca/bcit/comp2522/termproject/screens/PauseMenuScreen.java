@@ -11,6 +11,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+/**
+ * Represents the pause menu screen displayed when the game is paused.
+ * This screen provides options for the player to resume the game or quit to the main menu.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     private final int numberOfButtons = 2;
     private final CrowdSurvivor game;
@@ -23,6 +35,11 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
     private final float buttonPositionX;
     private final float firstButtonPositionY;
 
+    /**
+     * Constructs a pause menu screen for the Crowd Survivor game.
+     *
+     * @param game CrowdSurvivor object representing the game instance.
+     */
     public PauseMenuScreen(final CrowdSurvivor game) {
         this.game = game;
         this.inputManager = new InputMultiplexer(this, this.game.getButtonsUI());
@@ -37,12 +54,20 @@ public class PauseMenuScreen implements Screen, ActorManager, InputProcessor {
         createButtons();
     }
 
+    /**
+     * Initializes the pause menu screen.
+     */
     @Override
     public void show() {
         addActors(this.game.getButtonsUI(), this.menuItems);
         Gdx.input.setInputProcessor(this.inputManager);
     }
 
+    /**
+     * Renders the assets for the pause menu screen.
+     *
+     * @param deltaTime the delta time since the last frame.
+     */
     @Override
     public void render(final float deltaTime) {
         this.game.getInGameScreen().renderFrameAsBackground();
