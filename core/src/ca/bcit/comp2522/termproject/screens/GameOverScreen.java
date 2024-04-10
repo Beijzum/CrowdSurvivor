@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 /**
- * Represents the Game Over screen displayed when the player loses the game.
+ * Represents the game over screen displayed when the player loses the game.
  * This screen provides options to try again or return to the main menu.
  * It also displays relevant game statistics such as time elapsed and the player's score.
  *
