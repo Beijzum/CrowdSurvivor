@@ -44,18 +44,18 @@ import java.util.LinkedList;
  */
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor, MessageLayout {
     private static final int MAX_GAME_LENGTH = 300;
-    private final static int BACKGROUND_MULTIPLIER = 3;
-    private final static int arenaOffsetX = 1055;
-    private final static int arenaOffsetY = 630;
-    private final static int arenaWidth = 3529;
-    private final static int arenaHeight = 1887;
+    private static final int BACKGROUND_MULTIPLIER = 3;
+    private static final int ARENA_OFFSET_X = 1055;
+    private static final int ARENA_OFFSET_Y = 630;
+    private static final int ARENA_WIDTH = 3529;
+    private static final int ARENA_HEIGHT = 1887;
     private float timeElapsed = 0;
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
     private final OrthographicCamera camera;
     private final CrowdSurvivor game;
     private final Music music;
     private final Sprite background = new Sprite(new Texture("backgrounds/gameBackground.png"));
-    private final Rectangle arenaBorders = new Rectangle(arenaOffsetX, arenaOffsetY, arenaWidth, arenaHeight);
+    private final Rectangle arenaBorders = new Rectangle(ARENA_OFFSET_X, ARENA_OFFSET_Y, ARENA_WIDTH, ARENA_HEIGHT);
     private final Stage gameUI = new Stage();
     private final HPBar hpBar;
     private final EXPBar expBar;
@@ -70,7 +70,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     private final GlyphLayout timeElapsedMessage = new GlyphLayout();
     private int enterUpgradeScreenAmount;
     private final LinkedList<Boss> onFieldBosses = new LinkedList<>();
-    public final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("assets/gameAssets.atlas"));
+    private final TextureAtlas atlas;
 
     /**
      * Constructs the in-game screen for the Crowd Survivor game.
@@ -80,6 +80,7 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     public InGameScreen(final CrowdSurvivor crowdSurvivor) {
         this.camera = new OrthographicCamera();
         this.game = crowdSurvivor;
+        this.atlas = new TextureAtlas(Gdx.files.internal("assets/gameAssets.atlas"));
         this.player = Player.createPlayer(this.atlas);
         final int barHeight = 20;
         final int hpBarWidth = 300;
@@ -186,6 +187,16 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
      */
     public LinkedList<Projectile> getBossProjectilesOnScreen() {
         return this.bossProjectilesOnScreen;
+    }
+
+    /**
+     * Retrieves the TextureAtlas associated with this object.
+     * A TextureAtlas is a collection of sub-images (textures) packed into a single image.
+     *
+     * @return the TextureAtlas associated with this object
+     */
+    public TextureAtlas getAtlas() {
+        return this.atlas;
     }
 
     /**
