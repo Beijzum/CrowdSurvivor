@@ -18,6 +18,17 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+/**
+ * Represents the shop screen where players can purchase various upgrades and items using in-game currency.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public class ShopScreen implements Screen, Background, ActorManager, MessageLayout {
     private static final int BASE_ITEM_PRICE = 100;
     private final CrowdSurvivor game;
@@ -51,6 +62,11 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
     private final int buyCritDamagePrice = BASE_ITEM_PRICE * 3;
     private final int buyHealthRegenPrice = BASE_ITEM_PRICE * 5;
 
+    /**
+     * Constructs a shop screen for the Crowd Survivor game.
+     *
+     * @param crowdSurvivor CrowdSurvivor object representing the game instance.
+     */
     public ShopScreen(final CrowdSurvivor crowdSurvivor) {
         this.game = crowdSurvivor;
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -79,6 +95,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
         positionMenuItems();
     }
 
+    /**
+     * Initializes the shop screen.
+     * Sets the input processor, plays background music, and adds menu items to the UI stage.
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this.game.getButtonsUI());
@@ -87,6 +107,11 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
         addActors(this.game.getButtonsUI(), this.menuItems);
     }
 
+    /**
+     * Renders the assets for the shop screen.
+     *
+     * @param deltaTime the delta time since last frame.
+     */
     @Override
     public void render(final float deltaTime) {
         final float screenUtilsValueB = 0.2f;
