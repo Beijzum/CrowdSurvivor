@@ -111,9 +111,8 @@ public class HPBar {
 
         // draw HP current/max text
         batch.begin();
-        final float textHPX = 310;
-        float textX = this.x + textHPX;
-        float textY = this.y + this.getHeight() / 2;
+        final float textX = this.x + 310;
+        final float textY = this.y + this.getHeight() / 2;
         final float textHPScale = 0.5f;
         CrowdSurvivor.getFont().getData().setScale(textHPScale);
         CrowdSurvivor.getFont().draw(batch, this.currentHP + "/" + this.maxHP, textX, textY);

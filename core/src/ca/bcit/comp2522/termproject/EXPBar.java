@@ -124,9 +124,8 @@ public class EXPBar {
         shapeRenderer.rect(this.x, this.y, foregroundWidth, this.height);
 
         batch.begin();
-        final float textXWidth = 1.05f;
-        float textX = (this.x + this.getWidth() / textXWidth);
-        float textY = this.y + this.getHeight() / 2;
+        final float textX = (this.x + this.getWidth() / 1.05f);
+        final float textY = this.y + this.getHeight() / 2;
         final float textEXPScale = 0.75f;
         CrowdSurvivor.getFont().getData().setScale(textEXPScale);
         CrowdSurvivor.getFont().draw(batch, "Level: " + this.playerLevel, textX, textY);

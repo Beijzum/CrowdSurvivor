@@ -140,12 +140,10 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
     }
 
     private void positionButton(final TextButton button, final int buttonNumber) {
-        int buttonWidth = Gdx.graphics.getWidth() / 2;
-        final int buttonHeightDivisor = 6;
-        int buttonHeight = Gdx.graphics.getHeight() / buttonHeightDivisor;
-        int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
-        final int buttonPosYDivisor = 3;
-        int buttonPositionY = Gdx.graphics.getHeight() * 2 / buttonPosYDivisor - buttonHeight * buttonNumber;
+        final int buttonWidth = Gdx.graphics.getWidth() / 2;
+        final int buttonHeight = Gdx.graphics.getHeight() / 6;
+        final int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
+        final int buttonPositionY = Gdx.graphics.getHeight() * 2 / 3 - buttonHeight * buttonNumber;
 
         button.setSize(buttonWidth, buttonHeight);
         button.setPosition(buttonPositionX, buttonPositionY);

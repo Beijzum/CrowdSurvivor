@@ -468,12 +468,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
     }
 
     private void positionBackButton(final TextButton button) {
-        int buttonWidth = Gdx.graphics.getWidth() / 2;
-        final int buttonHeightMultiplier = 10;
-        int buttonHeight = Gdx.graphics.getHeight() / buttonHeightMultiplier;
-
-        int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
-        int buttonPositionY = buttonHeight / 2;
+        final int buttonWidth = Gdx.graphics.getWidth() / 2;
+        final int buttonHeight = Gdx.graphics.getHeight() / 10;
+        final int buttonPositionX = Gdx.graphics.getWidth() / 2 - buttonWidth / 2;
+        final int buttonPositionY = buttonHeight / 2;
 
         button.setSize(buttonWidth, buttonHeight);
         button.setPosition(buttonPositionX, buttonPositionY);
@@ -481,15 +479,10 @@ public class ShopScreen implements Screen, Background, ActorManager, MessageLayo
 
     private void positionItemButton(final TextButton button, final int col, final int row) {
         // col max = 1, row max = 4
-        final int buttonWidthMultiplier = 3;
-        final int buttonHeightMultiplier = 10;
-        int buttonWidth = Gdx.graphics.getWidth() / buttonWidthMultiplier;
-        int buttonHeight = Gdx.graphics.getHeight() / buttonHeightMultiplier;
-
-        final int buttonDivisor = 4;
-        int buttonPositionX = Gdx.graphics.getWidth() / buttonDivisor - buttonWidth / 2
-                + Gdx.graphics.getWidth() / 2 * col;
-        int buttonPositionY = Gdx.graphics.getHeight() / buttonDivisor + buttonHeight * row;
+        final int buttonWidth = Gdx.graphics.getWidth() / 3;
+        final int buttonHeight = Gdx.graphics.getHeight() / 10;
+        final int buttonPositionX = Gdx.graphics.getWidth() / 4 - buttonWidth / 2 + Gdx.graphics.getWidth() / 2 * col;
+        final int buttonPositionY = Gdx.graphics.getHeight() / 4 + buttonHeight * row;
 
         button.setSize(buttonWidth, buttonHeight);
         button.setPosition(buttonPositionX, buttonPositionY);

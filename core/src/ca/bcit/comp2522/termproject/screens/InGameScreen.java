@@ -358,13 +358,13 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
         if (this.bossProjectilesOnScreen.isEmpty()) {
             return;
         }
-        game.getBatch().begin();
-        for (Projectile bossProjectile : bossProjectilesOnScreen) {
+        this.game.getBatch().begin();
+        for (Projectile bossProjectile : this.bossProjectilesOnScreen) {
             if (inCameraView(bossProjectile.getHitbox())) {
-                bossProjectile.draw(game.getBatch());
+                bossProjectile.draw(this.game.getBatch());
             }
         }
-        game.getBatch().end();
+        this.game.getBatch().end();
     }
 
     private void drawAllEnemyProjectiles() {
@@ -482,10 +482,10 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
      */
     public void renderFrameAsBackground() {
         CrowdSurvivor.getFont().setColor(this.darkTint);
-        game.getBatch().setColor(this.darkTint);
+        this.game.getBatch().setColor(this.darkTint);
         drawAssets();
         drawHUD();
-        game.getBatch().setColor(CrowdSurvivor.getStandardColour());
+        this.game.getBatch().setColor(CrowdSurvivor.getStandardColour());
         CrowdSurvivor.getFont().setColor(CrowdSurvivor.getStandardColour());
     }
 

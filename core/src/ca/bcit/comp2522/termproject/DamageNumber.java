@@ -55,10 +55,9 @@ public class DamageNumber {
 
         final float arcHeight = 20f;
         final float arcPeriod = 1f;
-        final int arcHeightMultiplier = 4;
 
-        float xOffset = arcHeight * this.timer;
-        float yOffset = arcHeight * arcHeightMultiplier * this.timer * (1 - this.timer / arcPeriod);
+        final float xOffset = arcHeight * this.timer;
+        final float yOffset = arcHeight * 4 * this.timer * (1 - this.timer / arcPeriod);
 
         this.newX = this.x + xOffset;
         this.newY = this.y + yOffset;

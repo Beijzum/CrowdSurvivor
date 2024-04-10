@@ -54,7 +54,6 @@ public class MainMenuScreen implements Screen, Background, ActorManager, Message
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/mainMenuMusic.mp3"));
         this.background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
         final float buttonWidthDivisor = 3f;
         this.buttonWidth = Gdx.graphics.getWidth() / buttonWidthDivisor;
         final float buttonHeightDivisor = 10f;
