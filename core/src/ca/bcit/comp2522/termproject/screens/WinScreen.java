@@ -12,6 +12,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+/**
+ * Represents the win screen when the player successfully completes the game.
+ * It also displays relevant game statistics such as time elapsed and the player's score.
+ *
+ * @author Jonathan Liu
+ * @author A01375621
+ * @author jwl0724
+ * @author Jason Chow
+ * @author A00942129
+ * @author Beijzum
+ * @version 2024
+ */
 public class WinScreen implements Screen, ActorManager, MessageLayout {
     private final CrowdSurvivor game;
     private final TextButton[] menuItems;
@@ -24,8 +36,13 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
     private final float buttonPositionX;
     private final float firstButtonPositionY;
 
-    public WinScreen(final CrowdSurvivor game) {
-        this.game = game;
+    /**
+     * Constructs a win screen for the Crowd Survivor game.
+     *
+     * @param crowdSurvivor CrowdSurvivor object representing the game instance.
+     */
+    public WinScreen(final CrowdSurvivor crowdSurvivor) {
+        this.game = crowdSurvivor;
         this.music = Gdx.audio.newMusic(Gdx.files.internal("music/winMusic.mp3"));
         final float buttonWidthDivisor = 3f;
         this.buttonWidth = Gdx.graphics.getWidth() / buttonWidthDivisor;
@@ -36,7 +53,6 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
         this.playAgain = new TextButton("Play Again", this.game.getSkin());
         this.returnToMenu = new TextButton("Return To Menu", this.game.getSkin());
         this.menuItems = createButtons();
-
     }
 
     private TextButton[] createButtons() {
@@ -45,7 +61,6 @@ public class WinScreen implements Screen, ActorManager, MessageLayout {
 
         return new TextButton[]{this.playAgain, this.returnToMenu};
     }
-
 
     private void handlePlayAgain() {
         this.playAgain.setSize(this.buttonWidth, this.buttonHeight);
