@@ -16,14 +16,16 @@ public class Charger extends Enemy {
     @Override
     public void calculateDirectionVector(final float x, final float y) {
         this.getDirectionVector().set(x, y);
+        final int speedValue = 600;
         if (chargingVector.dot(this.getDirectionVector()) <= 0) {
-            if (Math.abs(this.speed) <= 600) {
+
+            if (Math.abs(this.speed) <= speedValue) {
                 this.speed -= Math.round(acceleration * Gdx.graphics.getDeltaTime());
             }
             this.chargingVector.add(getDirectionVector());
             return;
         }
-        if (Math.abs(this.speed) <= 600) {
+        if (Math.abs(this.speed) <= speedValue) {
             this.speed += Math.round(acceleration * Gdx.graphics.getDeltaTime());
         }
     }

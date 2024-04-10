@@ -7,18 +7,23 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.util.LinkedList;
 
 public class Boss extends Enemy {
-    final private float attackSpeed;
     private final Projectile projectileTemplate;
     private float attackTimer = 0;
-    public Boss(int health, int speed, int attack, int size, Sprite sprite, Sprite projectileSprite) {
+
+    public Boss(final int health, final int speed, final int attack, final int size, final Sprite sprite,
+                final Sprite projectileSprite) {
         super(health, speed, attack, sprite);
-        this.sprite.setSize(size, size);
-        this.attackSpeed = 10f;
-        this.projectileTemplate = new Projectile(projectileSprite, 200, 15, 200);
+        this.getSprite().setSize(size, size);
+        final int projectileSpeed = 200;
+        final int projectileLifetime = 15;
+        final int projectileSize = 200;
+        this.projectileTemplate = new Projectile(projectileSprite, projectileSpeed, projectileLifetime, projectileSize);
     }
 
-    public boolean fireProjectile(LinkedList<Projectile> enemyProjectiles, float playerCoordX, float playerCoordY) {
-        if (this.attackTimer >= this.attackSpeed) {
+    public boolean fireProjectile(final LinkedList<Projectile> enemyProjectiles, final float playerCoordX,
+                                  final float playerCoordY) {
+        final float attackSpeed = 10f;
+        if (this.attackTimer >= attackSpeed) {
             Projectile newProjectile = new Projectile(this.projectileTemplate);
             newProjectile.getDirectionVector().set(playerCoordX - this.getCenterX(), playerCoordY - this.getCenterY());
             newProjectile.setProjectileCenter(this.getCenterX(), this.getCenterY());
