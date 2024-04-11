@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static ca.bcit.comp2522.termproject.Player.createPlayer;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -39,9 +38,9 @@ public class EnemyTest {
         Gdx.gl = mockGL;
         Gdx.files = files;
         Gdx.graphics = mock(Graphics.class);
-//        gameScreen.getGame() = player;
-//        gameScreen.game = mock(COMP2522TermProject.class);
-//        gameScreen.getGame().getBatch() = mock(SpriteBatch.class);
+        gameScreen.getGame() = player;
+        gameScreen.game = mock(COMP2522TermProject.class);
+        gameScreen.getGame().getBatch() = mock(SpriteBatch.class);
 
         MockitoAnnotations.openMocks(this);
 
