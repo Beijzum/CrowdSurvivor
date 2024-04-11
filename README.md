@@ -46,7 +46,6 @@ Jonathan tends to frequently commit small changes, while Jason tends to infreque
 - JDK version 18
 - LibGDX version 1.12.1
 - Gradle version 8.5
-- DOUBLE CHECK BEFORE FRIDAY
 
 ## Post-Development Thoughts
 
