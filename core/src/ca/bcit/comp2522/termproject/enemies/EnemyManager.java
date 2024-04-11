@@ -311,16 +311,16 @@ public final class EnemyManager {
     }
 
     private float[] generateSpawnPoint() {
-        final float xDivisor = 4.0f;
-        final float yDivisor = 5.0f;
-        final int widthMultiplier = 5;
-        final int heightMultiplier = 6;
+        final float divisor = 1.5f;
+
         float randomX = this.randomNumberGenerator.nextFloat(
-                0 - Gdx.graphics.getWidth() / xDivisor, Gdx.graphics.getWidth()
-                        * widthMultiplier / xDivisor);
+                gameScreen.getCamera().position.x - gameScreen.getCamera().viewportWidth / divisor,
+                gameScreen.getCamera().position.x + gameScreen.getCamera().viewportWidth / divisor
+        );
         float randomY = this.randomNumberGenerator.nextFloat(
-                0 - Gdx.graphics.getHeight() / yDivisor, Gdx.graphics.getHeight()
-                        * heightMultiplier / yDivisor);
+                gameScreen.getCamera().position.y - gameScreen.getCamera().viewportHeight / divisor,
+                gameScreen.getCamera().position.y + gameScreen.getCamera().viewportHeight / divisor
+        );
 
         // adjust if spawn point in camera view
         if (this.gameScreen.getCamera().frustum.pointInFrustum(randomX, randomY, 0)) {
