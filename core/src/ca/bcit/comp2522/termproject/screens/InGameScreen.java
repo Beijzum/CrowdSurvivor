@@ -100,6 +100,15 @@ public class InGameScreen implements Screen, Background, ActorManager, InputProc
     }
 
     /**
+     * Retrieves the game instance.
+     *
+     * @return the game instance.
+     */
+    public CrowdSurvivor getGame() {
+        return this.game;
+    }
+
+    /**
      * Retrieves the maximum game length.
      *
      * @return the maximum game length.
