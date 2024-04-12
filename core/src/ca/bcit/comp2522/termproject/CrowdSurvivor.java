@@ -193,69 +193,6 @@ public class CrowdSurvivor extends Game {
     }
 
     /**
-     * Sets the UI stage containing buttons and other UI elements.
-     *
-     * @param buttonsUI Stage object representing the UI elements.
-     */
-    public void setButtonsUI(final Stage buttonsUI) {
-        this.buttonsUI = buttonsUI;
-    }
-
-    /**
-     * Sets the shop screen.
-     *
-     * @param shopScreen ShopScreen object representing the shop screen.
-     */
-    public void setShopScreen(final ShopScreen shopScreen) {
-        this.shopScreen = shopScreen;
-    }
-
-    /**
-     * Sets the in-game screen.
-     *
-     * @param inGameScreen InGameScreen object representing the in-game screen.
-     */
-    public void setInGameScreen(final InGameScreen inGameScreen) {
-        this.inGameScreen = inGameScreen;
-    }
-
-    /**
-     * Sets the pause menu screen.
-     *
-     * @param pauseMenuScreen PauseMenuScreen object representing the pause menu screen.
-     */
-    public void setPauseMenuScreen(final PauseMenuScreen pauseMenuScreen) {
-        this.pauseMenuScreen = pauseMenuScreen;
-    }
-
-    /**
-     * Sets the upgrade selection screen.
-     *
-     * @param upgradeSelectionScreen UpgradeSelectionScreen object representing the upgrade selection screen.
-     */
-    public void setUpgradeSelectionScreen(final UpgradeSelectionScreen upgradeSelectionScreen) {
-        this.upgradeSelectionScreen = upgradeSelectionScreen;
-    }
-
-    /**
-     * Sets the game over screen.
-     *
-     * @param gameOverScreen GameOverScreen object representing the game over screen.
-     */
-    public void setGameOverScreen(final GameOverScreen gameOverScreen) {
-        this.gameOverScreen = gameOverScreen;
-    }
-
-    /**
-     * Sets the win screen.
-     *
-     * @param winScreen WinScreen object representing the win screen.
-     */
-    public void setWinScreen(final WinScreen winScreen) {
-        this.winScreen = winScreen;
-    }
-
-    /**
      * Renders the current screen and updates the game state.
      */
     @Override

@@ -45,15 +45,6 @@ public class DamageNumber {
     }
 
     /**
-     * Retrieves the lifetime of the damage number.
-     *
-     * @return the lifetime of the damage number.
-     */
-    public float getLifetime() {
-        return this.lifetime;
-    }
-
-    /**
      * Updates the position of the damage number based on elapsed time.
      * The damage number will move in an arc pattern.
      *

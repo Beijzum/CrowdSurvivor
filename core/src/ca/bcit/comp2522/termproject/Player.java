@@ -299,15 +299,6 @@ public final class Player extends Entity {
     }
 
     /**
-     * Sets the player's projectile template.
-     *
-     * @param projectile Projectile object used as the new projectile template.
-     */
-    public void setProjectileTemplate(final Projectile projectile) {
-        this.projectileTemplate = projectile;
-    }
-
-    /**
      * Sets the player's IFrame length.
      *
      * @param newLength float representing the new length of the IFrames.

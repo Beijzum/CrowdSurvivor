@@ -27,18 +27,6 @@ public class AnimatedSprite extends Sprite {
     private boolean pausedAnimation;
 
     /**
-     * Constructs an animated sprite with a single frame and no animation.
-     *
-     * @param texture Texture object representing the single frame.
-     */
-    public AnimatedSprite(final Texture texture) {
-        super(texture);
-        this.frames = new Texture[]{texture};
-        this.framesPerSecond = 0;
-        this.timer = 0;
-    }
-
-    /**
      * Constructs an animated sprite with multiple frames and a specified frame rate.
      *
      * @param frames          Texture array objects representing the animation frames.

@@ -120,25 +120,6 @@ public class Projectile {
     }
 
     /**
-     * Sets the lifetime of the projectile.
-     *
-     * @param lifetime int representing the lifetime to set.
-     */
-    public void setLifetime(final int lifetime) {
-        this.lifetime = lifetime;
-    }
-
-    /**
-     * Sets the x and y coordinates for the origin of the sprite.
-     *
-     * @param x float representing the x-coordinate of the sprite's origin.
-     * @param y float representing the y-coordinate of the sprite's origin.
-     */
-    public void setSpriteOrigin(final float x, final float y) {
-        this.sprite.setOrigin(x, y);
-    }
-
-    /**
      * Sets the center of the projectile sprite.
      *
      * @param x float representing the x-coordinate of the sprite's center.
