@@ -49,6 +49,24 @@ public class EXPBar {
     }
 
     /**
+     * Retrieves the x-coordinate of the HP bar.
+     *
+     * @return the x-coordinate of the HP bar.
+     */
+    public float getX() {
+        return x;
+    }
+
+    /**
+     * Retrieves the y-coordinate of the HP bar.
+     *
+     * @return the y-coordinate of the HP bar.
+     */
+    public float getY() {
+        return y;
+    }
+
+    /**
      * Retrieves the width of the EXP bar.
      *
      * @return the width of the EXP bar.

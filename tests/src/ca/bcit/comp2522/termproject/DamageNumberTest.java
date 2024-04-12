@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DamageNumberTest {
 
     @Test
-    public void isExpired() {
+    public void testIsExpired() {
         DamageNumber damageNumber = new DamageNumber(100, 100, 50, false);
 
         assertFalse(damageNumber.isExpired());
