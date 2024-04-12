@@ -63,10 +63,6 @@ public class AnimatedSprite extends Sprite {
         this.currentFrame = 0;
     }
 
-    public int getCurrentFrame() {
-        return this.currentFrame;
-    }
-
     /**
      * Sets the animation state to paused or unpaused.
      *
