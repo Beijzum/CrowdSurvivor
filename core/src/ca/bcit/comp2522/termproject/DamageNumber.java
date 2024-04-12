@@ -44,6 +44,10 @@ public class DamageNumber {
         this.isCritical = isCritical;
     }
 
+    public float getLifetime() {
+        return this.lifetime;
+    }
+
     /**
      * Updates the position of the damage number based on elapsed time.
      * The damage number will move in an arc pattern.
