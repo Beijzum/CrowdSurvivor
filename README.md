@@ -41,6 +41,11 @@ recommended resolution of 1920 x 1080.
 The GitHub commits on this repository may seem unbalanced due to both pair programming and different commit styles.
 Jonathan tends to frequently commit small changes, while Jason tends to infrequently commit large changes.
 
+### UML
+
+When exporting the UML to PDF the diagram kept splitting the diagram into segmented pages of pieces of the diagram, 
+only exporting as an image would the diagram be preserved, so our UML diagram is in a .png format.
+
 ### Versions Used
 
 - JDK version 18
