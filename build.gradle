@@ -68,8 +68,26 @@ project(":core") {
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2+'
-        testImplementation 'org.mockito:mockito-core:4.2.0+'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2+'
+    }
+}
+
+project(":tests") {
+    apply plugin: "java"
+
+    sourceSets.test.java.srcDirs = ["src/"]
+
+    dependencies {
+        implementation project(":core")
+
+        testImplementation "org.junit.jupiter:junit-jupiter:5.9.0"  // Or your desired version
+        testImplementation "org.mockito:mockito-core:4.+"        // Or your desired version
+
+        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    }
+    tasks.withType(Test).tap {
+        configureEach {
+            useJUnitPlatform()
+        }
     }
 }
