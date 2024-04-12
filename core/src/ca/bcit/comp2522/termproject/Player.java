@@ -59,7 +59,7 @@ public final class Player extends Entity {
     private float healthRegenTimer;
     private boolean iFrameIsOn = false;
     private float healthRegenMultiplier;
-    private Projectile projectileTemplate;
+    private final Projectile projectileTemplate;
     private boolean isMoving = false;
     private boolean isFacingLeft = true;
     private final AnimatedSprite sprite;

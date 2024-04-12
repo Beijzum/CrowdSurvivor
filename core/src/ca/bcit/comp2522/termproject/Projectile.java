@@ -20,7 +20,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Projectile {
     private final Vector2 directionVector;
     private int speed;
-    private int lifetime;
+    private final int lifetime;
     private Sprite sprite;
     private float lifetimeTimer = 0;
 
