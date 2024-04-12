@@ -44,6 +44,11 @@ public class DamageNumber {
         this.isCritical = isCritical;
     }
 
+    /**
+     * Retrieves the lifetime of the damage number.
+     *
+     * @return the lifetime of the damage number.
+     */
     public float getLifetime() {
         return this.lifetime;
     }
