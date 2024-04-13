@@ -11,7 +11,7 @@ Use the WASD keys to move around the map, and use your mouse to aim at where to 
 the game and kill enemies to level up. Upon level-up, choose an upgrade to increase your stats that helps improve damage
 or survivability.
 
-You win when all Shreks are dead after 3 minutes!
+You win when all Shreks are dead after 2 minutes have elapsed in-game!
 
 ## Features
 
@@ -43,7 +43,7 @@ Jonathan tends to frequently commit small changes, while Jason tends to infreque
 
 ### UML
 
-When exporting the UML to PDF, the export kept splitting the diagram into segmented pages of pieces of the diagram, 
+When exporting the UML to PDF, the export kept splitting the diagram into segmented pages of pieces of the diagram,
 only exporting the diagram as an image would preserve the diagram, so our UML diagram is in a .png format.
 
 ### Versions Used
