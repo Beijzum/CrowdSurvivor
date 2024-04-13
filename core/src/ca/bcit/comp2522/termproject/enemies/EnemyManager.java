@@ -28,7 +28,7 @@ public final class EnemyManager {
     private static final int BASE_BASIC_ENEMY_SPAWN_TIME = 2;
     private static final int BASE_CHARGER_ENEMY_SPAWN_TIME = 10;
     private static final int BASE_RANGED_ENEMY_SPAWN_TIME = 5;
-    private static final int BASE_CHARGER_HEALTH = 70;
+    private static final int BASE_CHARGER_HEALTH = 100;
     private static final int BASE_ENEMY_SPEED = 100;
     private static final int WAVE_SIZE = 10;
     private static final int BOSS_SPAWN_TIMER = 30;
@@ -358,9 +358,9 @@ public final class EnemyManager {
     }
 
     private Enemy createCharger(final float xCoord, final float yCoord) {
-        final int health = Math.round(BASE_CHARGER_HEALTH + this.gameScreen.getTimeElapsed() / 5); // temp scaling
+        final int health = Math.round(BASE_CHARGER_HEALTH + this.gameScreen.getTimeElapsed() / 4); // temp scaling
         final int acceleration = 100;
-        final int attack = 10;
+        final int attack = 15;
         Charger newCharger = new Charger(health, acceleration, attack, this.gameScreen.getAtlas()
                 .createSprite("enemies/charger"));
         newCharger.setCenterPosition(xCoord, yCoord);
@@ -406,9 +406,9 @@ public final class EnemyManager {
     }
 
     private Enemy createBasicEnemy(final float xCoord, final float yCoord) {
-        final int health = Math.round(BASE_BASIC_ENEMY_HEALTH + this.gameScreen.getTimeElapsed() / 5); // temp
-        final int speed = Math.round(BASE_ENEMY_SPEED + this.gameScreen.getTimeElapsed() / 5);
-        final int attack = 10;
+        final int health = Math.round(BASE_BASIC_ENEMY_HEALTH + this.gameScreen.getTimeElapsed() / 3); // temp
+        final int speed = Math.round(BASE_ENEMY_SPEED + this.gameScreen.getTimeElapsed() / 3);
+        final int attack = 15;
         Enemy newEnemy = new Enemy(health, speed, attack, this.gameScreen.getAtlas()
                 .createSprite("enemies/enemy"));
         newEnemy.setCenterPosition(xCoord, yCoord);

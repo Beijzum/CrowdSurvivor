@@ -50,7 +50,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
     public UpgradeSelectionScreen(final CrowdSurvivor crowdSurvivor) {
         this.game = crowdSurvivor;
         this.attackUpgrade = new TextButton("+10 Attack", this.game.getSkin());
-        this.speedUpgrade = new TextButton("+10 Speed", this.game.getSkin());
+        this.speedUpgrade = new TextButton("+10% Speed", this.game.getSkin());
         this.healthUpgrade = new TextButton("+10 Health", this.game.getSkin());
         this.expUpgrade = new TextButton("+10% Experience Gain", this.game.getSkin());
         this.currencyUpgrade = new TextButton("+10% Currency Gain", this.game.getSkin());
@@ -59,7 +59,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
         this.critDamageUpgrade = new TextButton("+10% Critical Hit Damage", this.game.getSkin());
         this.critRateUpgrade = new TextButton("+5% Critical Hit Rate", this.game.getSkin());
         this.defenseUpgrade = new TextButton("+5% Defense", this.game.getSkin());
-        this.healthRegenUpgrade = new TextButton("+5% Health Regeneration", this.game.getSkin());
+        this.healthRegenUpgrade = new TextButton("+2% Health Regeneration", this.game.getSkin());
         this.possibleUpgrades = createButtons();
     }
 
@@ -370,7 +370,7 @@ public class UpgradeSelectionScreen implements Screen, ActorManager, Background 
                 }
                 game.getButtonClickSFX().play();
                 clearStage(game.getButtonsUI());
-                final float healthRegenValue = 0.05f;
+                final float healthRegenValue = 0.02f;
                 game.getInGameScreen().getPlayer().setHealthRegenMultiplier(game.getInGameScreen().getPlayer()
                         .getHealthRegenMultiplier() + healthRegenValue);
                 game.setScreen(game.getInGameScreen());

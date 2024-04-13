@@ -24,13 +24,13 @@ import java.util.LinkedList;
  */
 public final class Player extends Entity {
     private static Player instance = null;
-    private static final float DEFAULT_DEFENSE = 0.0f;
+    private static final float DEFAULT_DEFENSE = 0.1f;
     private static final int DEFAULT_MAX_HEALTH = 100;
     private static final int DEFAULT_SPEED = 200;
     private static final float DEFAULT_ATTACK_SPEED = 1.5f;
     private static final float DEFAULT_CRIT_RATE = 0.1f;
     private static final float DEFAULT_CRIT_MULTIPLIER = 1.5f;
-    private static final float DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.05f;
+    private static final float DEFAULT_HEALTH_REGEN_MULTIPLIER = 0.03f;
     private static final int DEFAULT_ATTACK = 20;
     private static final float BASE_IFRAME_LENGTH = 1.5f;
     private static final float HEALTH_REGEN_TICK_TIME = 1.5f;

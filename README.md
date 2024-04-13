@@ -28,7 +28,8 @@ https://adoptium.net/temurin/releases/?version=18&package=jdk&arch=any.
 ### Mac Machines
 
 Crowd Survivor was developed on Windows machines, as such game stability has not been tested for Mac machines and should
-be taken into consideration, and should start the game with the JVM argument -XstartOnFirstThread as cited by LibGDX.
+be taken into consideration. If any errors occur, you should try starting the game with the
+JVM argument -XstartOnFirstThread as cited by LibGDX.
 
 ### Resolution
 
@@ -44,7 +45,7 @@ Jonathan tends to frequently commit small changes, while Jason tends to infreque
 ### UML
 
 When exporting the UML to PDF, the export kept splitting the diagram into segmented pages of pieces of the diagram,
-only exporting the diagram as an image would preserve the diagram, so our UML diagram is in a .png format.
+only exporting the diagram as an image would preserve the diagram; therefore, our UML diagram is in a .png format.
 
 ### Versions Used
 
