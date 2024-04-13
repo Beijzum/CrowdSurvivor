@@ -60,6 +60,7 @@ Jonathan tends to frequently commit small changes, while Jason tends to infreque
 - [Polymorphism](core/src/ca/bcit/comp2522/termproject/enemies/Charger.java) e.g. ```Charger overrides Enemy```
 - [Encapsulation](core/src/ca/bcit/comp2522/termproject/Player.java) e.g. ```Data-hiding in Player```
 - [Use of data structures](core/src/ca/bcit/comp2522/termproject/screens/InGameScreen.java) e.g. ```Linked Lists```
+- [Unittests](tests/src/ca/bcit/comp2522/termproject) e.g. ```Collection of tests```
 
 ## Post-Development Thoughts
 
