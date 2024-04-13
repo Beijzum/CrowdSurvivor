@@ -43,7 +43,7 @@ import java.util.LinkedList;
  * @version 2024
  */
 public class InGameScreen implements Screen, Background, ActorManager, InputProcessor, MessageLayout {
-    private static final int MAX_GAME_LENGTH = 300;
+    private static final int MAX_GAME_LENGTH = 120;
     private static final int BACKGROUND_MULTIPLIER = 3;
     private static final int ARENA_OFFSET_X = 1055;
     private static final int ARENA_OFFSET_Y = 630;
