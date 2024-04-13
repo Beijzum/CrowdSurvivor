@@ -12,8 +12,9 @@ public class DamageNumberTest {
 
         assertFalse(damageNumber.isExpired());
 
-        float deltaTime = damageNumber.getLifetime() + 1f;
-        damageNumber.update(deltaTime);
+        float defaultLifeTime = 1.0f;
+
+        damageNumber.update(defaultLifeTime);
 
         assertTrue(damageNumber.isExpired());
     }
