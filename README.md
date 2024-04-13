@@ -51,6 +51,16 @@ Jonathan tends to frequently commit small changes, while Jason tends to infreque
 - LibGDX version 1.12.1
 - Gradle version 8.5
 
+### Project Features
+
+- [Interfaces](core/src/ca/bcit/comp2522/termproject/interfaces)  e.g. ```public interface ActorManager```
+- [Enumeration](core/src/ca/bcit/comp2522/termproject/HPBar.java) e.g. ```private enum Colour```
+- [Abstract Classes](core/src/ca/bcit/comp2522/termproject/Entity.java) e.g. ```public abstract class Entity```
+- [Inheritance](core/src/ca/bcit/comp2522/termproject/enemies/Enemy.java) e.g. ```Enemy inherits Entity```
+- [Polymorphism](core/src/ca/bcit/comp2522/termproject/enemies/Charger.java) e.g. ```Charger overrides Enemy```
+- [Encapsulation](core/src/ca/bcit/comp2522/termproject/Player.java) e.g. ```Data-hiding in Player```
+- [Use of data structures](core/src/ca/bcit/comp2522/termproject/screens/InGameScreen.java) e.g. ```Linked Lists```
+
 ## Post-Development Thoughts
 
 This project was our first attempt at making a game using LibGDX. We thought the game would be simple and would involve
@@ -75,12 +85,3 @@ If we were to redo this project, we would make the following changes shown below
 - Different projectile firing types
 - Ability to gamble currency for risk/reward experience
 - Optimized code structure (generics, lambda)
-
-### Project Features
-
-- [Interfaces](core/src/ca/bcit/comp2522/termproject/interfaces)  e.g. ```public interface ActorManager```
-- [Enumeration](core/src/ca/bcit/comp2522/termproject/HPBar.java) e.g. ```private enum Colour```
-- [Abstract Classes](core/src/ca/bcit/comp2522/termproject/Entity.java) e.g. ```public abstract class Entity```
-- [Polymorphism](core/src/ca/bcit/comp2522/termproject/Entity.java) e.g. ```public class Enemy extends Entity```
-- [Dependency Injection](core/src/ca/bcit/comp2522/termproject/enemies/RangedEnemy.java) e.g. ```RangedEnemies```
-- [Use of data structures](core/src/ca/bcit/comp2522/termproject/screens/InGameScreen.java) e.g. ```Linked Lists```
