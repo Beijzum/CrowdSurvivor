@@ -13,6 +13,9 @@ or survivability.
 
 You win when all Shreks are dead after 2 minutes have elapsed in-game!
 
+If you lose, don't worry. You can buy permanent upgrades in the shop--found in the main menu--to help you on your
+future attempts.
+
 ## Features
 
 - Auto-saving
@@ -42,11 +45,6 @@ recommended resolution of 1920 x 1080.
 The GitHub commits on this repository may seem unbalanced due to both pair programming and different commit styles.
 Jonathan tends to frequently commit small changes, while Jason tends to infrequently commit large changes.
 
-### UML
-
-When exporting the UML to PDF, the export kept splitting the diagram into segmented pages of pieces of the diagram,
-only exporting the diagram as an image would preserve the diagram; therefore, our UML diagram is in a .png format.
-
 ### Versions Used
 
 - JDK version 18
@@ -55,7 +53,14 @@ only exporting the diagram as an image would preserve the diagram; therefore, ou
 
 ## Post-Development Thoughts
 
+This project was our first attempt at making a game using LibGDX. We thought the game would be simple and would involve
+only a handful of classes. However, the more we progressed, the more we realized how much planning was needed for an
+optimized project structure. This game gave us a lot of experience coding using OOP and SOLID principles and we will
+use that experience as a stepping stone in our developer journey.
+
 ### Future Consideration
+
+If we were to redo this project, we would make the following changes shown below:
 
 - A more aesthetically pleasing UI
 - Fix the UI elements offsetting whenever the player moves
@@ -65,16 +70,17 @@ only exporting the diagram as an image would preserve the diagram; therefore, ou
 - More enemy variation
 - Special ultimate abilities the player can use
 - Load out page to choose different attack styles
+- Pick up different items that add power and mechanics
 - Different player projectiles
 - Different projectile firing types
 - Ability to gamble currency for risk/reward experience
 - Optimized code structure (generics, lambda)
 
-## TODO BEFORE TUESDAY
+### Project Features
 
-change enemy spawning to use camera, not gdx viewport
-unit tests
-update uml
-update readme
-
-
+- [Interfaces](core/src/ca/bcit/comp2522/termproject/interfaces)  e.g. ```public interface ActorManager```
+- [Enumeration](core/src/ca/bcit/comp2522/termproject/HPBar.java) e.g. ```private enum Colour```
+- [Abstract Classes](core/src/ca/bcit/comp2522/termproject/Entity.java) e.g. ```public abstract class Entity```
+- [Polymorphism](core/src/ca/bcit/comp2522/termproject/Entity.java) e.g. ```public class Enemy extends Entity```
+- [Dependency Injection](core/src/ca/bcit/comp2522/termproject/enemies/RangedEnemy.java) e.g. ```RangedEnemies```
+- [Use of data structures](core/src/ca/bcit/comp2522/termproject/screens/InGameScreen.java) e.g. ```Linked Lists```
