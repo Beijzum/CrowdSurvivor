@@ -43,8 +43,8 @@ Jonathan tends to frequently commit small changes, while Jason tends to infreque
 
 ### UML
 
-When exporting the UML to PDF the diagram kept splitting the diagram into segmented pages of pieces of the diagram, 
-only exporting as an image would the diagram be preserved, so our UML diagram is in a .png format.
+When exporting the UML to PDF, the export kept splitting the diagram into segmented pages of pieces of the diagram, 
+only exporting the diagram as an image would preserve the diagram, so our UML diagram is in a .png format.
 
 ### Versions Used
 
