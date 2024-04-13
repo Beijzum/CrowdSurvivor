@@ -23,8 +23,6 @@ public class EXPBar {
     private final float height;
     private int levelThreshold;
     private int currentEXP;
-    private final Color backgroundColour = Color.BLUE;
-    private final Color foregroundColour = Color.CYAN;
     private int playerLevel;
 
     /**
@@ -46,6 +44,21 @@ public class EXPBar {
         this.levelThreshold = levelThreshold;
         this.currentEXP = 0;
         this.playerLevel = playerLevel;
+    }
+
+    private enum Colour {
+        BLUE(Color.BLUE),
+        CYAN(Color.CYAN);
+
+        private final Color colourValue;
+
+        Colour(final Color colourValue) {
+            this.colourValue = colourValue;
+        }
+
+        private Color getColourValue() {
+            return this.colourValue;
+        }
     }
 
     /**
@@ -132,13 +145,13 @@ public class EXPBar {
      */
     public void draw(final ShapeRenderer shapeRenderer, final Batch batch) {
         // draw background
-        shapeRenderer.setColor(this.backgroundColour);
+        shapeRenderer.setColor(Colour.BLUE.getColourValue());
         final float rectWidth = 1.075f;
         shapeRenderer.rect(this.x, this.y, (this.width / rectWidth), this.height);
 
         // draw foreground (experience)
         float foregroundWidth = (float) this.currentEXP / this.levelThreshold * this.width;
-        shapeRenderer.setColor(this.foregroundColour);
+        shapeRenderer.setColor(Colour.CYAN.getColourValue());
         shapeRenderer.rect(this.x, this.y, foregroundWidth, this.height);
 
         batch.begin();
@@ -165,8 +178,6 @@ public class EXPBar {
                 + ", height=" + this.height
                 + ", levelThreshold=" + this.levelThreshold
                 + ", currentEXP=" + this.currentEXP
-                + ", backgroundColour=" + this.backgroundColour
-                + ", foregroundColour=" + this.foregroundColour
                 + ", playerLevel=" + this.playerLevel
                 + '}';
     }

@@ -44,6 +44,20 @@ public class HPBar {
         this.currentHP = maxHP;
     }
 
+    private enum Colour {
+        RED(Color.RED),
+        GREEN(Color.GREEN);
+
+        private final Color colourValue;
+
+        Colour(final Color colourValue) {
+            this.colourValue = colourValue;
+        }
+
+        private Color getColourValue() {
+            return this.colourValue;
+        }
+    }
 
     /**
      * Retrieves the x-coordinate of the HP bar.
@@ -120,12 +134,12 @@ public class HPBar {
      */
     public void draw(final ShapeRenderer shapeRenderer, final Batch batch) {
         // draw background
-        shapeRenderer.setColor(this.backgroundColor);
+        shapeRenderer.setColor(Colour.RED.getColourValue());
         shapeRenderer.rect(this.x, this.y, this.width, this.height);
 
         // draw foreground (HP)
         float foregroundWidth = (float) this.currentHP / this.maxHP * this.width;
-        shapeRenderer.setColor(this.foregroundColor);
+        shapeRenderer.setColor(Colour.GREEN.getColourValue());
         shapeRenderer.rect(this.x, this.y, foregroundWidth, this.height);
 
         // draw HP current/max text
